@@ -1,0 +1,51 @@
+# LunarLanderContinuous DDPG 실험 설정
+
+environment:
+  name: "LunarLanderContinuous-v3"
+  seed: 42
+
+algorithm:
+  name: "DDPG"
+  lr_actor: 0.0001
+  lr_critic: 0.001
+  gamma: 0.99
+  tau: 0.001
+  buffer_size: 1000000
+  batch_size: 64
+  ou_theta: 0.15
+  ou_mu: 0.0
+  ou_sigma: 0.2
+  has_continuous_action_space: true
+  hidden1: 400
+  hidden2: 300
+  init_w: 0.003
+
+network:
+  hidden_dims: [400, 300]
+  activation: "relu"
+
+training:
+  max_episodes: 1000
+  max_steps_per_episode: 1000
+  update_interval: 500     # DDPG는 매 Step마다 업데이트하므로, max_steps_per_episode를 update_interval로 사용
+  eval_interval: 10
+  save_interval: 500
+  log_interval: 10
+
+experiment:
+  name: "lunarlandercontinuous_ddpg"
+  seeds: [0, 1, 2]
+  device: "cpu"
+  save_dir: "results/lunarlandercontinuous_ddpg"
+
+logging:
+  tensorboard: false
+  save_metrics: true
+  plot_interval: 50 
+  # wandb 설정
+  use_wandb: true
+  wandb_project: "rl-framework-lunarlandercontinuous"
+  wandb_entity: "tatalintelli-university-of-seoul"  # wandb 사용자명 또는 팀명
+  # 스텝 기반 로깅 설정
+  enable_step_logging: true
+  step_log_interval: 1000  # 모든 알고리즘에서 동일한 간격 사용 

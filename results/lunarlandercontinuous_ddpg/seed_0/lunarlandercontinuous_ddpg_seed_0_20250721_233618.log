@@ -1,0 +1,103 @@
+2025-07-21 23:36:18,094 - lunarlandercontinuous_ddpg_seed_0 - INFO - Hyperparameters:
+2025-07-21 23:36:18,094 - lunarlandercontinuous_ddpg_seed_0 - INFO -   environment: {'name': 'LunarLanderContinuous-v3', 'seed': 42}
+2025-07-21 23:36:18,095 - lunarlandercontinuous_ddpg_seed_0 - INFO -   algorithm: {'name': 'DDPG', 'lr_actor': 0.0001, 'lr_critic': 0.001, 'gamma': 0.99, 'tau': 0.001, 'buffer_size': 1000000, 'batch_size': 64, 'ou_theta': 0.15, 'ou_mu': 0.0, 'ou_sigma': 0.2, 'has_continuous_action_space': True, 'hidden1': 400, 'hidden2': 300, 'init_w': 0.003}
+2025-07-21 23:36:18,096 - lunarlandercontinuous_ddpg_seed_0 - INFO -   network: {'hidden_dims': [400, 300], 'activation': 'relu'}
+2025-07-21 23:36:18,096 - lunarlandercontinuous_ddpg_seed_0 - INFO -   training: {'max_episodes': 1000, 'max_steps_per_episode': 1000, 'update_interval': 500, 'eval_interval': 10, 'save_interval': 500, 'log_interval': 10}
+2025-07-21 23:36:18,097 - lunarlandercontinuous_ddpg_seed_0 - INFO -   experiment: {'name': 'lunarlandercontinuous_ddpg', 'seeds': [0, 1, 2], 'device': 'cpu', 'save_dir': 'results/lunarlandercontinuous_ddpg'}
+2025-07-21 23:36:18,097 - lunarlandercontinuous_ddpg_seed_0 - INFO -   logging: {'tensorboard': False, 'save_metrics': True, 'plot_interval': 50, 'use_wandb': True, 'wandb_project': 'rl-framework-lunarlandercontinuous', 'wandb_entity': 'tatalintelli-university-of-seoul'}
+2025-07-21 23:36:20,120 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 0: Reward=-224.50, Length=164, Avg Reward (last 10)=-224.50
+2025-07-21 23:36:32,098 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 10: Reward=-188.94, Length=84, Avg Reward (last 10)=-530.62
+2025-07-21 23:36:42,317 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 20: Reward=-268.02, Length=130, Avg Reward (last 10)=-200.93
+2025-07-21 23:37:07,945 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 30: Reward=-203.11, Length=191, Avg Reward (last 10)=-277.13
+2025-07-21 23:37:36,804 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 40: Reward=-159.77, Length=146, Avg Reward (last 10)=-137.80
+2025-07-21 23:37:57,163 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 50: Reward=-185.84, Length=285, Avg Reward (last 10)=-199.32
+2025-07-21 23:39:14,679 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 60: Reward=-149.79, Length=295, Avg Reward (last 10)=-125.90
+2025-07-21 23:41:41,518 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 70: Reward=-307.84, Length=99, Avg Reward (last 10)=-228.86
+2025-07-21 23:42:16,676 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 80: Reward=-111.65, Length=113, Avg Reward (last 10)=-176.62
+2025-07-21 23:42:56,568 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 90: Reward=-235.37, Length=283, Avg Reward (last 10)=-152.66
+2025-07-21 23:45:04,679 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 100: Reward=-267.05, Length=122, Avg Reward (last 10)=-197.08
+2025-07-21 23:46:04,116 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 110: Reward=-253.22, Length=160, Avg Reward (last 10)=-214.10
+2025-07-21 23:47:48,199 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 120: Reward=-325.54, Length=430, Avg Reward (last 10)=-227.11
+2025-07-21 23:48:34,002 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 130: Reward=-53.14, Length=232, Avg Reward (last 10)=-134.92
+2025-07-21 23:49:06,981 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 140: Reward=-44.64, Length=163, Avg Reward (last 10)=-146.14
+2025-07-21 23:49:45,228 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 150: Reward=-43.01, Length=232, Avg Reward (last 10)=-95.46
+2025-07-21 23:50:22,740 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 160: Reward=-134.66, Length=257, Avg Reward (last 10)=-94.11
+2025-07-21 23:50:58,690 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 170: Reward=-31.54, Length=136, Avg Reward (last 10)=-49.90
+2025-07-21 23:52:47,769 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 180: Reward=-142.36, Length=129, Avg Reward (last 10)=-126.04
+2025-07-21 23:53:46,912 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 190: Reward=-134.45, Length=56, Avg Reward (last 10)=-156.57
+2025-07-21 23:54:06,789 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 200: Reward=-107.94, Length=200, Avg Reward (last 10)=-138.72
+2025-07-21 23:54:21,437 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 210: Reward=-85.01, Length=139, Avg Reward (last 10)=-57.16
+2025-07-21 23:55:52,241 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 220: Reward=-211.01, Length=107, Avg Reward (last 10)=8.04
+2025-07-21 23:58:01,280 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 230: Reward=-46.67, Length=118, Avg Reward (last 10)=-199.12
+2025-07-21 23:59:56,438 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 240: Reward=-60.96, Length=297, Avg Reward (last 10)=-80.79
+2025-07-22 00:03:15,357 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 250: Reward=-192.70, Length=137, Avg Reward (last 10)=-137.33
+2025-07-22 00:05:34,663 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 260: Reward=-165.63, Length=214, Avg Reward (last 10)=-136.11
+2025-07-22 00:06:06,264 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 270: Reward=81.79, Length=206, Avg Reward (last 10)=-137.24
+2025-07-22 00:08:56,069 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 280: Reward=-226.00, Length=139, Avg Reward (last 10)=-197.32
+2025-07-22 00:12:37,626 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 290: Reward=-31.66, Length=267, Avg Reward (last 10)=-171.94
+2025-07-22 00:13:28,693 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 300: Reward=-105.22, Length=134, Avg Reward (last 10)=-140.73
+2025-07-22 00:15:26,640 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 310: Reward=-147.83, Length=413, Avg Reward (last 10)=-188.94
+2025-07-22 00:16:08,704 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 320: Reward=-167.92, Length=123, Avg Reward (last 10)=-146.02
+2025-07-22 00:17:07,790 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 330: Reward=-72.77, Length=106, Avg Reward (last 10)=-154.80
+2025-07-22 00:18:29,357 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 340: Reward=-340.36, Length=121, Avg Reward (last 10)=-301.87
+2025-07-22 00:20:03,976 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 350: Reward=188.88, Length=435, Avg Reward (last 10)=5.32
+2025-07-22 00:22:06,611 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 360: Reward=-410.35, Length=500, Avg Reward (last 10)=-135.82
+2025-07-22 00:24:29,296 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 370: Reward=-40.38, Length=253, Avg Reward (last 10)=-197.95
+2025-07-22 00:26:09,509 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 380: Reward=-13.96, Length=188, Avg Reward (last 10)=-81.46
+2025-07-22 00:28:53,255 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 390: Reward=-261.58, Length=240, Avg Reward (last 10)=-143.85
+2025-07-22 00:30:51,487 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 400: Reward=190.83, Length=287, Avg Reward (last 10)=-45.22
+2025-07-22 00:32:13,660 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 410: Reward=-257.04, Length=226, Avg Reward (last 10)=82.46
+2025-07-22 00:33:19,969 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 420: Reward=195.40, Length=354, Avg Reward (last 10)=14.39
+2025-07-22 00:34:44,319 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 430: Reward=-65.54, Length=116, Avg Reward (last 10)=9.41
+2025-07-22 00:35:41,358 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 440: Reward=-114.54, Length=82, Avg Reward (last 10)=-121.46
+2025-07-22 00:36:43,184 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 450: Reward=-285.69, Length=231, Avg Reward (last 10)=-27.41
+2025-07-22 00:37:48,642 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 460: Reward=-232.89, Length=103, Avg Reward (last 10)=-56.04
+2025-07-22 00:39:34,109 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 470: Reward=-23.54, Length=128, Avg Reward (last 10)=-64.30
+2025-07-22 00:40:40,332 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 480: Reward=232.22, Length=456, Avg Reward (last 10)=17.50
+2025-07-22 00:42:04,932 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 490: Reward=-23.92, Length=122, Avg Reward (last 10)=-112.01
+2025-07-22 00:42:35,375 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 500: Reward=12.02, Length=95, Avg Reward (last 10)=12.17
+2025-07-22 00:43:12,412 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 510: Reward=109.44, Length=486, Avg Reward (last 10)=-11.27
+2025-07-22 00:43:43,908 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 520: Reward=-228.23, Length=130, Avg Reward (last 10)=-70.60
+2025-07-22 00:44:29,558 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 530: Reward=-230.86, Length=121, Avg Reward (last 10)=-109.47
+2025-07-22 00:45:58,221 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 540: Reward=148.65, Length=424, Avg Reward (last 10)=15.07
+2025-07-22 00:47:50,955 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 550: Reward=0.06, Length=247, Avg Reward (last 10)=104.06
+2025-07-22 00:50:14,283 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 560: Reward=11.54, Length=347, Avg Reward (last 10)=-123.68
+2025-07-22 00:52:07,849 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 570: Reward=126.95, Length=442, Avg Reward (last 10)=-72.46
+2025-07-22 00:53:47,582 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 580: Reward=-86.14, Length=125, Avg Reward (last 10)=-12.70
+2025-07-22 00:54:45,786 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 590: Reward=55.14, Length=116, Avg Reward (last 10)=-151.35
+2025-07-22 00:55:17,764 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 600: Reward=-78.49, Length=129, Avg Reward (last 10)=-22.52
+2025-07-22 00:55:55,318 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 610: Reward=-150.47, Length=108, Avg Reward (last 10)=-140.02
+2025-07-22 00:56:46,117 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 620: Reward=-165.26, Length=75, Avg Reward (last 10)=-41.59
+2025-07-22 00:58:10,171 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 630: Reward=-107.12, Length=371, Avg Reward (last 10)=29.08
+2025-07-22 00:59:12,634 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 640: Reward=246.56, Length=428, Avg Reward (last 10)=17.39
+2025-07-22 01:00:33,873 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 650: Reward=247.60, Length=268, Avg Reward (last 10)=-31.93
+2025-07-22 01:02:26,349 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 660: Reward=-169.57, Length=75, Avg Reward (last 10)=61.69
+2025-07-22 01:03:19,176 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 670: Reward=-145.00, Length=94, Avg Reward (last 10)=-31.25
+2025-07-22 01:04:17,128 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 680: Reward=245.06, Length=416, Avg Reward (last 10)=-4.17
+2025-07-22 01:05:19,790 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 690: Reward=11.52, Length=224, Avg Reward (last 10)=89.96
+2025-07-22 01:06:27,379 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 700: Reward=-20.81, Length=136, Avg Reward (last 10)=86.90
+2025-07-22 01:06:43,094 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 710: Reward=-118.68, Length=72, Avg Reward (last 10)=-92.82
+2025-07-22 01:07:14,885 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 720: Reward=220.92, Length=464, Avg Reward (last 10)=-3.67
+2025-07-22 01:07:52,835 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 730: Reward=-49.54, Length=91, Avg Reward (last 10)=-131.02
+2025-07-22 01:08:14,756 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 740: Reward=-159.62, Length=98, Avg Reward (last 10)=-140.61
+2025-07-22 01:09:02,177 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 750: Reward=-28.83, Length=129, Avg Reward (last 10)=-78.69
+2025-07-22 01:09:45,996 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 760: Reward=231.65, Length=203, Avg Reward (last 10)=4.28
+2025-07-22 01:10:55,553 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 770: Reward=-78.21, Length=364, Avg Reward (last 10)=50.12
+2025-07-22 01:11:17,509 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 780: Reward=-13.78, Length=84, Avg Reward (last 10)=-12.27
+2025-07-22 01:12:15,187 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 790: Reward=-356.92, Length=121, Avg Reward (last 10)=-10.02
+2025-07-22 01:13:49,312 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 800: Reward=257.10, Length=475, Avg Reward (last 10)=39.68
+2025-07-22 01:14:10,387 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 810: Reward=-58.74, Length=91, Avg Reward (last 10)=21.81
+2025-07-22 01:14:27,598 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 820: Reward=226.42, Length=421, Avg Reward (last 10)=-35.60
+2025-07-22 01:15:22,302 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 830: Reward=217.06, Length=250, Avg Reward (last 10)=91.08
+2025-07-22 01:16:03,749 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 840: Reward=-236.30, Length=165, Avg Reward (last 10)=38.62
+2025-07-22 01:16:47,327 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 850: Reward=222.58, Length=342, Avg Reward (last 10)=53.68
+2025-07-22 01:18:16,549 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 860: Reward=251.60, Length=207, Avg Reward (last 10)=101.98
+2025-07-22 01:19:12,575 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 870: Reward=-257.11, Length=146, Avg Reward (last 10)=-26.34
+2025-07-22 01:20:44,965 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 880: Reward=32.27, Length=88, Avg Reward (last 10)=55.36
+2025-07-22 01:21:31,251 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 890: Reward=-46.20, Length=98, Avg Reward (last 10)=116.64
+2025-07-22 01:21:58,522 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 900: Reward=215.00, Length=211, Avg Reward (last 10)=-149.91
+2025-07-22 01:23:31,280 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 910: Reward=-63.85, Length=235, Avg Reward (last 10)=117.06
+2025-07-22 01:24:09,356 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 920: Reward=249.19, Length=186, Avg Reward (last 10)=33.67
+2025-07-22 01:24:58,479 - lunarlandercontinuous_ddpg_seed_0 - INFO - Episode 930: Reward=245.39, Length=465, Avg Reward (last 10)=95.85
+2025-07-22 01:25:56,829 - lunarlandercontinuous_ddpg_seed_0 - INFO - Metrics saved to results/lunarlandercontinuous_ddpg/seed_0/metrics.json
+2025-07-22 01:25:59,438 - lunarlandercontinuous_ddpg_seed_0 - INFO - Experiment completed.

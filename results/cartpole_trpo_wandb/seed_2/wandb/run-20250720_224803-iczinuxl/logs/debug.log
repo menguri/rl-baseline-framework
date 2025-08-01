@@ -1,0 +1,15 @@
+2025-07-20 22:48:03,944 INFO    MainThread:26591 [wandb_init.py:setup_run_log_directory():647] Logging user logs to results/cartpole_trpo_wandb/seed_2/wandb/run-20250720_224803-iczinuxl/logs/debug.log
+2025-07-20 22:48:03,945 INFO    MainThread:26591 [wandb_init.py:setup_run_log_directory():648] Logging internal logs to results/cartpole_trpo_wandb/seed_2/wandb/run-20250720_224803-iczinuxl/logs/debug-internal.log
+2025-07-20 22:48:03,946 INFO    MainThread:26591 [wandb_init.py:init():761] calling init triggers
+2025-07-20 22:48:03,947 INFO    MainThread:26591 [wandb_init.py:init():766] wandb.init called with sweep_config: {}
+config: {'_wandb': {}}
+2025-07-20 22:48:03,948 INFO    MainThread:26591 [wandb_init.py:init():776] wandb.init() called while a run is active
+2025-07-20 22:48:03,954 INFO    MainThread:26591 [wandb_run.py:_config_callback():1261] config_cb None None {'environment': {'name': 'CartPole-v1', 'seed': 42}, 'algorithm': {'name': 'TRPO', 'lr': '3e-4', 'gamma': 0.99, 'gae_lambda': 0.95, 'max_kl': 0.005, 'damping': 0.2, 'has_continuous_action_space': False, 'action_std_init': 0.6}, 'network': {'hidden_dims': [64, 64], 'activation': 'tanh'}, 'training': {'max_episodes': 100, 'max_steps_per_episode': 500, 'update_interval': 2048, 'eval_interval': 10, 'save_interval': 300, 'log_interval': 10}, 'experiment': {'name': 'cartpole_trpo_wandb', 'seeds': [0, 1, 2], 'device': 'cpu', 'save_dir': 'results/cartpole_trpo_wandb'}, 'logging': {'tensorboard': False, 'save_metrics': True, 'plot_interval': 25, 'use_wandb': True, 'wandb_project': 'rl-framework-cartpole', 'wandb_entity': 'tatalintelli-university-of-seoul'}}
+2025-07-20 22:51:03,653 INFO    MainThread:26591 [wandb_run.py:_finish():2112] finishing run tatalintelli-university-of-seoul/rl-framework-cartpole/vcu57qll
+2025-07-20 22:51:03,656 INFO    MainThread:26591 [wandb_run.py:_atexit_cleanup():2342] got exitcode: 0
+2025-07-20 22:51:03,662 INFO    MainThread:26591 [wandb_run.py:_restore():2324] restore
+2025-07-20 22:51:03,664 INFO    MainThread:26591 [wandb_run.py:_restore():2330] restore done
+2025-07-20 22:51:05,956 INFO    MsgRouterThr:26591 [mailbox.py:close():115] Closing mailbox, abandoning 1 handles.
+2025-07-20 22:51:05,964 INFO    MainThread:26591 [wandb_run.py:_footer_history_summary_info():3958] rendering history
+2025-07-20 22:51:05,978 INFO    MainThread:26591 [wandb_run.py:_footer_history_summary_info():3990] rendering summary
+2025-07-20 22:51:05,984 INFO    MainThread:26591 [wandb_run.py:_footer_sync_info():3919] logging synced files

@@ -1,0 +1,86 @@
+{
+  "config": {
+    "environment": {
+      "name": "CartPole-v1",
+      "seed": 42
+    },
+    "algorithm": {
+      "name": "PPO",
+      "lr_actor": "3e-4",
+      "lr_critic": "1e-3",
+      "gamma": 0.99,
+      "gae_lambda": 0.95,
+      "clip_ratio": 0.2,
+      "target_kl": 0.01,
+      "train_policy_iters": 80,
+      "train_value_iters": 80,
+      "lam": 0.97,
+      "has_continuous_action_space": false,
+      "action_std_init": 0.6
+    },
+    "network": {
+      "hidden_dims": [
+        64,
+        64
+      ],
+      "activation": "tanh"
+    },
+    "training": {
+      "max_episodes": 500,
+      "max_steps_per_episode": 500,
+      "update_interval": 2048,
+      "eval_interval": 10,
+      "save_interval": 50,
+      "log_interval": 10
+    },
+    "experiment": {
+      "name": "cartpole_ppo_wandb",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "device": "cpu",
+      "save_dir": "results/cartpole_ppo_wandb"
+    },
+    "logging": {
+      "tensorboard": false,
+      "save_metrics": true,
+      "plot_interval": 25,
+      "use_wandb": true,
+      "wandb_project": "rl-framework-cartpole",
+      "wandb_entity": "tatalintelli-university-of-seoul"
+    }
+  },
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "results": [
+    {
+      "seed": 0,
+      "error": "not enough values to unpack (expected 5, got 4)",
+      "best_reward": -Infinity
+    },
+    {
+      "seed": 1,
+      "error": "not enough values to unpack (expected 5, got 4)",
+      "best_reward": -Infinity
+    },
+    {
+      "seed": 2,
+      "error": "not enough values to unpack (expected 5, got 4)",
+      "best_reward": -Infinity
+    }
+  ],
+  "summary": {
+    "total_experiments": 3,
+    "successful_experiments": 0,
+    "failed_experiments": 3,
+    "mean_reward": null,
+    "std_reward": null,
+    "max_reward": null,
+    "min_reward": null
+  }
+}

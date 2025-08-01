@@ -1,0 +1,15 @@
+2025-07-21 02:56:30,861 INFO    MainThread:4323 [wandb_init.py:setup_run_log_directory():647] Logging user logs to results/lunarlandercontinuous_ppo/seed_2/wandb/run-20250721_025630-arvch88u/logs/debug.log
+2025-07-21 02:56:30,863 INFO    MainThread:4323 [wandb_init.py:setup_run_log_directory():648] Logging internal logs to results/lunarlandercontinuous_ppo/seed_2/wandb/run-20250721_025630-arvch88u/logs/debug-internal.log
+2025-07-21 02:56:30,864 INFO    MainThread:4323 [wandb_init.py:init():761] calling init triggers
+2025-07-21 02:56:30,865 INFO    MainThread:4323 [wandb_init.py:init():766] wandb.init called with sweep_config: {}
+config: {'_wandb': {}}
+2025-07-21 02:56:30,866 INFO    MainThread:4323 [wandb_init.py:init():776] wandb.init() called while a run is active
+2025-07-21 02:56:30,871 INFO    MainThread:4323 [wandb_run.py:_config_callback():1261] config_cb None None {'environment': {'name': 'LunarLanderContinuous-v3', 'seed': 42}, 'algorithm': {'name': 'PPO', 'lr_actor': '3e-4', 'lr_critic': '1e-3', 'gamma': 0.99, 'gae_lambda': 0.95, 'clip_ratio': 0.2, 'target_kl': 0.01, 'train_policy_iters': 80, 'train_value_iters': 80, 'lam': 0.97, 'has_continuous_action_space': True, 'action_std_init': 0.6}, 'network': {'hidden_dims': [64, 64], 'activation': 'tanh'}, 'training': {'max_episodes': 1000, 'max_steps_per_episode': 1000, 'update_interval': 2048, 'eval_interval': 10, 'save_interval': 1000, 'log_interval': 10}, 'experiment': {'name': 'lunarlandercontinuous_ppo', 'seeds': [0, 1, 2], 'device': 'cpu', 'save_dir': 'results/lunarlandercontinuous_ppo'}, 'logging': {'tensorboard': False, 'save_metrics': True, 'plot_interval': 50, 'use_wandb': True, 'wandb_project': 'rl-framework-lunarlandercontinuous', 'wandb_entity': 'tatalintelli-university-of-seoul'}}
+2025-07-21 03:45:06,136 INFO    MainThread:4323 [wandb_run.py:_finish():2112] finishing run tatalintelli-university-of-seoul/rl-framework-lunarlandercontinuous/dkwov2ie
+2025-07-21 03:45:06,140 INFO    MainThread:4323 [wandb_run.py:_atexit_cleanup():2342] got exitcode: 0
+2025-07-21 03:45:06,144 INFO    MainThread:4323 [wandb_run.py:_restore():2324] restore
+2025-07-21 03:45:06,146 INFO    MainThread:4323 [wandb_run.py:_restore():2330] restore done
+2025-07-21 03:45:08,531 INFO    MsgRouterThr:4323 [mailbox.py:close():115] Closing mailbox, abandoning 1 handles.
+2025-07-21 03:45:08,540 INFO    MainThread:4323 [wandb_run.py:_footer_history_summary_info():3958] rendering history
+2025-07-21 03:45:08,552 INFO    MainThread:4323 [wandb_run.py:_footer_history_summary_info():3990] rendering summary
+2025-07-21 03:45:08,559 INFO    MainThread:4323 [wandb_run.py:_footer_sync_info():3919] logging synced files

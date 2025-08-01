@@ -1,0 +1,51 @@
+# CartPole TRPO 실험 설정 (wandb 활성화)
+
+# 환경 설정
+environment:
+  name: "CartPole-v1"
+  seed: 42
+
+# 알고리즘 설정
+algorithm:
+  name: "TRPO"
+  lr: 3e-4
+  gamma: 0.99
+  gae_lambda: 0.95
+  max_kl: 0.005
+  damping: 0.2
+  has_continuous_action_space: false
+  action_std_init: 0.6
+
+# 네트워크 설정
+network:
+  hidden_dims: [64, 64]
+  activation: "tanh"
+
+# 학습 설정
+training:
+  max_episodes: 100  # 밤새 돌릴 수 있도록 조정
+  max_steps_per_episode: 500
+  update_interval: 2048
+  eval_interval: 10
+  save_interval: 300
+  log_interval: 10
+
+# 실험 설정
+experiment:
+  name: "cartpole_trpo_wandb"
+  seeds: [0, 1, 2]
+  device: "cpu"
+  save_dir: "results/cartpole_trpo_wandb"
+
+# 로깅 설정
+logging:
+  tensorboard: false
+  save_metrics: true
+  plot_interval: 25
+  # wandb 설정
+  use_wandb: True
+  wandb_project: "rl-framework-cartpole"
+  wandb_entity: "tatalintelli-university-of-seoul"  # wandb 사용자명 또는 팀명
+  # 스텝 기반 로깅 설정
+  enable_step_logging: true
+  step_log_interval: 1000  # 1000 스텝마다 로깅 

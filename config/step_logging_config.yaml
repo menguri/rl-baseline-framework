@@ -1,0 +1,40 @@
+# 스텝 기반 로깅 공통 설정
+# 모든 알고리즘에서 동일한 설정을 사용하여 공정한 비교를 보장합니다
+
+step_logging:
+  # 스텝 기반 로깅 활성화
+  enable_step_logging: true
+  
+  # 로깅 간격 (모든 알고리즘에서 동일해야 함!)
+  step_log_interval: 1000
+  
+  # wandb에서 스텝 기반 메트릭 네임스페이스
+  step_metric_prefix: "step_metrics"
+  
+  # 비교 분석을 위한 공통 스텝 포인트들
+  # 이 스텝들에서 모든 알고리즘이 메트릭을 기록해야 합니다
+  comparison_steps:
+    - 1000
+    - 2000
+    - 5000
+    - 10000
+    - 20000
+    - 50000
+    - 100000
+
+# 환경별 권장 최대 스텝 수
+environment_max_steps:
+  "CartPole-v1": 50000
+  "LunarLanderContinuous-v3": 100000
+  
+# 알고리즘별 특성 (참고용)
+algorithm_characteristics:
+  PPO:
+    typical_episode_length: "환경에 따라 다름"
+    update_frequency: "배치 단위"
+  TRPO:
+    typical_episode_length: "환경에 따라 다름"  
+    update_frequency: "배치 단위"
+  DDPG:
+    typical_episode_length: "환경에 따라 다름"
+    update_frequency: "매 스텝"

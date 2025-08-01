@@ -1,0 +1,21 @@
+[TRPO]
+1) 그레디언트 끊김 현상이 actor의 get_loss() 파트에서 자꾸 발생하여 디버깅 진행하였음
+- actor/critic으로 분리하여 구현하다보니 해결됨
+2) 학습이 되다가 gradient가 폭주하는 상황이 발생함. 초반 episode 10에서 500을 찍었다가, 다시 내리막길.
+- Categorical에 들어가는 action_probs가 NaN > 소프트맥스 연산 혹은 입력이 무너진 경우
+- 가능한 시나리오: Gradient explosion, log(action_probs)=0, linesearch에서 큰 step
+> damping, max_kl 을 조정하니, 좀 더 가다가 Gradient 폭주하는 상황 발생 - 일단은 넘기고, continuos action space로 넘어감
+- FVP 계산, linesearch에서 문제 생겼을 것으로 생각됨 (여기 해결하기)
+> shs(trust region 2차 근사의 크기 나타냄)에서 음수 등장/ 이론상 양정치 행렬이라는 가정에 어긋나는데, 이는 근사오차 혹은 CG 반복의 불안정성이 원인
+- 이를 위한 방어코드 작성 완료(shs 한정정)
+
+
+[DDPG]
+1) TRPO/PPO는 update_interval을 2048 정도로 둬서, 충분히 transition 모으고 업댓
+2) DDPG는 이와 달리 매 step 마다 transition 수집 및 sampling을 통한 업데이터를 진행함. algorithm 수정 필요.
+
+[Continuos action space]
+1) .log_prob(action).sum(dim=-1) 로 변경해줘야 함. Because 각 transition마다 log probability는 한 개이기를 기대함
+2) 후에 step 기준으로 나오도록 전부 수정하기
+3) action 결정하면 다음 2 step까지는 똑같은 action 수행하도록 조정하는 과정도 시도해보자
+

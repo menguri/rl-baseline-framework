@@ -1,0 +1,101 @@
+2025-07-14 16:14:53,363 - cartpole_ppo_wandb_seed_0 - INFO - Hyperparameters:
+2025-07-14 16:14:53,364 - cartpole_ppo_wandb_seed_0 - INFO -   environment: {'name': 'CartPole-v1', 'seed': 42}
+2025-07-14 16:14:53,364 - cartpole_ppo_wandb_seed_0 - INFO -   algorithm: {'name': 'PPO', 'lr_actor': '3e-4', 'lr_critic': '1e-3', 'gamma': 0.99, 'gae_lambda': 0.95, 'clip_ratio': 0.2, 'target_kl': 0.01, 'train_policy_iters': 80, 'train_value_iters': 80, 'lam': 0.97, 'has_continuous_action_space': False, 'action_std_init': 0.6}
+2025-07-14 16:14:53,365 - cartpole_ppo_wandb_seed_0 - INFO -   network: {'hidden_dims': [64, 64], 'activation': 'tanh'}
+2025-07-14 16:14:53,366 - cartpole_ppo_wandb_seed_0 - INFO -   training: {'max_episodes': 100, 'max_steps_per_episode': 500, 'update_interval': 2048, 'eval_interval': 10, 'save_interval': 300, 'log_interval': 10}
+2025-07-14 16:14:53,366 - cartpole_ppo_wandb_seed_0 - INFO -   experiment: {'name': 'cartpole_ppo_wandb', 'seeds': [0, 1, 2], 'device': 'cpu', 'save_dir': 'results/cartpole_ppo_wandb'}
+2025-07-14 16:14:53,367 - cartpole_ppo_wandb_seed_0 - INFO -   logging: {'tensorboard': False, 'save_metrics': True, 'plot_interval': 25, 'use_wandb': True, 'wandb_project': 'rl-framework-cartpole', 'wandb_entity': 'tatalintelli-university-of-seoul'}
+2025-07-14 16:14:53,420 - cartpole_ppo_wandb_seed_0 - INFO - Episode 0: Reward=17.00, Length=17, Avg Reward (last 10)=17.00
+2025-07-14 16:14:53,753 - cartpole_ppo_wandb_seed_0 - INFO - Episode 10: Reward=33.00, Length=33, Avg Reward (last 10)=38.70
+2025-07-14 16:14:53,915 - cartpole_ppo_wandb_seed_0 - INFO - Episode 20: Reward=27.00, Length=27, Avg Reward (last 10)=16.80
+2025-07-14 16:14:54,171 - cartpole_ppo_wandb_seed_0 - INFO - Episode 30: Reward=22.00, Length=22, Avg Reward (last 10)=22.80
+2025-07-14 16:14:54,469 - cartpole_ppo_wandb_seed_0 - INFO - Episode 40: Reward=16.00, Length=16, Avg Reward (last 10)=23.20
+2025-07-14 16:14:54,708 - cartpole_ppo_wandb_seed_0 - INFO - Episode 50: Reward=16.00, Length=16, Avg Reward (last 10)=26.90
+2025-07-14 16:14:54,934 - cartpole_ppo_wandb_seed_0 - INFO - Episode 60: Reward=27.00, Length=27, Avg Reward (last 10)=26.20
+2025-07-14 16:14:55,199 - cartpole_ppo_wandb_seed_0 - INFO - Episode 70: Reward=31.00, Length=31, Avg Reward (last 10)=31.50
+2025-07-14 16:14:57,275 - cartpole_ppo_wandb_seed_0 - INFO - Episode 80: Reward=26.00, Length=26, Avg Reward (last 10)=29.00
+2025-07-14 16:14:57,484 - cartpole_ppo_wandb_seed_0 - INFO - Episode 90: Reward=22.00, Length=22, Avg Reward (last 10)=21.50
+2025-07-14 16:14:57,824 - cartpole_ppo_wandb_seed_0 - INFO - Episode 100: Reward=29.00, Length=29, Avg Reward (last 10)=21.50
+2025-07-14 16:14:58,039 - cartpole_ppo_wandb_seed_0 - INFO - Episode 110: Reward=19.00, Length=19, Avg Reward (last 10)=22.70
+2025-07-14 16:14:58,366 - cartpole_ppo_wandb_seed_0 - INFO - Episode 120: Reward=31.00, Length=31, Avg Reward (last 10)=27.80
+2025-07-14 16:14:58,789 - cartpole_ppo_wandb_seed_0 - INFO - Episode 130: Reward=17.00, Length=17, Avg Reward (last 10)=24.40
+2025-07-14 16:14:59,063 - cartpole_ppo_wandb_seed_0 - INFO - Episode 140: Reward=19.00, Length=19, Avg Reward (last 10)=25.50
+2025-07-14 16:14:59,286 - cartpole_ppo_wandb_seed_0 - INFO - Episode 150: Reward=28.00, Length=28, Avg Reward (last 10)=27.20
+2025-07-14 16:14:59,443 - cartpole_ppo_wandb_seed_0 - INFO - Episode 160: Reward=23.00, Length=23, Avg Reward (last 10)=17.70
+2025-07-14 16:15:00,954 - cartpole_ppo_wandb_seed_0 - INFO - Episode 170: Reward=24.00, Length=24, Avg Reward (last 10)=24.10
+2025-07-14 16:15:01,163 - cartpole_ppo_wandb_seed_0 - INFO - Episode 180: Reward=36.00, Length=36, Avg Reward (last 10)=23.00
+2025-07-14 16:15:01,555 - cartpole_ppo_wandb_seed_0 - INFO - Episode 190: Reward=125.00, Length=125, Avg Reward (last 10)=45.90
+2025-07-14 16:15:01,908 - cartpole_ppo_wandb_seed_0 - INFO - Episode 200: Reward=16.00, Length=16, Avg Reward (last 10)=39.40
+2025-07-14 16:15:02,213 - cartpole_ppo_wandb_seed_0 - INFO - Episode 210: Reward=16.00, Length=16, Avg Reward (last 10)=27.10
+2025-07-14 16:15:02,626 - cartpole_ppo_wandb_seed_0 - INFO - Episode 220: Reward=53.00, Length=53, Avg Reward (last 10)=41.40
+2025-07-14 16:15:03,953 - cartpole_ppo_wandb_seed_0 - INFO - Episode 230: Reward=36.00, Length=36, Avg Reward (last 10)=26.10
+2025-07-14 16:15:04,280 - cartpole_ppo_wandb_seed_0 - INFO - Episode 240: Reward=121.00, Length=121, Avg Reward (last 10)=51.50
+2025-07-14 16:15:04,446 - cartpole_ppo_wandb_seed_0 - INFO - Episode 250: Reward=47.00, Length=47, Avg Reward (last 10)=23.40
+2025-07-14 16:15:04,674 - cartpole_ppo_wandb_seed_0 - INFO - Episode 260: Reward=56.00, Length=56, Avg Reward (last 10)=35.90
+2025-07-14 16:15:04,932 - cartpole_ppo_wandb_seed_0 - INFO - Episode 270: Reward=33.00, Length=33, Avg Reward (last 10)=38.40
+2025-07-14 16:15:05,116 - cartpole_ppo_wandb_seed_0 - INFO - Episode 280: Reward=29.00, Length=29, Avg Reward (last 10)=26.50
+2025-07-14 16:15:06,558 - cartpole_ppo_wandb_seed_0 - INFO - Episode 290: Reward=14.00, Length=14, Avg Reward (last 10)=49.80
+2025-07-14 16:15:06,867 - cartpole_ppo_wandb_seed_0 - INFO - Episode 300: Reward=20.00, Length=20, Avg Reward (last 10)=44.40
+2025-07-14 16:15:07,307 - cartpole_ppo_wandb_seed_0 - INFO - Episode 310: Reward=16.00, Length=16, Avg Reward (last 10)=30.20
+2025-07-14 16:15:07,509 - cartpole_ppo_wandb_seed_0 - INFO - Episode 320: Reward=32.00, Length=32, Avg Reward (last 10)=30.20
+2025-07-14 16:15:07,714 - cartpole_ppo_wandb_seed_0 - INFO - Episode 330: Reward=15.00, Length=15, Avg Reward (last 10)=31.40
+2025-07-14 16:15:08,666 - cartpole_ppo_wandb_seed_0 - INFO - Episode 340: Reward=115.00, Length=115, Avg Reward (last 10)=51.20
+2025-07-14 16:15:08,986 - cartpole_ppo_wandb_seed_0 - INFO - Episode 350: Reward=15.00, Length=15, Avg Reward (last 10)=50.00
+2025-07-14 16:15:09,269 - cartpole_ppo_wandb_seed_0 - INFO - Episode 360: Reward=32.00, Length=32, Avg Reward (last 10)=38.10
+2025-07-14 16:15:09,561 - cartpole_ppo_wandb_seed_0 - INFO - Episode 370: Reward=34.00, Length=34, Avg Reward (last 10)=45.60
+2025-07-14 16:15:09,750 - cartpole_ppo_wandb_seed_0 - INFO - Episode 380: Reward=14.00, Length=14, Avg Reward (last 10)=29.20
+2025-07-14 16:15:10,666 - cartpole_ppo_wandb_seed_0 - INFO - Episode 390: Reward=60.00, Length=60, Avg Reward (last 10)=66.10
+2025-07-14 16:15:11,072 - cartpole_ppo_wandb_seed_0 - INFO - Episode 400: Reward=67.00, Length=67, Avg Reward (last 10)=67.60
+2025-07-14 16:15:11,530 - cartpole_ppo_wandb_seed_0 - INFO - Episode 410: Reward=56.00, Length=56, Avg Reward (last 10)=66.80
+2025-07-14 16:15:12,445 - cartpole_ppo_wandb_seed_0 - INFO - Episode 420: Reward=65.00, Length=65, Avg Reward (last 10)=52.10
+2025-07-14 16:15:13,198 - cartpole_ppo_wandb_seed_0 - INFO - Episode 430: Reward=309.00, Length=309, Avg Reward (last 10)=107.40
+2025-07-14 16:15:14,229 - cartpole_ppo_wandb_seed_0 - INFO - Episode 440: Reward=89.00, Length=89, Avg Reward (last 10)=64.20
+2025-07-14 16:15:14,789 - cartpole_ppo_wandb_seed_0 - INFO - Episode 450: Reward=99.00, Length=99, Avg Reward (last 10)=94.70
+2025-07-14 16:15:15,261 - cartpole_ppo_wandb_seed_0 - INFO - Episode 460: Reward=128.00, Length=128, Avg Reward (last 10)=74.10
+2025-07-14 16:15:16,967 - cartpole_ppo_wandb_seed_0 - INFO - Episode 470: Reward=152.00, Length=152, Avg Reward (last 10)=165.60
+2025-07-14 16:15:19,539 - cartpole_ppo_wandb_seed_0 - INFO - Episode 480: Reward=185.00, Length=185, Avg Reward (last 10)=217.10
+2025-07-14 16:15:24,555 - cartpole_ppo_wandb_seed_0 - INFO - Episode 490: Reward=162.00, Length=162, Avg Reward (last 10)=231.90
+2025-07-14 16:15:26,794 - cartpole_ppo_wandb_seed_0 - INFO - Episode 500: Reward=148.00, Length=148, Avg Reward (last 10)=199.10
+2025-07-14 16:15:29,496 - cartpole_ppo_wandb_seed_0 - INFO - Episode 510: Reward=172.00, Length=172, Avg Reward (last 10)=230.60
+2025-07-14 16:15:31,877 - cartpole_ppo_wandb_seed_0 - INFO - Episode 520: Reward=355.00, Length=355, Avg Reward (last 10)=250.60
+2025-07-14 16:15:36,350 - cartpole_ppo_wandb_seed_0 - INFO - Episode 530: Reward=35.00, Length=35, Avg Reward (last 10)=320.00
+2025-07-14 16:15:40,134 - cartpole_ppo_wandb_seed_0 - INFO - Episode 540: Reward=342.00, Length=342, Avg Reward (last 10)=362.40
+2025-07-14 16:15:48,658 - cartpole_ppo_wandb_seed_0 - INFO - Episode 550: Reward=500.00, Length=500, Avg Reward (last 10)=432.10
+2025-07-14 16:15:55,472 - cartpole_ppo_wandb_seed_0 - INFO - Episode 560: Reward=417.00, Length=417, Avg Reward (last 10)=439.20
+2025-07-14 16:16:01,409 - cartpole_ppo_wandb_seed_0 - INFO - Episode 570: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-07-14 16:16:05,999 - cartpole_ppo_wandb_seed_0 - INFO - Episode 580: Reward=500.00, Length=500, Avg Reward (last 10)=468.00
+2025-07-14 16:16:16,450 - cartpole_ppo_wandb_seed_0 - INFO - Episode 590: Reward=500.00, Length=500, Avg Reward (last 10)=473.60
+2025-07-14 16:16:23,051 - cartpole_ppo_wandb_seed_0 - INFO - Episode 600: Reward=500.00, Length=500, Avg Reward (last 10)=479.00
+2025-07-14 16:16:27,715 - cartpole_ppo_wandb_seed_0 - INFO - Episode 610: Reward=500.00, Length=500, Avg Reward (last 10)=357.00
+2025-07-14 16:16:33,246 - cartpole_ppo_wandb_seed_0 - INFO - Episode 620: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-07-14 16:16:38,572 - cartpole_ppo_wandb_seed_0 - INFO - Episode 630: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-07-14 16:16:49,138 - cartpole_ppo_wandb_seed_0 - INFO - Episode 640: Reward=500.00, Length=500, Avg Reward (last 10)=441.30
+2025-07-14 16:16:54,469 - cartpole_ppo_wandb_seed_0 - INFO - Episode 650: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-07-14 16:17:00,169 - cartpole_ppo_wandb_seed_0 - INFO - Episode 660: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-07-14 16:17:04,490 - cartpole_ppo_wandb_seed_0 - INFO - Episode 670: Reward=500.00, Length=500, Avg Reward (last 10)=393.20
+2025-07-14 16:17:11,657 - cartpole_ppo_wandb_seed_0 - INFO - Episode 680: Reward=500.00, Length=500, Avg Reward (last 10)=324.30
+2025-07-14 16:17:15,575 - cartpole_ppo_wandb_seed_0 - INFO - Episode 690: Reward=386.00, Length=386, Avg Reward (last 10)=334.90
+2025-07-14 16:17:19,841 - cartpole_ppo_wandb_seed_0 - INFO - Episode 700: Reward=500.00, Length=500, Avg Reward (last 10)=485.30
+2025-07-14 16:17:24,712 - cartpole_ppo_wandb_seed_0 - INFO - Episode 710: Reward=500.00, Length=500, Avg Reward (last 10)=330.30
+2025-07-14 16:17:27,038 - cartpole_ppo_wandb_seed_0 - INFO - Episode 720: Reward=193.00, Length=193, Avg Reward (last 10)=248.60
+2025-07-14 16:17:28,493 - cartpole_ppo_wandb_seed_0 - INFO - Episode 730: Reward=160.00, Length=160, Avg Reward (last 10)=158.70
+2025-07-14 16:17:32,235 - cartpole_ppo_wandb_seed_0 - INFO - Episode 740: Reward=500.00, Length=500, Avg Reward (last 10)=274.50
+2025-07-14 16:17:37,423 - cartpole_ppo_wandb_seed_0 - INFO - Episode 750: Reward=500.00, Length=500, Avg Reward (last 10)=292.60
+2025-07-14 16:17:42,134 - cartpole_ppo_wandb_seed_0 - INFO - Episode 760: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-07-14 16:17:47,896 - cartpole_ppo_wandb_seed_0 - INFO - Episode 770: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-07-14 16:17:52,426 - cartpole_ppo_wandb_seed_0 - INFO - Episode 780: Reward=241.00, Length=241, Avg Reward (last 10)=439.00
+2025-07-14 16:17:56,906 - cartpole_ppo_wandb_seed_0 - INFO - Episode 790: Reward=326.00, Length=326, Avg Reward (last 10)=242.80
+2025-07-14 16:18:01,974 - cartpole_ppo_wandb_seed_0 - INFO - Episode 800: Reward=500.00, Length=500, Avg Reward (last 10)=348.00
+2025-07-14 16:18:03,928 - cartpole_ppo_wandb_seed_0 - INFO - Episode 810: Reward=265.00, Length=265, Avg Reward (last 10)=227.50
+2025-07-14 16:18:07,083 - cartpole_ppo_wandb_seed_0 - INFO - Episode 820: Reward=500.00, Length=500, Avg Reward (last 10)=274.00
+2025-07-14 16:18:10,878 - cartpole_ppo_wandb_seed_0 - INFO - Episode 830: Reward=500.00, Length=500, Avg Reward (last 10)=437.90
+2025-07-14 16:18:19,879 - cartpole_ppo_wandb_seed_0 - INFO - Episode 840: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-07-14 16:18:26,635 - cartpole_ppo_wandb_seed_0 - INFO - Episode 850: Reward=500.00, Length=500, Avg Reward (last 10)=451.90
+2025-07-14 16:18:30,825 - cartpole_ppo_wandb_seed_0 - INFO - Episode 860: Reward=288.00, Length=288, Avg Reward (last 10)=478.80
+2025-07-14 16:18:36,550 - cartpole_ppo_wandb_seed_0 - INFO - Episode 870: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-07-14 16:18:40,779 - cartpole_ppo_wandb_seed_0 - INFO - Episode 880: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-07-14 16:18:50,358 - cartpole_ppo_wandb_seed_0 - INFO - Episode 890: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-07-14 16:18:54,890 - cartpole_ppo_wandb_seed_0 - INFO - Episode 900: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-07-14 16:19:01,173 - cartpole_ppo_wandb_seed_0 - INFO - Episode 910: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-07-14 16:19:04,194 - cartpole_ppo_wandb_seed_0 - INFO - Metrics saved to results/cartpole_ppo_wandb/seed_0/metrics.json
+2025-07-14 16:19:06,495 - cartpole_ppo_wandb_seed_0 - INFO - Experiment completed.
