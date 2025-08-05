@@ -28,6 +28,7 @@ class PPO(BaseOnPolicyAlgorithm):
         self.train_value_iters = train_value_iters
         self.lam = lam
         self.has_continuous_action_space = has_continuous_action_space
+        self.device = torch.device(device)
         
         # 네트워크 초기화
         self.policy = MLPActorCritic(
@@ -63,12 +64,12 @@ class PPO(BaseOnPolicyAlgorithm):
         if has_continuous_action_space:
             self.action_std = action_std_init
     
-    def set_action_std(self, new_action_std):
+    def set_action_std(self, new_action_std, device='cpu'):
         """연속 행동 공간에서 행동 표준편차를 설정합니다."""
         if self.has_continuous_action_space:
             self.action_std = new_action_std
-            self.policy.set_action_std(new_action_std)
-            self.policy_old.set_action_std(new_action_std)
+            self.policy.set_action_std(new_action_std, self.device)
+            self.policy_old.set_action_std(new_action_std, self.device)
         else:
             print("WARNING: Calling set_action_std() on discrete action space policy")
     
@@ -79,14 +80,14 @@ class PPO(BaseOnPolicyAlgorithm):
             self.action_std = round(self.action_std, 4)
             if self.action_std <= min_action_std:
                 self.action_std = min_action_std
-            self.set_action_std(self.action_std)
+            self.set_action_std(self.action_std, self.device)
         else:
             print("WARNING: Calling decay_action_std() on discrete action space policy")
     
     def select_action(self, state):
         """주어진 상태에서 행동을 선택합니다."""
         with torch.no_grad():
-            state = torch.FloatTensor(state).to(self.device)
+            state = torch.as_tensor(state, dtype=torch.float32, device=self.device)
             action, action_logprob, state_val = self.policy_old.act(state)
         
         # 버퍼에 저장
@@ -184,7 +185,7 @@ class PPO(BaseOnPolicyAlgorithm):
         
         if self.has_continuous_action_space and checkpoint['action_std'] is not None:
             self.action_std = checkpoint['action_std']
-            self.set_action_std(self.action_std)
+            self.set_action_std(self.action_std, self.device)
     
     def set_eval_mode(self):
         """평가 모드로 설정합니다."""
@@ -199,14 +200,14 @@ class PPO(BaseOnPolicyAlgorithm):
     def get_action_logprob(self, state, action):
         """주어진 상태와 행동에 대한 로그 확률을 계산합니다."""
         with torch.no_grad():
-            state = torch.FloatTensor(state).to(self.device)
+            state = torch.as_tensor(state, dtype=torch.float32, device=self.device)
             action = torch.FloatTensor(action).to(self.device)
             return self.policy.get_action_logprob(state, action)
     
     def get_value(self, state):
         """주어진 상태의 가치를 계산합니다."""
         with torch.no_grad():
-            state = torch.FloatTensor(state).to(self.device)
+            state = torch.as_tensor(state, dtype=torch.float32, device=self.device)
             return self.policy.get_value(state)
     
     def compute_gae(self, rewards, values, dones, gamma=0.99, gae_lambda=0.95):

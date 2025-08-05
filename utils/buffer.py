@@ -11,6 +11,7 @@ class ReplayBuffer:
         self.device = device
         self.position = 0
         self.size = 0
+        self.device = torch.device(device)
         
         # 버퍼 초기화
         self.states = torch.zeros((capacity, state_dim), dtype=torch.float32, device=device)
@@ -21,11 +22,13 @@ class ReplayBuffer:
     
     def push(self, state, action, reward, next_state, done):
         """새로운 경험을 버퍼에 추가합니다."""
-        self.states[self.position] = torch.FloatTensor(state)
-        self.actions[self.position] = torch.FloatTensor(action)
-        self.rewards[self.position] = torch.FloatTensor([reward])
-        self.next_states[self.position] = torch.FloatTensor(next_state)
-        self.dones[self.position] = torch.BoolTensor([done])
+        device = self.device  # 예: 'cuda' 또는 'cpu'
+
+        self.states[self.position] = torch.as_tensor(state, dtype=torch.float32, device=device)
+        self.actions[self.position] = torch.as_tensor(action, dtype=torch.float32, device=device)
+        self.rewards[self.position] = torch.as_tensor([reward], dtype=torch.float32, device=device)
+        self.next_states[self.position] = torch.as_tensor(next_state, dtype=torch.float32, device=device)
+        self.dones[self.position] = torch.as_tensor([done], dtype=torch.bool, device=device)
         
         self.position = (self.position + 1) % self.capacity
         self.size = min(self.size + 1, self.capacity)

@@ -34,6 +34,11 @@ class Trainer:
         self.total_steps = 0
         self.best_reward = -np.inf
         
+        # 디바이스 설정
+        self.device = torch.device(self.config['experiment']['device'])
+        if self.device.type == 'cuda' and not torch.cuda.is_available():
+            raise RuntimeError("CUDA is not available. Please check your PyTorch installation.")
+        
     def _load_config(self, config_path):
         """설정 파일을 로드합니다."""
         with open(config_path, 'r') as f:
@@ -61,7 +66,9 @@ class Trainer:
         has_continuous_action_space = self.env.has_continuous_actions()
         if has_continuous_action_space is None:
             has_continuous_action_space = False
+            
         device = self.config['experiment']['device']
+        print(f"Using device: {device}")
         
         if alg_name == "PPO":
             return PPO(
@@ -164,6 +171,8 @@ class Trainer:
                 action = np.clip(action, action_low, action_high)
 
             next_state, reward, done, info = self.env.step(action)
+            next_state = torch.as_tensor(next_state, dtype=torch.float32, device=self.device)
+            
             if alg_name == 'DDPG':
                 self.algorithm.store_transition(state, action, reward, next_state, done)
                 self.algorithm.update()  #DDPG는 매 step마다 업데이트
@@ -204,6 +213,11 @@ class Trainer:
         print(f"Environment: {self.config['environment']['name']}")
         print(f"Algorithm: {self.config['algorithm']['name']}")
         print(f"Max episodes: {max_episodes}")
+        print(f"device: {self.device}")
+
+        print(f"torch.cuda.is_available() : {torch.cuda.is_available()}")          # True 여야 함
+        print(f"torch.cuda.current_device() : {torch.cuda.current_device()}")        # GPU 번호
+        print(f"torch.cuda.get_device_name(0) : {torch.cuda.get_device_name(0)}")      # GPU 이름
 
         alg_name = self.config['algorithm']['name']
         

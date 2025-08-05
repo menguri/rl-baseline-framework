@@ -1,0 +1,18 @@
+2025-08-01 09:21:39,678 - cartpole_trpo_wandb_seed_0 - INFO - Hyperparameters:
+2025-08-01 09:21:39,678 - cartpole_trpo_wandb_seed_0 - INFO -   environment: {'name': 'CartPole-v1', 'seed': 42}
+2025-08-01 09:21:39,678 - cartpole_trpo_wandb_seed_0 - INFO -   algorithm: {'name': 'TRPO', 'lr': '3e-4', 'gamma': 0.99, 'gae_lambda': 0.95, 'max_kl': 0.01, 'damping': 0.2, 'has_continuous_action_space': False, 'action_std_init': 0.6}
+2025-08-01 09:21:39,678 - cartpole_trpo_wandb_seed_0 - INFO -   network: {'hidden_dims': [64, 64], 'activation': 'tanh'}
+2025-08-01 09:21:39,678 - cartpole_trpo_wandb_seed_0 - INFO -   training: {'max_episodes': 100, 'max_steps_per_episode': 500, 'update_interval': 2048, 'eval_interval': 10, 'save_interval': 300, 'log_interval': 10}
+2025-08-01 09:21:39,678 - cartpole_trpo_wandb_seed_0 - INFO -   experiment: {'name': 'cartpole_trpo_wandb', 'seeds': [0, 1, 2, 3, 4], 'device': 'cuda', 'save_dir': 'results/cartpole_trpo_wandb'}
+2025-08-01 09:21:39,678 - cartpole_trpo_wandb_seed_0 - INFO -   logging: {'tensorboard': False, 'save_metrics': True, 'plot_interval': 25, 'use_wandb': True, 'wandb_project': 'rl-framework-cartpole', 'wandb_entity': 'tatalintelli-university-of-seoul', 'enable_step_logging': True, 'step_log_interval': 1000}
+2025-08-01 09:21:40,584 - cartpole_trpo_wandb_seed_0 - INFO - Episode 0: Reward=55.00, Length=55, Avg Reward (last 10)=55.00
+2025-08-01 09:21:41,461 - cartpole_trpo_wandb_seed_0 - INFO - Episode 10: Reward=22.00, Length=22, Avg Reward (last 10)=21.30
+2025-08-01 09:21:42,472 - cartpole_trpo_wandb_seed_0 - INFO - Episode 20: Reward=11.00, Length=11, Avg Reward (last 10)=25.00
+2025-08-01 09:21:43,345 - cartpole_trpo_wandb_seed_0 - INFO - Episode 30: Reward=29.00, Length=29, Avg Reward (last 10)=21.10
+2025-08-01 09:21:44,402 - cartpole_trpo_wandb_seed_0 - INFO - Episode 40: Reward=14.00, Length=14, Avg Reward (last 10)=24.10
+2025-08-01 09:21:44,549 - cartpole_trpo_wandb_seed_0 - INFO - Step 1000: Avg Reward=23.26, Running Avg=23.26, Episodes=43
+2025-08-01 09:21:45,466 - cartpole_trpo_wandb_seed_0 - INFO - Episode 50: Reward=19.00, Length=19, Avg Reward (last 10)=24.90
+2025-08-01 09:21:46,265 - cartpole_trpo_wandb_seed_0 - INFO - Episode 60: Reward=13.00, Length=13, Avg Reward (last 10)=19.70
+2025-08-01 09:21:47,295 - cartpole_trpo_wandb_seed_0 - INFO - Episode 70: Reward=16.00, Length=16, Avg Reward (last 10)=23.90
+2025-08-01 09:21:48,202 - cartpole_trpo_wandb_seed_0 - INFO - Episode 80: Reward=54.00, Length=54, Avg Reward (last 10)=20.80
+2025-08-01 09:21:48,812 - cartpole_trpo_wandb_seed_0 - INFO - Step 2010: Avg Reward=22.95, Running Avg=23.10, Episodes=44

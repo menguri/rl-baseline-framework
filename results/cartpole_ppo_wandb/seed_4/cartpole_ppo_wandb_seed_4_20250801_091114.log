@@ -1,0 +1,273 @@
+2025-08-01 09:11:14,843 - cartpole_ppo_wandb_seed_4 - INFO - Hyperparameters:
+2025-08-01 09:11:14,843 - cartpole_ppo_wandb_seed_4 - INFO -   environment: {'name': 'CartPole-v1', 'seed': 42}
+2025-08-01 09:11:14,843 - cartpole_ppo_wandb_seed_4 - INFO -   algorithm: {'name': 'PPO', 'lr_actor': '3e-4', 'lr_critic': '1e-3', 'gamma': 0.99, 'gae_lambda': 0.95, 'clip_ratio': 0.2, 'target_kl': 0.01, 'train_policy_iters': 80, 'train_value_iters': 80, 'lam': 0.97, 'has_continuous_action_space': False, 'action_std_init': 0.6}
+2025-08-01 09:11:14,843 - cartpole_ppo_wandb_seed_4 - INFO -   network: {'hidden_dims': [64, 64], 'activation': 'tanh'}
+2025-08-01 09:11:14,843 - cartpole_ppo_wandb_seed_4 - INFO -   training: {'max_episodes': 100, 'max_steps_per_episode': 500, 'update_interval': 2048, 'eval_interval': 10, 'save_interval': 300, 'log_interval': 10}
+2025-08-01 09:11:14,843 - cartpole_ppo_wandb_seed_4 - INFO -   experiment: {'name': 'cartpole_ppo_wandb', 'seeds': [0, 1, 2, 3, 4], 'device': 'cuda', 'save_dir': 'results/cartpole_ppo_wandb'}
+2025-08-01 09:11:14,843 - cartpole_ppo_wandb_seed_4 - INFO -   logging: {'tensorboard': False, 'save_metrics': True, 'plot_interval': 25, 'use_wandb': True, 'wandb_project': 'rl-framework-cartpole', 'wandb_entity': 'tatalintelli-university-of-seoul', 'enable_step_logging': True, 'step_log_interval': 1000}
+2025-08-01 09:11:14,898 - cartpole_ppo_wandb_seed_4 - INFO - Episode 0: Reward=64.00, Length=64, Avg Reward (last 10)=64.00
+2025-08-01 09:11:15,323 - cartpole_ppo_wandb_seed_4 - INFO - Episode 10: Reward=11.00, Length=11, Avg Reward (last 10)=31.40
+2025-08-01 09:11:15,765 - cartpole_ppo_wandb_seed_4 - INFO - Episode 20: Reward=34.00, Length=34, Avg Reward (last 10)=29.90
+2025-08-01 09:11:16,137 - cartpole_ppo_wandb_seed_4 - INFO - Episode 30: Reward=23.00, Length=23, Avg Reward (last 10)=26.20
+2025-08-01 09:11:16,259 - cartpole_ppo_wandb_seed_4 - INFO - Step 1038: Avg Reward=30.53, Running Avg=30.53, Episodes=34
+2025-08-01 09:11:16,539 - cartpole_ppo_wandb_seed_4 - INFO - Episode 40: Reward=15.00, Length=15, Avg Reward (last 10)=32.40
+2025-08-01 09:11:16,995 - cartpole_ppo_wandb_seed_4 - INFO - Episode 50: Reward=14.00, Length=14, Avg Reward (last 10)=37.40
+2025-08-01 09:11:17,369 - cartpole_ppo_wandb_seed_4 - INFO - Episode 60: Reward=45.00, Length=45, Avg Reward (last 10)=30.30
+2025-08-01 09:11:17,497 - cartpole_ppo_wandb_seed_4 - INFO - Step 2044: Avg Reward=33.53, Running Avg=31.94, Episodes=30
+2025-08-01 09:11:18,828 - cartpole_ppo_wandb_seed_4 - INFO - Episode 70: Reward=20.00, Length=20, Avg Reward (last 10)=28.40
+2025-08-01 09:11:19,190 - cartpole_ppo_wandb_seed_4 - INFO - Episode 80: Reward=23.00, Length=23, Avg Reward (last 10)=29.10
+2025-08-01 09:11:19,543 - cartpole_ppo_wandb_seed_4 - INFO - Episode 90: Reward=26.00, Length=26, Avg Reward (last 10)=28.60
+2025-08-01 09:11:19,850 - cartpole_ppo_wandb_seed_4 - INFO - Step 3053: Avg Reward=29.56, Running Avg=31.11, Episodes=34
+2025-08-01 09:11:19,954 - cartpole_ppo_wandb_seed_4 - INFO - Episode 100: Reward=15.00, Length=15, Avg Reward (last 10)=33.10
+2025-08-01 09:11:20,274 - cartpole_ppo_wandb_seed_4 - INFO - Episode 110: Reward=34.00, Length=34, Avg Reward (last 10)=25.60
+2025-08-01 09:11:20,635 - cartpole_ppo_wandb_seed_4 - INFO - Episode 120: Reward=21.00, Length=21, Avg Reward (last 10)=29.50
+2025-08-01 09:11:21,031 - cartpole_ppo_wandb_seed_4 - INFO - Episode 130: Reward=14.00, Length=14, Avg Reward (last 10)=32.00
+2025-08-01 09:11:21,971 - cartpole_ppo_wandb_seed_4 - INFO - Step 4119: Avg Reward=27.51, Running Avg=30.13, Episodes=37
+2025-08-01 09:11:22,179 - cartpole_ppo_wandb_seed_4 - INFO - Episode 140: Reward=40.00, Length=40, Avg Reward (last 10)=23.20
+2025-08-01 09:11:23,073 - cartpole_ppo_wandb_seed_4 - INFO - Episode 150: Reward=38.00, Length=38, Avg Reward (last 10)=41.30
+2025-08-01 09:11:24,611 - cartpole_ppo_wandb_seed_4 - INFO - Step 5131: Avg Reward=38.92, Running Avg=31.55, Episodes=26
+2025-08-01 09:11:24,612 - cartpole_ppo_wandb_seed_4 - INFO - Episode 160: Reward=49.00, Length=49, Avg Reward (last 10)=43.10
+2025-08-01 09:11:25,673 - cartpole_ppo_wandb_seed_4 - INFO - Episode 170: Reward=20.00, Length=20, Avg Reward (last 10)=27.80
+2025-08-01 09:11:26,994 - cartpole_ppo_wandb_seed_4 - INFO - Episode 180: Reward=22.00, Length=22, Avg Reward (last 10)=33.70
+2025-08-01 09:11:29,168 - cartpole_ppo_wandb_seed_4 - INFO - Step 6155: Avg Reward=36.85, Running Avg=32.31, Episodes=27
+2025-08-01 09:11:29,478 - cartpole_ppo_wandb_seed_4 - INFO - Episode 190: Reward=38.00, Length=38, Avg Reward (last 10)=46.70
+2025-08-01 09:11:31,452 - cartpole_ppo_wandb_seed_4 - INFO - Episode 200: Reward=156.00, Length=156, Avg Reward (last 10)=51.70
+2025-08-01 09:11:32,649 - cartpole_ppo_wandb_seed_4 - INFO - Episode 210: Reward=19.00, Length=19, Avg Reward (last 10)=29.70
+2025-08-01 09:11:33,105 - cartpole_ppo_wandb_seed_4 - INFO - Step 7176: Avg Reward=37.81, Running Avg=33.00, Episodes=27
+2025-08-01 09:11:34,522 - cartpole_ppo_wandb_seed_4 - INFO - Episode 220: Reward=33.00, Length=33, Avg Reward (last 10)=48.30
+2025-08-01 09:11:36,147 - cartpole_ppo_wandb_seed_4 - INFO - Episode 230: Reward=23.00, Length=23, Avg Reward (last 10)=42.10
+2025-08-01 09:11:38,530 - cartpole_ppo_wandb_seed_4 - INFO - Step 8274: Avg Reward=44.17, Running Avg=34.08, Episodes=23
+2025-08-01 09:11:39,632 - cartpole_ppo_wandb_seed_4 - INFO - Episode 240: Reward=114.00, Length=114, Avg Reward (last 10)=51.30
+2025-08-01 09:11:42,492 - cartpole_ppo_wandb_seed_4 - INFO - Step 9275: Avg Reward=100.10, Running Avg=36.74, Episodes=10
+2025-08-01 09:11:43,030 - cartpole_ppo_wandb_seed_4 - INFO - Episode 250: Reward=32.00, Length=32, Avg Reward (last 10)=86.00
+2025-08-01 09:11:44,909 - cartpole_ppo_wandb_seed_4 - INFO - Episode 260: Reward=21.00, Length=21, Avg Reward (last 10)=47.40
+2025-08-01 09:11:47,354 - cartpole_ppo_wandb_seed_4 - INFO - Step 10365: Avg Reward=60.82, Running Avg=38.29, Episodes=17
+2025-08-01 09:11:49,015 - cartpole_ppo_wandb_seed_4 - INFO - Episode 270: Reward=69.00, Length=69, Avg Reward (last 10)=83.30
+2025-08-01 09:11:50,838 - cartpole_ppo_wandb_seed_4 - INFO - Episode 280: Reward=18.00, Length=18, Avg Reward (last 10)=46.40
+2025-08-01 09:11:51,679 - cartpole_ppo_wandb_seed_4 - INFO - Step 11440: Avg Reward=59.72, Running Avg=39.65, Episodes=18
+2025-08-01 09:11:54,023 - cartpole_ppo_wandb_seed_4 - INFO - Episode 290: Reward=16.00, Length=16, Avg Reward (last 10)=79.30
+2025-08-01 09:11:56,715 - cartpole_ppo_wandb_seed_4 - INFO - Step 12561: Avg Reward=68.47, Running Avg=41.10, Episodes=15
+2025-08-01 09:11:58,257 - cartpole_ppo_wandb_seed_4 - INFO - Episode 300: Reward=48.00, Length=48, Avg Reward (last 10)=81.40
+2025-08-01 09:12:01,266 - cartpole_ppo_wandb_seed_4 - INFO - Step 13660: Avg Reward=109.90, Running Avg=43.33, Episodes=10
+2025-08-01 09:12:02,484 - cartpole_ppo_wandb_seed_4 - INFO - Episode 310: Reward=167.00, Length=167, Avg Reward (last 10)=102.70
+2025-08-01 09:12:05,956 - cartpole_ppo_wandb_seed_4 - INFO - Step 14681: Avg Reward=100.80, Running Avg=45.14, Episodes=10
+2025-08-01 09:12:07,499 - cartpole_ppo_wandb_seed_4 - INFO - Episode 320: Reward=86.00, Length=86, Avg Reward (last 10)=108.00
+2025-08-01 09:12:10,228 - cartpole_ppo_wandb_seed_4 - INFO - Step 15748: Avg Reward=118.56, Running Avg=47.16, Episodes=9
+2025-08-01 09:12:12,338 - cartpole_ppo_wandb_seed_4 - INFO - Episode 330: Reward=115.00, Length=115, Avg Reward (last 10)=119.80
+2025-08-01 09:12:16,315 - cartpole_ppo_wandb_seed_4 - INFO - Step 17124: Avg Reward=208.83, Running Avg=50.08, Episodes=6
+2025-08-01 09:12:20,850 - cartpole_ppo_wandb_seed_4 - INFO - Step 18232: Avg Reward=369.33, Running Avg=52.93, Episodes=3
+2025-08-01 09:12:26,690 - cartpole_ppo_wandb_seed_4 - INFO - Step 19448: Avg Reward=338.67, Running Avg=55.45, Episodes=3
+2025-08-01 09:12:29,270 - cartpole_ppo_wandb_seed_4 - INFO - Episode 340: Reward=212.00, Length=212, Avg Reward (last 10)=350.60
+2025-08-01 09:12:30,782 - cartpole_ppo_wandb_seed_4 - INFO - Step 20461: Avg Reward=253.25, Running Avg=57.76, Episodes=4
+2025-08-01 09:12:36,138 - cartpole_ppo_wandb_seed_4 - INFO - Step 21647: Avg Reward=194.50, Running Avg=60.11, Episodes=6
+2025-08-01 09:12:37,618 - cartpole_ppo_wandb_seed_4 - INFO - Episode 350: Reward=137.00, Length=137, Avg Reward (last 10)=189.10
+2025-08-01 09:12:57,114 - cartpole_ppo_wandb_seed_4 - INFO - Step 22995: Avg Reward=292.50, Running Avg=62.75, Episodes=4
+2025-08-01 09:13:01,380 - cartpole_ppo_wandb_seed_4 - INFO - Step 24009: Avg Reward=253.50, Running Avg=64.88, Episodes=4
+2025-08-01 09:13:06,995 - cartpole_ppo_wandb_seed_4 - INFO - Step 25164: Avg Reward=272.50, Running Avg=67.18, Episodes=4
+2025-08-01 09:13:06,996 - cartpole_ppo_wandb_seed_4 - INFO - Episode 360: Reward=375.00, Length=375, Avg Reward (last 10)=292.10
+2025-08-01 09:13:12,417 - cartpole_ppo_wandb_seed_4 - INFO - Step 26485: Avg Reward=440.33, Running Avg=70.26, Episodes=3
+2025-08-01 09:13:17,927 - cartpole_ppo_wandb_seed_4 - INFO - Step 27557: Avg Reward=233.25, Running Avg=72.03, Episodes=4
+2025-08-01 09:13:20,860 - cartpole_ppo_wandb_seed_4 - INFO - Episode 370: Reward=389.00, Length=389, Avg Reward (last 10)=297.80
+2025-08-01 09:13:22,384 - cartpole_ppo_wandb_seed_4 - INFO - Step 28659: Avg Reward=275.50, Running Avg=74.22, Episodes=4
+2025-08-01 09:13:28,752 - cartpole_ppo_wandb_seed_4 - INFO - Step 29932: Avg Reward=315.00, Running Avg=76.78, Episodes=4
+2025-08-01 09:13:35,212 - cartpole_ppo_wandb_seed_4 - INFO - Step 31220: Avg Reward=387.33, Running Avg=79.24, Episodes=3
+2025-08-01 09:13:39,307 - cartpole_ppo_wandb_seed_4 - INFO - Step 32220: Avg Reward=500.00, Running Avg=81.45, Episodes=2
+2025-08-01 09:13:39,308 - cartpole_ppo_wandb_seed_4 - INFO - Episode 380: Reward=500.00, Length=500, Avg Reward (last 10)=380.00
+2025-08-01 09:13:43,926 - cartpole_ppo_wandb_seed_4 - INFO - Step 33268: Avg Reward=500.00, Running Avg=83.63, Episodes=2
+2025-08-01 09:13:49,415 - cartpole_ppo_wandb_seed_4 - INFO - Step 34633: Avg Reward=455.00, Running Avg=86.52, Episodes=3
+2025-08-01 09:13:54,637 - cartpole_ppo_wandb_seed_4 - INFO - Step 35816: Avg Reward=500.00, Running Avg=88.65, Episodes=2
+2025-08-01 09:13:57,258 - cartpole_ppo_wandb_seed_4 - INFO - Step 37364: Avg Reward=450.33, Running Avg=91.42, Episodes=3
+2025-08-01 09:13:57,258 - cartpole_ppo_wandb_seed_4 - INFO - Episode 390: Reward=500.00, Length=500, Avg Reward (last 10)=471.60
+2025-08-01 09:13:58,740 - cartpole_ppo_wandb_seed_4 - INFO - Step 38632: Avg Reward=422.67, Running Avg=93.95, Episodes=3
+2025-08-01 09:14:00,463 - cartpole_ppo_wandb_seed_4 - INFO - Step 39787: Avg Reward=437.50, Running Avg=95.68, Episodes=2
+2025-08-01 09:14:03,261 - cartpole_ppo_wandb_seed_4 - INFO - Step 41460: Avg Reward=483.33, Running Avg=98.60, Episodes=3
+2025-08-01 09:14:04,497 - cartpole_ppo_wandb_seed_4 - INFO - Step 42460: Avg Reward=500.00, Running Avg=100.60, Episodes=2
+2025-08-01 09:14:04,497 - cartpole_ppo_wandb_seed_4 - INFO - Episode 400: Reward=500.00, Length=500, Avg Reward (last 10)=459.30
+2025-08-01 09:14:10,359 - cartpole_ppo_wandb_seed_4 - INFO - Step 43508: Avg Reward=500.00, Running Avg=102.58, Episodes=2
+2025-08-01 09:14:12,044 - cartpole_ppo_wandb_seed_4 - INFO - Step 44945: Avg Reward=287.40, Running Avg=104.85, Episodes=5
+2025-08-01 09:14:14,518 - cartpole_ppo_wandb_seed_4 - INFO - Step 46160: Avg Reward=368.00, Running Avg=106.77, Episodes=3
+2025-08-01 09:14:14,518 - cartpole_ppo_wandb_seed_4 - INFO - Episode 410: Reward=368.00, Length=368, Avg Reward (last 10)=354.10
+2025-08-01 09:14:16,795 - cartpole_ppo_wandb_seed_4 - INFO - Step 47265: Avg Reward=307.00, Running Avg=107.74, Episodes=2
+2025-08-01 09:14:18,113 - cartpole_ppo_wandb_seed_4 - INFO - Step 48348: Avg Reward=270.75, Running Avg=109.30, Episodes=4
+2025-08-01 09:14:19,705 - cartpole_ppo_wandb_seed_4 - INFO - Step 49574: Avg Reward=359.00, Running Avg=111.08, Episodes=3
+2025-08-01 09:14:19,901 - cartpole_ppo_wandb_seed_4 - INFO - Episode 420: Reward=163.00, Length=163, Avg Reward (last 10)=293.70
+2025-08-01 09:14:20,901 - cartpole_ppo_wandb_seed_4 - INFO - Step 50579: Avg Reward=251.25, Running Avg=112.41, Episodes=4
+2025-08-01 09:14:22,431 - cartpole_ppo_wandb_seed_4 - INFO - Step 51611: Avg Reward=227.75, Running Avg=113.48, Episodes=4
+2025-08-01 09:14:22,941 - cartpole_ppo_wandb_seed_4 - INFO - Episode 430: Reward=194.00, Length=194, Avg Reward (last 10)=222.30
+2025-08-01 09:14:23,641 - cartpole_ppo_wandb_seed_4 - INFO - Step 52689: Avg Reward=179.67, Running Avg=114.40, Episodes=6
+2025-08-01 09:14:25,689 - cartpole_ppo_wandb_seed_4 - INFO - Step 53800: Avg Reward=141.14, Running Avg=114.82, Episodes=7
+2025-08-01 09:14:25,689 - cartpole_ppo_wandb_seed_4 - INFO - Episode 440: Reward=161.00, Length=161, Avg Reward (last 10)=159.60
+2025-08-01 09:14:26,893 - cartpole_ppo_wandb_seed_4 - INFO - Step 54923: Avg Reward=160.43, Running Avg=115.54, Episodes=7
+2025-08-01 09:14:28,686 - cartpole_ppo_wandb_seed_4 - INFO - Episode 450: Reward=451.00, Length=451, Avg Reward (last 10)=187.20
+2025-08-01 09:14:29,081 - cartpole_ppo_wandb_seed_4 - INFO - Step 56072: Avg Reward=214.80, Running Avg=116.63, Episodes=5
+2025-08-01 09:14:30,376 - cartpole_ppo_wandb_seed_4 - INFO - Step 57126: Avg Reward=175.67, Running Avg=117.40, Episodes=6
+2025-08-01 09:14:31,400 - cartpole_ppo_wandb_seed_4 - INFO - Episode 460: Reward=272.00, Length=272, Avg Reward (last 10)=185.00
+2025-08-01 09:14:32,196 - cartpole_ppo_wandb_seed_4 - INFO - Step 58259: Avg Reward=185.67, Running Avg=118.28, Episodes=6
+2025-08-01 09:14:33,364 - cartpole_ppo_wandb_seed_4 - INFO - Episode 470: Reward=157.00, Length=157, Avg Reward (last 10)=160.10
+2025-08-01 09:14:34,696 - cartpole_ppo_wandb_seed_4 - INFO - Step 59892: Avg Reward=208.29, Running Avg=119.62, Episodes=7
+2025-08-01 09:14:39,002 - cartpole_ppo_wandb_seed_4 - INFO - Step 61056: Avg Reward=388.00, Running Avg=121.31, Episodes=3
+2025-08-01 09:14:45,485 - cartpole_ppo_wandb_seed_4 - INFO - Step 62447: Avg Reward=273.40, Running Avg=122.90, Episodes=5
+2025-08-01 09:14:47,221 - cartpole_ppo_wandb_seed_4 - INFO - Episode 480: Reward=465.00, Length=465, Avg Reward (last 10)=349.60
+2025-08-01 09:15:11,568 - cartpole_ppo_wandb_seed_4 - INFO - Step 63748: Avg Reward=320.00, Running Avg=124.12, Episodes=3
+2025-08-01 09:15:15,915 - cartpole_ppo_wandb_seed_4 - INFO - Step 64748: Avg Reward=500.00, Running Avg=125.67, Episodes=2
+2025-08-01 09:15:21,115 - cartpole_ppo_wandb_seed_4 - INFO - Step 65792: Avg Reward=378.00, Running Avg=126.71, Episodes=2
+2025-08-01 09:15:25,200 - cartpole_ppo_wandb_seed_4 - INFO - Step 66795: Avg Reward=250.75, Running Avg=127.72, Episodes=4
+2025-08-01 09:15:25,201 - cartpole_ppo_wandb_seed_4 - INFO - Episode 490: Reward=148.00, Length=148, Avg Reward (last 10)=325.40
+2025-08-01 09:15:30,753 - cartpole_ppo_wandb_seed_4 - INFO - Step 67998: Avg Reward=289.75, Running Avg=129.03, Episodes=4
+2025-08-01 09:15:35,655 - cartpole_ppo_wandb_seed_4 - INFO - Step 69208: Avg Reward=302.50, Running Avg=130.42, Episodes=4
+2025-08-01 09:15:39,860 - cartpole_ppo_wandb_seed_4 - INFO - Episode 500: Reward=456.00, Length=456, Avg Reward (last 10)=305.10
+2025-08-01 09:15:41,877 - cartpole_ppo_wandb_seed_4 - INFO - Step 70584: Avg Reward=392.67, Running Avg=131.99, Episodes=3
+2025-08-01 09:15:49,012 - cartpole_ppo_wandb_seed_4 - INFO - Step 72180: Avg Reward=491.67, Running Avg=134.12, Episodes=3
+2025-08-01 09:15:53,103 - cartpole_ppo_wandb_seed_4 - INFO - Step 73180: Avg Reward=500.00, Running Avg=135.57, Episodes=2
+2025-08-01 09:15:58,459 - cartpole_ppo_wandb_seed_4 - INFO - Step 74228: Avg Reward=500.00, Running Avg=137.00, Episodes=2
+2025-08-01 09:16:02,548 - cartpole_ppo_wandb_seed_4 - INFO - Step 75228: Avg Reward=500.00, Running Avg=138.42, Episodes=2
+2025-08-01 09:16:02,549 - cartpole_ppo_wandb_seed_4 - INFO - Episode 510: Reward=500.00, Length=500, Avg Reward (last 10)=497.10
+2025-08-01 09:16:07,278 - cartpole_ppo_wandb_seed_4 - INFO - Step 76276: Avg Reward=500.00, Running Avg=139.83, Episodes=2
+2025-08-01 09:16:11,284 - cartpole_ppo_wandb_seed_4 - INFO - Step 77276: Avg Reward=500.00, Running Avg=141.23, Episodes=2
+2025-08-01 09:16:16,164 - cartpole_ppo_wandb_seed_4 - INFO - Step 78324: Avg Reward=500.00, Running Avg=142.62, Episodes=2
+2025-08-01 09:16:20,383 - cartpole_ppo_wandb_seed_4 - INFO - Step 79324: Avg Reward=500.00, Running Avg=143.99, Episodes=2
+2025-08-01 09:16:25,299 - cartpole_ppo_wandb_seed_4 - INFO - Step 80372: Avg Reward=469.00, Running Avg=145.24, Episodes=2
+2025-08-01 09:16:25,299 - cartpole_ppo_wandb_seed_4 - INFO - Episode 520: Reward=500.00, Length=500, Avg Reward (last 10)=493.80
+2025-08-01 09:16:29,482 - cartpole_ppo_wandb_seed_4 - INFO - Step 81372: Avg Reward=500.00, Running Avg=146.60, Episodes=2
+2025-08-01 09:16:34,352 - cartpole_ppo_wandb_seed_4 - INFO - Step 82420: Avg Reward=500.00, Running Avg=147.94, Episodes=2
+2025-08-01 09:16:38,571 - cartpole_ppo_wandb_seed_4 - INFO - Step 83420: Avg Reward=500.00, Running Avg=149.28, Episodes=2
+2025-08-01 09:17:04,721 - cartpole_ppo_wandb_seed_4 - INFO - Step 84468: Avg Reward=500.00, Running Avg=150.60, Episodes=2
+2025-08-01 09:17:06,755 - cartpole_ppo_wandb_seed_4 - INFO - Episode 530: Reward=375.00, Length=375, Avg Reward (last 10)=487.50
+2025-08-01 09:17:07,367 - cartpole_ppo_wandb_seed_4 - INFO - Step 85843: Avg Reward=458.33, Running Avg=152.34, Episodes=3
+2025-08-01 09:17:10,350 - cartpole_ppo_wandb_seed_4 - INFO - Step 87329: Avg Reward=437.67, Running Avg=153.94, Episodes=3
+2025-08-01 09:17:12,168 - cartpole_ppo_wandb_seed_4 - INFO - Step 88564: Avg Reward=500.00, Running Avg=155.23, Episodes=2
+2025-08-01 09:17:13,374 - cartpole_ppo_wandb_seed_4 - INFO - Step 89564: Avg Reward=500.00, Running Avg=156.51, Episodes=2
+2025-08-01 09:17:15,322 - cartpole_ppo_wandb_seed_4 - INFO - Step 90612: Avg Reward=500.00, Running Avg=157.78, Episodes=2
+2025-08-01 09:17:15,322 - cartpole_ppo_wandb_seed_4 - INFO - Episode 540: Reward=500.00, Length=500, Avg Reward (last 10)=481.30
+2025-08-01 09:17:16,518 - cartpole_ppo_wandb_seed_4 - INFO - Step 91612: Avg Reward=500.00, Running Avg=159.04, Episodes=2
+2025-08-01 09:17:18,530 - cartpole_ppo_wandb_seed_4 - INFO - Step 92660: Avg Reward=500.00, Running Avg=160.29, Episodes=2
+2025-08-01 09:17:19,721 - cartpole_ppo_wandb_seed_4 - INFO - Step 93660: Avg Reward=500.00, Running Avg=161.53, Episodes=2
+2025-08-01 09:17:21,753 - cartpole_ppo_wandb_seed_4 - INFO - Step 94708: Avg Reward=500.00, Running Avg=162.77, Episodes=2
+2025-08-01 09:17:22,945 - cartpole_ppo_wandb_seed_4 - INFO - Step 95708: Avg Reward=500.00, Running Avg=163.99, Episodes=2
+2025-08-01 09:17:22,945 - cartpole_ppo_wandb_seed_4 - INFO - Episode 550: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-08-01 09:17:24,968 - cartpole_ppo_wandb_seed_4 - INFO - Step 96756: Avg Reward=500.00, Running Avg=165.20, Episodes=2
+2025-08-01 09:17:26,156 - cartpole_ppo_wandb_seed_4 - INFO - Step 97756: Avg Reward=500.00, Running Avg=166.41, Episodes=2
+2025-08-01 09:17:27,870 - cartpole_ppo_wandb_seed_4 - INFO - Step 98804: Avg Reward=500.00, Running Avg=167.61, Episodes=2
+2025-08-01 09:17:29,055 - cartpole_ppo_wandb_seed_4 - INFO - Step 99804: Avg Reward=500.00, Running Avg=168.80, Episodes=2
+2025-08-01 09:17:30,704 - cartpole_ppo_wandb_seed_4 - INFO - Step 100852: Avg Reward=500.00, Running Avg=169.98, Episodes=2
+2025-08-01 09:17:30,704 - cartpole_ppo_wandb_seed_4 - INFO - Episode 560: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-08-01 09:17:31,887 - cartpole_ppo_wandb_seed_4 - INFO - Step 101852: Avg Reward=500.00, Running Avg=171.15, Episodes=2
+2025-08-01 09:17:33,383 - cartpole_ppo_wandb_seed_4 - INFO - Step 102900: Avg Reward=500.00, Running Avg=172.32, Episodes=2
+2025-08-01 09:17:34,531 - cartpole_ppo_wandb_seed_4 - INFO - Step 103900: Avg Reward=500.00, Running Avg=173.47, Episodes=2
+2025-08-01 09:17:41,889 - cartpole_ppo_wandb_seed_4 - INFO - Step 104948: Avg Reward=500.00, Running Avg=174.62, Episodes=2
+2025-08-01 09:17:42,987 - cartpole_ppo_wandb_seed_4 - INFO - Step 105948: Avg Reward=500.00, Running Avg=175.76, Episodes=2
+2025-08-01 09:17:42,987 - cartpole_ppo_wandb_seed_4 - INFO - Episode 570: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-08-01 09:17:45,004 - cartpole_ppo_wandb_seed_4 - INFO - Step 106996: Avg Reward=500.00, Running Avg=176.89, Episodes=2
+2025-08-01 09:17:46,171 - cartpole_ppo_wandb_seed_4 - INFO - Step 107996: Avg Reward=500.00, Running Avg=178.01, Episodes=2
+2025-08-01 09:17:47,724 - cartpole_ppo_wandb_seed_4 - INFO - Step 109044: Avg Reward=500.00, Running Avg=179.13, Episodes=2
+2025-08-01 09:17:48,892 - cartpole_ppo_wandb_seed_4 - INFO - Step 110044: Avg Reward=500.00, Running Avg=180.24, Episodes=2
+2025-08-01 09:17:50,890 - cartpole_ppo_wandb_seed_4 - INFO - Step 111092: Avg Reward=500.00, Running Avg=181.34, Episodes=2
+2025-08-01 09:17:50,891 - cartpole_ppo_wandb_seed_4 - INFO - Episode 580: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-08-01 09:17:51,998 - cartpole_ppo_wandb_seed_4 - INFO - Step 112092: Avg Reward=500.00, Running Avg=182.43, Episodes=2
+2025-08-01 09:17:53,626 - cartpole_ppo_wandb_seed_4 - INFO - Step 113140: Avg Reward=500.00, Running Avg=183.52, Episodes=2
+2025-08-01 09:17:54,850 - cartpole_ppo_wandb_seed_4 - INFO - Step 114140: Avg Reward=500.00, Running Avg=184.60, Episodes=2
+2025-08-01 09:17:56,582 - cartpole_ppo_wandb_seed_4 - INFO - Step 115188: Avg Reward=500.00, Running Avg=185.67, Episodes=2
+2025-08-01 09:17:57,804 - cartpole_ppo_wandb_seed_4 - INFO - Step 116188: Avg Reward=500.00, Running Avg=186.73, Episodes=2
+2025-08-01 09:17:57,805 - cartpole_ppo_wandb_seed_4 - INFO - Episode 590: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-08-01 09:17:59,444 - cartpole_ppo_wandb_seed_4 - INFO - Step 117236: Avg Reward=500.00, Running Avg=187.79, Episodes=2
+2025-08-01 09:18:00,411 - cartpole_ppo_wandb_seed_4 - INFO - Step 118236: Avg Reward=500.00, Running Avg=188.84, Episodes=2
+2025-08-01 09:18:02,041 - cartpole_ppo_wandb_seed_4 - INFO - Step 119284: Avg Reward=500.00, Running Avg=189.88, Episodes=2
+2025-08-01 09:18:03,201 - cartpole_ppo_wandb_seed_4 - INFO - Step 120284: Avg Reward=500.00, Running Avg=190.91, Episodes=2
+2025-08-01 09:18:04,742 - cartpole_ppo_wandb_seed_4 - INFO - Step 121332: Avg Reward=500.00, Running Avg=191.94, Episodes=2
+2025-08-01 09:18:04,742 - cartpole_ppo_wandb_seed_4 - INFO - Episode 600: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-08-01 09:18:05,902 - cartpole_ppo_wandb_seed_4 - INFO - Step 122332: Avg Reward=500.00, Running Avg=192.97, Episodes=2
+2025-08-01 09:18:07,887 - cartpole_ppo_wandb_seed_4 - INFO - Step 123380: Avg Reward=500.00, Running Avg=193.98, Episodes=2
+2025-08-01 09:18:09,045 - cartpole_ppo_wandb_seed_4 - INFO - Step 124380: Avg Reward=500.00, Running Avg=194.99, Episodes=2
+2025-08-01 09:18:16,569 - cartpole_ppo_wandb_seed_4 - INFO - Step 125428: Avg Reward=500.00, Running Avg=195.99, Episodes=2
+2025-08-01 09:18:17,698 - cartpole_ppo_wandb_seed_4 - INFO - Step 126428: Avg Reward=500.00, Running Avg=196.99, Episodes=2
+2025-08-01 09:18:17,699 - cartpole_ppo_wandb_seed_4 - INFO - Episode 610: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-08-01 09:18:20,087 - cartpole_ppo_wandb_seed_4 - INFO - Step 127476: Avg Reward=500.00, Running Avg=197.97, Episodes=2
+2025-08-01 09:18:21,279 - cartpole_ppo_wandb_seed_4 - INFO - Step 128476: Avg Reward=500.00, Running Avg=198.96, Episodes=2
+2025-08-01 09:18:23,302 - cartpole_ppo_wandb_seed_4 - INFO - Step 129524: Avg Reward=500.00, Running Avg=199.93, Episodes=2
+2025-08-01 09:18:24,616 - cartpole_ppo_wandb_seed_4 - INFO - Step 130524: Avg Reward=500.00, Running Avg=200.90, Episodes=2
+2025-08-01 09:18:26,642 - cartpole_ppo_wandb_seed_4 - INFO - Step 131572: Avg Reward=500.00, Running Avg=201.86, Episodes=2
+2025-08-01 09:18:26,642 - cartpole_ppo_wandb_seed_4 - INFO - Episode 620: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-08-01 09:18:27,759 - cartpole_ppo_wandb_seed_4 - INFO - Step 132572: Avg Reward=500.00, Running Avg=202.82, Episodes=2
+2025-08-01 09:18:29,314 - cartpole_ppo_wandb_seed_4 - INFO - Step 133620: Avg Reward=500.00, Running Avg=203.77, Episodes=2
+2025-08-01 09:18:30,488 - cartpole_ppo_wandb_seed_4 - INFO - Step 134620: Avg Reward=500.00, Running Avg=204.72, Episodes=2
+2025-08-01 09:18:32,498 - cartpole_ppo_wandb_seed_4 - INFO - Step 135668: Avg Reward=500.00, Running Avg=205.66, Episodes=2
+2025-08-01 09:18:33,679 - cartpole_ppo_wandb_seed_4 - INFO - Step 136668: Avg Reward=500.00, Running Avg=206.59, Episodes=2
+2025-08-01 09:18:33,679 - cartpole_ppo_wandb_seed_4 - INFO - Episode 630: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-08-01 09:18:35,556 - cartpole_ppo_wandb_seed_4 - INFO - Step 137716: Avg Reward=500.00, Running Avg=207.52, Episodes=2
+2025-08-01 09:18:36,673 - cartpole_ppo_wandb_seed_4 - INFO - Step 138716: Avg Reward=500.00, Running Avg=208.44, Episodes=2
+2025-08-01 09:18:38,704 - cartpole_ppo_wandb_seed_4 - INFO - Step 139764: Avg Reward=500.00, Running Avg=209.35, Episodes=2
+2025-08-01 09:18:39,901 - cartpole_ppo_wandb_seed_4 - INFO - Step 140764: Avg Reward=500.00, Running Avg=210.26, Episodes=2
+2025-08-01 09:18:41,490 - cartpole_ppo_wandb_seed_4 - INFO - Step 141812: Avg Reward=500.00, Running Avg=211.17, Episodes=2
+2025-08-01 09:18:41,490 - cartpole_ppo_wandb_seed_4 - INFO - Episode 640: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-08-01 09:18:42,688 - cartpole_ppo_wandb_seed_4 - INFO - Step 142812: Avg Reward=500.00, Running Avg=212.07, Episodes=2
+2025-08-01 09:18:44,728 - cartpole_ppo_wandb_seed_4 - INFO - Step 143860: Avg Reward=500.00, Running Avg=212.96, Episodes=2
+2025-08-01 09:18:45,822 - cartpole_ppo_wandb_seed_4 - INFO - Step 144860: Avg Reward=500.00, Running Avg=213.85, Episodes=2
+2025-08-01 09:18:53,629 - cartpole_ppo_wandb_seed_4 - INFO - Step 145908: Avg Reward=500.00, Running Avg=214.73, Episodes=2
+2025-08-01 09:18:54,760 - cartpole_ppo_wandb_seed_4 - INFO - Step 146908: Avg Reward=500.00, Running Avg=215.60, Episodes=2
+2025-08-01 09:18:54,760 - cartpole_ppo_wandb_seed_4 - INFO - Episode 650: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-08-01 09:18:57,087 - cartpole_ppo_wandb_seed_4 - INFO - Step 147956: Avg Reward=500.00, Running Avg=216.47, Episodes=2
+2025-08-01 09:18:58,218 - cartpole_ppo_wandb_seed_4 - INFO - Step 148956: Avg Reward=500.00, Running Avg=217.34, Episodes=2
+2025-08-01 09:18:59,726 - cartpole_ppo_wandb_seed_4 - INFO - Step 150004: Avg Reward=500.00, Running Avg=218.20, Episodes=2
+2025-08-01 09:19:00,852 - cartpole_ppo_wandb_seed_4 - INFO - Step 151004: Avg Reward=500.00, Running Avg=219.06, Episodes=2
+2025-08-01 09:19:02,391 - cartpole_ppo_wandb_seed_4 - INFO - Step 152052: Avg Reward=500.00, Running Avg=219.91, Episodes=2
+2025-08-01 09:19:02,391 - cartpole_ppo_wandb_seed_4 - INFO - Episode 660: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-08-01 09:19:03,509 - cartpole_ppo_wandb_seed_4 - INFO - Step 153052: Avg Reward=500.00, Running Avg=220.75, Episodes=2
+2025-08-01 09:19:05,415 - cartpole_ppo_wandb_seed_4 - INFO - Step 154100: Avg Reward=500.00, Running Avg=221.59, Episodes=2
+2025-08-01 09:19:06,581 - cartpole_ppo_wandb_seed_4 - INFO - Step 155100: Avg Reward=500.00, Running Avg=222.43, Episodes=2
+2025-08-01 09:19:08,564 - cartpole_ppo_wandb_seed_4 - INFO - Step 156148: Avg Reward=500.00, Running Avg=223.26, Episodes=2
+2025-08-01 09:19:09,727 - cartpole_ppo_wandb_seed_4 - INFO - Step 157148: Avg Reward=500.00, Running Avg=224.08, Episodes=2
+2025-08-01 09:19:09,727 - cartpole_ppo_wandb_seed_4 - INFO - Episode 670: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-08-01 09:19:11,316 - cartpole_ppo_wandb_seed_4 - INFO - Step 158196: Avg Reward=500.00, Running Avg=224.90, Episodes=2
+2025-08-01 09:19:12,474 - cartpole_ppo_wandb_seed_4 - INFO - Step 159196: Avg Reward=500.00, Running Avg=225.72, Episodes=2
+2025-08-01 09:19:13,938 - cartpole_ppo_wandb_seed_4 - INFO - Step 160244: Avg Reward=500.00, Running Avg=226.53, Episodes=2
+2025-08-01 09:19:15,096 - cartpole_ppo_wandb_seed_4 - INFO - Step 161244: Avg Reward=500.00, Running Avg=227.33, Episodes=2
+2025-08-01 09:19:16,222 - cartpole_ppo_wandb_seed_4 - INFO - Episode 680: Reward=79.00, Length=79, Avg Reward (last 10)=457.90
+2025-08-01 09:19:16,798 - cartpole_ppo_wandb_seed_4 - INFO - Step 162371: Avg Reward=359.67, Running Avg=227.91, Episodes=3
+2025-08-01 09:19:17,953 - cartpole_ppo_wandb_seed_4 - INFO - Step 163371: Avg Reward=500.00, Running Avg=228.71, Episodes=2
+2025-08-01 09:19:19,970 - cartpole_ppo_wandb_seed_4 - INFO - Step 164840: Avg Reward=500.00, Running Avg=229.50, Episodes=2
+2025-08-01 09:19:21,121 - cartpole_ppo_wandb_seed_4 - INFO - Step 165840: Avg Reward=500.00, Running Avg=230.29, Episodes=2
+2025-08-01 09:19:28,485 - cartpole_ppo_wandb_seed_4 - INFO - Step 166888: Avg Reward=500.00, Running Avg=231.07, Episodes=2
+2025-08-01 09:19:29,083 - cartpole_ppo_wandb_seed_4 - INFO - Episode 690: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-08-01 09:19:29,679 - cartpole_ppo_wandb_seed_4 - INFO - Step 167888: Avg Reward=500.00, Running Avg=231.85, Episodes=2
+2025-08-01 09:19:32,071 - cartpole_ppo_wandb_seed_4 - INFO - Step 168936: Avg Reward=500.00, Running Avg=232.62, Episodes=2
+2025-08-01 09:19:33,270 - cartpole_ppo_wandb_seed_4 - INFO - Step 169936: Avg Reward=500.00, Running Avg=233.39, Episodes=2
+2025-08-01 09:19:35,324 - cartpole_ppo_wandb_seed_4 - INFO - Step 170984: Avg Reward=500.00, Running Avg=234.15, Episodes=2
+2025-08-01 09:19:36,515 - cartpole_ppo_wandb_seed_4 - INFO - Step 171984: Avg Reward=500.00, Running Avg=234.91, Episodes=2
+2025-08-01 09:19:37,561 - cartpole_ppo_wandb_seed_4 - INFO - Episode 700: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-08-01 09:19:38,085 - cartpole_ppo_wandb_seed_4 - INFO - Step 173032: Avg Reward=500.00, Running Avg=235.67, Episodes=2
+2025-08-01 09:19:39,275 - cartpole_ppo_wandb_seed_4 - INFO - Step 174032: Avg Reward=500.00, Running Avg=236.42, Episodes=2
+2025-08-01 09:19:40,848 - cartpole_ppo_wandb_seed_4 - INFO - Step 175080: Avg Reward=500.00, Running Avg=237.16, Episodes=2
+2025-08-01 09:19:41,962 - cartpole_ppo_wandb_seed_4 - INFO - Step 176080: Avg Reward=500.00, Running Avg=237.91, Episodes=2
+2025-08-01 09:19:43,999 - cartpole_ppo_wandb_seed_4 - INFO - Step 177128: Avg Reward=500.00, Running Avg=238.64, Episodes=2
+2025-08-01 09:19:44,602 - cartpole_ppo_wandb_seed_4 - INFO - Episode 710: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-08-01 09:19:45,207 - cartpole_ppo_wandb_seed_4 - INFO - Step 178128: Avg Reward=500.00, Running Avg=239.38, Episodes=2
+2025-08-01 09:19:46,733 - cartpole_ppo_wandb_seed_4 - INFO - Step 179176: Avg Reward=500.00, Running Avg=240.11, Episodes=2
+2025-08-01 09:19:48,898 - cartpole_ppo_wandb_seed_4 - INFO - Step 180724: Avg Reward=313.75, Running Avg=240.52, Episodes=4
+2025-08-01 09:19:50,178 - cartpole_ppo_wandb_seed_4 - INFO - Step 181865: Avg Reward=380.33, Running Avg=241.10, Episodes=3
+2025-08-01 09:19:50,179 - cartpole_ppo_wandb_seed_4 - INFO - Episode 720: Reward=500.00, Length=500, Avg Reward (last 10)=389.60
+2025-08-01 09:19:52,161 - cartpole_ppo_wandb_seed_4 - INFO - Step 183272: Avg Reward=500.00, Running Avg=241.82, Episodes=2
+2025-08-01 09:19:53,312 - cartpole_ppo_wandb_seed_4 - INFO - Step 184272: Avg Reward=500.00, Running Avg=242.53, Episodes=2
+2025-08-01 09:19:55,490 - cartpole_ppo_wandb_seed_4 - INFO - Step 185320: Avg Reward=500.00, Running Avg=243.24, Episodes=2
+2025-08-01 09:19:56,706 - cartpole_ppo_wandb_seed_4 - INFO - Step 186320: Avg Reward=500.00, Running Avg=243.94, Episodes=2
+2025-08-01 09:20:05,473 - cartpole_ppo_wandb_seed_4 - INFO - Step 187368: Avg Reward=500.00, Running Avg=244.64, Episodes=2
+2025-08-01 09:20:05,474 - cartpole_ppo_wandb_seed_4 - INFO - Episode 730: Reward=500.00, Length=500, Avg Reward (last 10)=500.00
+2025-08-01 09:20:12,667 - cartpole_ppo_wandb_seed_4 - INFO - Step 188916: Avg Reward=433.33, Running Avg=245.41, Episodes=3
+2025-08-01 09:20:16,935 - cartpole_ppo_wandb_seed_4 - INFO - Step 190072: Avg Reward=289.00, Running Avg=245.65, Episodes=4
+2025-08-01 09:20:22,294 - cartpole_ppo_wandb_seed_4 - INFO - Step 191192: Avg Reward=364.00, Running Avg=245.97, Episodes=2
+2025-08-01 09:20:24,255 - cartpole_ppo_wandb_seed_4 - INFO - Episode 740: Reward=500.00, Length=500, Avg Reward (last 10)=368.40
+2025-08-01 09:20:26,217 - cartpole_ppo_wandb_seed_4 - INFO - Step 192192: Avg Reward=500.00, Running Avg=246.65, Episodes=2
+2025-08-01 09:20:31,997 - cartpole_ppo_wandb_seed_4 - INFO - Step 193512: Avg Reward=500.00, Running Avg=247.33, Episodes=2
+2025-08-01 09:20:38,829 - cartpole_ppo_wandb_seed_4 - INFO - Step 195060: Avg Reward=493.67, Running Avg=248.32, Episodes=3
+2025-08-01 09:20:42,905 - cartpole_ppo_wandb_seed_4 - INFO - Step 196060: Avg Reward=500.00, Running Avg=249.00, Episodes=2
+2025-08-01 09:20:47,632 - cartpole_ppo_wandb_seed_4 - INFO - Step 197108: Avg Reward=500.00, Running Avg=249.66, Episodes=2
+2025-08-01 09:20:47,633 - cartpole_ppo_wandb_seed_4 - INFO - Episode 750: Reward=500.00, Length=500, Avg Reward (last 10)=498.10
+2025-08-01 09:20:51,590 - cartpole_ppo_wandb_seed_4 - INFO - Step 198108: Avg Reward=500.00, Running Avg=250.33, Episodes=2
+2025-08-01 09:20:56,937 - cartpole_ppo_wandb_seed_4 - INFO - Step 199156: Avg Reward=500.00, Running Avg=250.99, Episodes=2
+2025-08-01 09:21:01,020 - cartpole_ppo_wandb_seed_4 - INFO - Step 200156: Avg Reward=500.00, Running Avg=251.65, Episodes=2
+2025-08-01 09:21:05,740 - cartpole_ppo_wandb_seed_4 - INFO - Step 201204: Avg Reward=312.00, Running Avg=251.81, Episodes=2
+2025-08-01 09:21:09,866 - cartpole_ppo_wandb_seed_4 - INFO - Step 202204: Avg Reward=500.00, Running Avg=252.46, Episodes=2
+2025-08-01 09:21:09,867 - cartpole_ppo_wandb_seed_4 - INFO - Episode 760: Reward=500.00, Length=500, Avg Reward (last 10)=462.40
+2025-08-01 09:21:15,215 - cartpole_ppo_wandb_seed_4 - INFO - Step 203252: Avg Reward=500.00, Running Avg=253.11, Episodes=2
+2025-08-01 09:21:19,187 - cartpole_ppo_wandb_seed_4 - INFO - Step 204252: Avg Reward=500.00, Running Avg=253.75, Episodes=2
+2025-08-01 09:21:21,871 - cartpole_ppo_wandb_seed_4 - INFO - Metrics saved to results/cartpole_ppo_wandb/seed_4/metrics.json
+2025-08-01 09:21:24,190 - cartpole_ppo_wandb_seed_4 - INFO - Experiment completed.

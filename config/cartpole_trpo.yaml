@@ -11,7 +11,7 @@ algorithm:
   lr: 3e-4
   gamma: 0.99
   gae_lambda: 0.95
-  max_kl: 0.005
+  max_kl: 0.01
   damping: 0.2
   has_continuous_action_space: false
   action_std_init: 0.6
@@ -33,8 +33,9 @@ training:
 # 실험 설정
 experiment:
   name: "cartpole_trpo_wandb"
-  seeds: [0, 1, 2]
-  device: "cpu"
+  seeds: [0, 1, 2, 3, 4]  # 여러 시드로 실험
+  device: "cuda"  # GPU 사용
+  # GPU가 없을 경우 'cpu'로 변경
   save_dir: "results/cartpole_trpo_wandb"
 
 # 로깅 설정

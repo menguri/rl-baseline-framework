@@ -9,37 +9,34 @@ algorithm:
   lr: 3e-4
   gamma: 0.99
   gae_lambda: 0.95
-  max_kl: 0.01
+  max_kl: 0.05
   damping: 0.1
   has_continuous_action_space: true
-  action_std_init: 0.6
+  action_std_init: 1.0
 
 network:
-  hidden_dims: [64, 64]
+  hidden_dims: [128, 128]
   activation: "tanh"
 
 training:
-  max_episodes: 2000
-  max_steps_per_episode: 1000
+  max_episodes: 500
   update_interval: 2048
   eval_interval: 10
-  save_interval: 1000
-  log_interval: 10
+  save_interval: 1000000
 
 experiment:
   name: "lunarlandercontinuous_trpo"
-  seeds: [0, 1, 2]
-  device: "cpu"
+  seeds: [0, 1, 2, 3, 4]
+  device: "cuda"
   save_dir: "results/lunarlandercontinuous_trpo"
 
 logging:
   tensorboard: false
   save_metrics: true
-  plot_interval: 50 
   # wandb 설정
   use_wandb: True
   wandb_project: "rl-framework-lunarlandercontinuous"
   wandb_entity: "tatalintelli-university-of-seoul"  # wandb 사용자명 또는 팀명
   # 스텝 기반 로깅 설정
   enable_step_logging: true
-  step_log_interval: 1000  # 모든 알고리즘에서 동일한 간격 사용 
+  step_log_interval: 100  # 모든 알고리즘에서 동일한 간격 사용 

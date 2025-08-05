@@ -25,23 +25,20 @@ network:
   activation: "relu"
 
 training:
-  max_episodes: 1000
-  max_steps_per_episode: 1000
-  update_interval: 500     # DDPG는 매 Step마다 업데이트하므로, max_steps_per_episode를 update_interval로 사용
+  max_episodes: 500
+  update_interval: 2048     # DDPG는 매 Step마다 업데이트하므로, max_steps_per_episode를 update_interval로 사용
   eval_interval: 10
-  save_interval: 500
-  log_interval: 10
+  save_interval: 1000000
 
 experiment:
   name: "lunarlandercontinuous_ddpg"
-  seeds: [0, 1, 2]
-  device: "cpu"
+  seeds: [0, 1, 2, 3, 4, 5]
+  device: "cuda"
   save_dir: "results/lunarlandercontinuous_ddpg"
 
 logging:
   tensorboard: false
   save_metrics: true
-  plot_interval: 50 
   # wandb 설정
   use_wandb: true
   wandb_project: "rl-framework-lunarlandercontinuous"

@@ -61,11 +61,21 @@ class MLPActorCritic(nn.Module):
         self.state_dim = state_dim
         self.action_dim = action_dim
         self.has_continuous_action_space = has_continuous_action_space
+        if torch.cuda.is_available():
+            self.device = torch.device('cuda')
+        else:
+            self.device = torch.device('cpu')  # 디바이스 설정, 필요시 변경 가능
+        
         
         # Actor (정책) 네트워크
         if has_continuous_action_space:
             self.action_dim = action_dim
-            self.action_var = torch.full((action_dim,), action_std_init * action_std_init)
+            self.action_var = torch.full(
+                                        (self.action_dim,),
+                                        action_std_init ** 2,
+                                        dtype=torch.float32,
+                                        device=self.device
+                                    )
             
             self.actor = MLP(state_dim, action_dim, hidden_dims, activation='tanh')
         else:
@@ -82,7 +92,11 @@ class MLPActorCritic(nn.Module):
     def set_action_std(self, new_action_std):
         """연속 행동 공간에서 행동 표준편차를 설정합니다."""
         if self.has_continuous_action_space:
-            self.action_var = torch.full((self.action_dim,), new_action_std * new_action_std)
+            self.action_var = torch.full(
+                                        (self.action_dim,),
+                                        new_action_std ** 2,
+                                        dtype=torch.float32,
+                                    )
         else:
             print("WARNING: Calling set_action_std() on discrete action space policy")
     
@@ -90,6 +104,7 @@ class MLPActorCritic(nn.Module):
         raise NotImplementedError
     
     def act(self, state):
+        
         """주어진 상태에서 행동을 선택합니다."""
         if self.has_continuous_action_space:
             action_mean = self.actor(state)

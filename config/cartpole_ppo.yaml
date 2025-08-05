@@ -37,8 +37,9 @@ training:
 # 실험 설정
 experiment:
   name: "cartpole_ppo_wandb"
-  seeds: [0, 1, 2]
-  device: "cpu"
+  seeds: [0, 1, 2, 3, 4]  # 여러 시드로 실험
+  device: "cuda"  # GPU 사용
+  # GPU가 없을 경우 'cpu'로 변경
   save_dir: "results/cartpole_ppo_wandb"
 
 # 로깅 설정

@@ -13,9 +13,9 @@ from utils.buffer import RolloutBuffer
 
 def conjugate_gradients(Avp, b, nsteps, residual_tol=1e-10):
     """켤레 기울기법 (Conjugate Gradient Method) 구현"""
-    x = torch.zeros(b.size())
-    r = b.clone()
-    p = b.clone()
+    x = torch.zeros_like(b).to(b.device)
+    r = b.clone().to(b.device)
+    p = b.clone().to(b.device)
     rdotr = torch.dot(r, r)
     
     for i in range(nsteps):
@@ -97,6 +97,7 @@ class TRPO(BaseOnPolicyAlgorithm):
         self.max_kl = max_kl
         self.damping = damping
         self.has_continuous_action_space = has_continuous_action_space
+        self.device = torch.device(device)
 
         # Actor 네트워크
         self.actor = ActorNetwork(
@@ -140,19 +141,19 @@ class TRPO(BaseOnPolicyAlgorithm):
         if has_continuous_action_space:
             self.action_std = action_std_init
     
-    def set_action_std(self, new_action_std):
+    def set_action_std(self, new_action_std, device='cpu'):
         """연속 행동 공간에서 행동 표준편차를 설정합니다."""
         if self.has_continuous_action_space:
             self.action_std = new_action_std
-            self.actor.set_action_std(new_action_std)
-            self.actor_old.set_action_std(new_action_std)
+            self.actor.set_action_std(new_action_std, self.device)
+            self.actor_old.set_action_std(new_action_std, self.device)
         else:
             print("WARNING: Calling set_action_std() on discrete action space actor")
     
     def select_action(self, state):
         """주어진 상태에서 행동을 선택합니다."""
         with torch.no_grad():
-            state = torch.FloatTensor(state).to(self.device)
+            state = torch.as_tensor(state, dtype=torch.float32, device=self.device)
             action, action_logprob = self.actor_old.act(state)
             state_val = self.critic.evaluate(state)
         
@@ -295,7 +296,7 @@ class TRPO(BaseOnPolicyAlgorithm):
         
         if self.has_continuous_action_space and checkpoint['action_std'] is not None:
             self.action_std = checkpoint['action_std']
-            self.set_action_std(self.action_std)
+            self.set_action_std(self.action_std, self.device)
     
     def set_eval_mode(self):
         """평가 모드로 설정합니다."""
@@ -314,12 +315,12 @@ class TRPO(BaseOnPolicyAlgorithm):
     def get_action_logprob(self, state, action):
         """주어진 상태와 행동에 대한 로그 확률을 계산합니다."""
         with torch.no_grad():
-            state = torch.FloatTensor(state).to(self.device)
+            state = torch.as_tensor(state, dtype=torch.float32, device=self.device)
             action = torch.FloatTensor(action).to(self.device)
             return self.actor.get_action_logprob(state, action)
     
     def get_value(self, state):
         """주어진 상태의 가치를 계산합니다."""
         with torch.no_grad():
-            state = torch.FloatTensor(state).to(self.device)
+            state = torch.as_tensor(state, dtype=torch.float32, device=self.device)
             return self.actor.get_value(state) 

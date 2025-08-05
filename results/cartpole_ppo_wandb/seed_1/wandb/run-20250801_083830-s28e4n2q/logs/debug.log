@@ -1,0 +1,107 @@
+2025-08-01 08:38:30,926 INFO    MainThread:964160 [wandb_init.py:setup_run_log_directory():624] Logging user logs to results/cartpole_ppo_wandb/seed_1/wandb/run-20250801_083830-s28e4n2q/logs/debug.log
+2025-08-01 08:38:30,926 INFO    MainThread:964160 [wandb_init.py:setup_run_log_directory():625] Logging internal logs to results/cartpole_ppo_wandb/seed_1/wandb/run-20250801_083830-s28e4n2q/logs/debug-internal.log
+2025-08-01 08:38:30,926 INFO    MainThread:964160 [wandb_init.py:init():743] calling init triggers
+2025-08-01 08:38:30,926 INFO    MainThread:964160 [wandb_init.py:init():748] wandb.init called with sweep_config: {}
+config: {}
+2025-08-01 08:38:30,926 INFO    MainThread:964160 [wandb_init.py:init():768] wandb.init() called when a run is still active
+2025-08-01 08:38:30,927 INFO    MainThread:964160 [wandb_run.py:_config_callback():1270] config_cb None None {'environment': {'name': 'CartPole-v1', 'seed': 42}, 'algorithm': {'name': 'PPO', 'lr_actor': '3e-4', 'lr_critic': '1e-3', 'gamma': 0.99, 'gae_lambda': 0.95, 'clip_ratio': 0.2, 'target_kl': 0.01, 'train_policy_iters': 80, 'train_value_iters': 80, 'lam': 0.97, 'has_continuous_action_space': False, 'action_std_init': 0.6}, 'network': {'hidden_dims': [64, 64], 'activation': 'tanh'}, 'training': {'max_episodes': 100, 'max_steps_per_episode': 500, 'update_interval': 2048, 'eval_interval': 10, 'save_interval': 300, 'log_interval': 10}, 'experiment': {'name': 'cartpole_ppo_wandb', 'seeds': [0, 1, 2, 3, 4], 'device': 'cuda', 'save_dir': 'results/cartpole_ppo_wandb'}, 'logging': {'tensorboard': False, 'save_metrics': True, 'plot_interval': 25, 'use_wandb': True, 'wandb_project': 'rl-framework-cartpole', 'wandb_entity': 'tatalintelli-university-of-seoul', 'enable_step_logging': True, 'step_log_interval': 1000}}
+2025-08-01 08:48:51,709 INFO    MainThread:964160 [wandb_run.py:_finish():2134] finishing run tatalintelli-university-of-seoul/rl-framework-cartpole/6vdzvg3c
+2025-08-01 08:48:51,709 INFO    MainThread:964160 [wandb_run.py:_atexit_cleanup():2374] got exitcode: 0
+2025-08-01 08:48:51,709 INFO    MainThread:964160 [wandb_run.py:_restore():2356] restore
+2025-08-01 08:48:51,709 INFO    MainThread:964160 [wandb_run.py:_restore():2362] restore done
+2025-08-01 08:48:54,236 INFO    MainThread:964160 [wandb_run.py:_footer_history_summary_info():3976] rendering history
+2025-08-01 08:48:54,240 INFO    MainThread:964160 [wandb_run.py:_footer_history_summary_info():4008] rendering summary
+2025-08-01 08:48:54,241 INFO    MainThread:964160 [wandb_run.py:_footer_sync_info():3937] logging synced files
+2025-08-01 08:48:54,250 INFO    MainThread:964160 [wandb_init.py:setup_run_log_directory():624] Logging user logs to /home/mlic/mingukang/rl-baseline-framework/wandb/run-20250801_084854-lv07a1qy/logs/debug.log
+2025-08-01 08:48:54,250 INFO    MainThread:964160 [wandb_init.py:setup_run_log_directory():625] Logging internal logs to /home/mlic/mingukang/rl-baseline-framework/wandb/run-20250801_084854-lv07a1qy/logs/debug-internal.log
+2025-08-01 08:48:54,251 INFO    MainThread:964160 [wandb_init.py:init():743] calling init triggers
+2025-08-01 08:48:54,251 INFO    MainThread:964160 [wandb_init.py:init():748] wandb.init called with sweep_config: {}
+config: {'environment': {'name': 'CartPole-v1', 'seed': 42}, 'algorithm': {'name': 'PPO', 'lr_actor': '3e-4', 'lr_critic': '1e-3', 'gamma': 0.99, 'gae_lambda': 0.95, 'clip_ratio': 0.2, 'target_kl': 0.01, 'train_policy_iters': 80, 'train_value_iters': 80, 'lam': 0.97, 'has_continuous_action_space': False, 'action_std_init': 0.6}, 'network': {'hidden_dims': [64, 64], 'activation': 'tanh'}, 'training': {'max_episodes': 100, 'max_steps_per_episode': 500, 'update_interval': 2048, 'eval_interval': 10, 'save_interval': 300, 'log_interval': 10}, 'experiment': {'name': 'cartpole_ppo_wandb', 'seeds': [0, 1, 2, 3, 4], 'device': 'cuda', 'save_dir': 'results/cartpole_ppo_wandb'}, 'logging': {'tensorboard': False, 'save_metrics': True, 'plot_interval': 25, 'use_wandb': True, 'wandb_project': 'rl-framework-cartpole', 'wandb_entity': 'tatalintelli-university-of-seoul', 'enable_step_logging': True, 'step_log_interval': 1000}}
+2025-08-01 08:48:54,251 INFO    MainThread:964160 [wandb_init.py:init():776] starting backend
+2025-08-01 08:48:54,251 INFO    MainThread:964160 [wandb_init.py:init():780] sending inform_init request
+2025-08-01 08:48:54,253 INFO    MainThread:964160 [backend.py:_multiprocessing_setup():97] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2025-08-01 08:48:54,254 INFO    MainThread:964160 [wandb_init.py:init():795] backend started and connected
+2025-08-01 08:48:54,262 INFO    MainThread:964160 [wandb_init.py:init():888] updated telemetry
+2025-08-01 08:48:54,272 INFO    MainThread:964160 [wandb_init.py:init():915] communicating run to backend with 90.0 second timeout
+2025-08-01 08:48:54,808 INFO    MainThread:964160 [wandb_init.py:init():967] starting run threads in backend
+2025-08-01 08:48:55,053 INFO    MainThread:964160 [wandb_run.py:_console_start():2409] atexit reg
+2025-08-01 08:48:55,053 INFO    MainThread:964160 [wandb_run.py:_redirect():2259] redirect: wrap_raw
+2025-08-01 08:48:55,054 INFO    MainThread:964160 [wandb_run.py:_redirect():2324] Wrapping output streams.
+2025-08-01 08:48:55,054 INFO    MainThread:964160 [wandb_run.py:_redirect():2349] Redirects installed.
+2025-08-01 08:48:55,054 INFO    MainThread:964160 [wandb_init.py:init():1009] run started, returning control to user process
+2025-08-01 08:48:55,135 INFO    MainThread:964160 [wandb_init.py:setup_run_log_directory():624] Logging user logs to results/cartpole_ppo_wandb/seed_2/wandb/run-20250801_084855-h44c92ql/logs/debug.log
+2025-08-01 08:48:55,135 INFO    MainThread:964160 [wandb_init.py:setup_run_log_directory():625] Logging internal logs to results/cartpole_ppo_wandb/seed_2/wandb/run-20250801_084855-h44c92ql/logs/debug-internal.log
+2025-08-01 08:48:55,135 INFO    MainThread:964160 [wandb_init.py:init():743] calling init triggers
+2025-08-01 08:48:55,136 INFO    MainThread:964160 [wandb_init.py:init():748] wandb.init called with sweep_config: {}
+config: {}
+2025-08-01 08:48:55,136 INFO    MainThread:964160 [wandb_init.py:init():768] wandb.init() called when a run is still active
+2025-08-01 08:48:55,136 INFO    MainThread:964160 [wandb_run.py:_config_callback():1270] config_cb None None {'environment': {'name': 'CartPole-v1', 'seed': 42}, 'algorithm': {'name': 'PPO', 'lr_actor': '3e-4', 'lr_critic': '1e-3', 'gamma': 0.99, 'gae_lambda': 0.95, 'clip_ratio': 0.2, 'target_kl': 0.01, 'train_policy_iters': 80, 'train_value_iters': 80, 'lam': 0.97, 'has_continuous_action_space': False, 'action_std_init': 0.6}, 'network': {'hidden_dims': [64, 64], 'activation': 'tanh'}, 'training': {'max_episodes': 100, 'max_steps_per_episode': 500, 'update_interval': 2048, 'eval_interval': 10, 'save_interval': 300, 'log_interval': 10}, 'experiment': {'name': 'cartpole_ppo_wandb', 'seeds': [0, 1, 2, 3, 4], 'device': 'cuda', 'save_dir': 'results/cartpole_ppo_wandb'}, 'logging': {'tensorboard': False, 'save_metrics': True, 'plot_interval': 25, 'use_wandb': True, 'wandb_project': 'rl-framework-cartpole', 'wandb_entity': 'tatalintelli-university-of-seoul', 'enable_step_logging': True, 'step_log_interval': 1000}}
+2025-08-01 09:00:08,856 INFO    MainThread:964160 [wandb_run.py:_finish():2134] finishing run tatalintelli-university-of-seoul/rl-framework-cartpole/lv07a1qy
+2025-08-01 09:00:08,856 INFO    MainThread:964160 [wandb_run.py:_atexit_cleanup():2374] got exitcode: 0
+2025-08-01 09:00:08,857 INFO    MainThread:964160 [wandb_run.py:_restore():2356] restore
+2025-08-01 09:00:08,857 INFO    MainThread:964160 [wandb_run.py:_restore():2362] restore done
+2025-08-01 09:00:12,259 INFO    MainThread:964160 [wandb_run.py:_footer_history_summary_info():3976] rendering history
+2025-08-01 09:00:12,262 INFO    MainThread:964160 [wandb_run.py:_footer_history_summary_info():4008] rendering summary
+2025-08-01 09:00:12,263 INFO    MainThread:964160 [wandb_run.py:_footer_sync_info():3937] logging synced files
+2025-08-01 09:00:12,269 INFO    MainThread:964160 [wandb_init.py:setup_run_log_directory():624] Logging user logs to /home/mlic/mingukang/rl-baseline-framework/wandb/run-20250801_090012-zyjb8sru/logs/debug.log
+2025-08-01 09:00:12,270 INFO    MainThread:964160 [wandb_init.py:setup_run_log_directory():625] Logging internal logs to /home/mlic/mingukang/rl-baseline-framework/wandb/run-20250801_090012-zyjb8sru/logs/debug-internal.log
+2025-08-01 09:00:12,270 INFO    MainThread:964160 [wandb_init.py:init():743] calling init triggers
+2025-08-01 09:00:12,270 INFO    MainThread:964160 [wandb_init.py:init():748] wandb.init called with sweep_config: {}
+config: {'environment': {'name': 'CartPole-v1', 'seed': 42}, 'algorithm': {'name': 'PPO', 'lr_actor': '3e-4', 'lr_critic': '1e-3', 'gamma': 0.99, 'gae_lambda': 0.95, 'clip_ratio': 0.2, 'target_kl': 0.01, 'train_policy_iters': 80, 'train_value_iters': 80, 'lam': 0.97, 'has_continuous_action_space': False, 'action_std_init': 0.6}, 'network': {'hidden_dims': [64, 64], 'activation': 'tanh'}, 'training': {'max_episodes': 100, 'max_steps_per_episode': 500, 'update_interval': 2048, 'eval_interval': 10, 'save_interval': 300, 'log_interval': 10}, 'experiment': {'name': 'cartpole_ppo_wandb', 'seeds': [0, 1, 2, 3, 4], 'device': 'cuda', 'save_dir': 'results/cartpole_ppo_wandb'}, 'logging': {'tensorboard': False, 'save_metrics': True, 'plot_interval': 25, 'use_wandb': True, 'wandb_project': 'rl-framework-cartpole', 'wandb_entity': 'tatalintelli-university-of-seoul', 'enable_step_logging': True, 'step_log_interval': 1000}}
+2025-08-01 09:00:12,270 INFO    MainThread:964160 [wandb_init.py:init():776] starting backend
+2025-08-01 09:00:12,270 INFO    MainThread:964160 [wandb_init.py:init():780] sending inform_init request
+2025-08-01 09:00:12,272 INFO    MainThread:964160 [backend.py:_multiprocessing_setup():97] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2025-08-01 09:00:12,273 INFO    MainThread:964160 [wandb_init.py:init():795] backend started and connected
+2025-08-01 09:00:12,276 INFO    MainThread:964160 [wandb_init.py:init():888] updated telemetry
+2025-08-01 09:00:12,284 INFO    MainThread:964160 [wandb_init.py:init():915] communicating run to backend with 90.0 second timeout
+2025-08-01 09:00:12,784 INFO    MainThread:964160 [wandb_init.py:init():967] starting run threads in backend
+2025-08-01 09:00:13,089 INFO    MainThread:964160 [wandb_run.py:_console_start():2409] atexit reg
+2025-08-01 09:00:13,090 INFO    MainThread:964160 [wandb_run.py:_redirect():2259] redirect: wrap_raw
+2025-08-01 09:00:13,090 INFO    MainThread:964160 [wandb_run.py:_redirect():2324] Wrapping output streams.
+2025-08-01 09:00:13,090 INFO    MainThread:964160 [wandb_run.py:_redirect():2349] Redirects installed.
+2025-08-01 09:00:13,091 INFO    MainThread:964160 [wandb_init.py:init():1009] run started, returning control to user process
+2025-08-01 09:00:13,117 INFO    MainThread:964160 [wandb_init.py:setup_run_log_directory():624] Logging user logs to results/cartpole_ppo_wandb/seed_3/wandb/run-20250801_090013-lnthyb4k/logs/debug.log
+2025-08-01 09:00:13,118 INFO    MainThread:964160 [wandb_init.py:setup_run_log_directory():625] Logging internal logs to results/cartpole_ppo_wandb/seed_3/wandb/run-20250801_090013-lnthyb4k/logs/debug-internal.log
+2025-08-01 09:00:13,118 INFO    MainThread:964160 [wandb_init.py:init():743] calling init triggers
+2025-08-01 09:00:13,118 INFO    MainThread:964160 [wandb_init.py:init():748] wandb.init called with sweep_config: {}
+config: {}
+2025-08-01 09:00:13,118 INFO    MainThread:964160 [wandb_init.py:init():768] wandb.init() called when a run is still active
+2025-08-01 09:00:13,119 INFO    MainThread:964160 [wandb_run.py:_config_callback():1270] config_cb None None {'environment': {'name': 'CartPole-v1', 'seed': 42}, 'algorithm': {'name': 'PPO', 'lr_actor': '3e-4', 'lr_critic': '1e-3', 'gamma': 0.99, 'gae_lambda': 0.95, 'clip_ratio': 0.2, 'target_kl': 0.01, 'train_policy_iters': 80, 'train_value_iters': 80, 'lam': 0.97, 'has_continuous_action_space': False, 'action_std_init': 0.6}, 'network': {'hidden_dims': [64, 64], 'activation': 'tanh'}, 'training': {'max_episodes': 100, 'max_steps_per_episode': 500, 'update_interval': 2048, 'eval_interval': 10, 'save_interval': 300, 'log_interval': 10}, 'experiment': {'name': 'cartpole_ppo_wandb', 'seeds': [0, 1, 2, 3, 4], 'device': 'cuda', 'save_dir': 'results/cartpole_ppo_wandb'}, 'logging': {'tensorboard': False, 'save_metrics': True, 'plot_interval': 25, 'use_wandb': True, 'wandb_project': 'rl-framework-cartpole', 'wandb_entity': 'tatalintelli-university-of-seoul', 'enable_step_logging': True, 'step_log_interval': 1000}}
+2025-08-01 09:11:11,096 INFO    MainThread:964160 [wandb_run.py:_finish():2134] finishing run tatalintelli-university-of-seoul/rl-framework-cartpole/zyjb8sru
+2025-08-01 09:11:11,096 INFO    MainThread:964160 [wandb_run.py:_atexit_cleanup():2374] got exitcode: 0
+2025-08-01 09:11:11,096 INFO    MainThread:964160 [wandb_run.py:_restore():2356] restore
+2025-08-01 09:11:11,096 INFO    MainThread:964160 [wandb_run.py:_restore():2362] restore done
+2025-08-01 09:11:14,103 INFO    MainThread:964160 [wandb_run.py:_footer_history_summary_info():3976] rendering history
+2025-08-01 09:11:14,106 INFO    MainThread:964160 [wandb_run.py:_footer_history_summary_info():4008] rendering summary
+2025-08-01 09:11:14,106 INFO    MainThread:964160 [wandb_run.py:_footer_sync_info():3937] logging synced files
+2025-08-01 09:11:14,113 INFO    MainThread:964160 [wandb_init.py:setup_run_log_directory():624] Logging user logs to /home/mlic/mingukang/rl-baseline-framework/wandb/run-20250801_091114-uqcv66uw/logs/debug.log
+2025-08-01 09:11:14,113 INFO    MainThread:964160 [wandb_init.py:setup_run_log_directory():625] Logging internal logs to /home/mlic/mingukang/rl-baseline-framework/wandb/run-20250801_091114-uqcv66uw/logs/debug-internal.log
+2025-08-01 09:11:14,113 INFO    MainThread:964160 [wandb_init.py:init():743] calling init triggers
+2025-08-01 09:11:14,113 INFO    MainThread:964160 [wandb_init.py:init():748] wandb.init called with sweep_config: {}
+config: {'environment': {'name': 'CartPole-v1', 'seed': 42}, 'algorithm': {'name': 'PPO', 'lr_actor': '3e-4', 'lr_critic': '1e-3', 'gamma': 0.99, 'gae_lambda': 0.95, 'clip_ratio': 0.2, 'target_kl': 0.01, 'train_policy_iters': 80, 'train_value_iters': 80, 'lam': 0.97, 'has_continuous_action_space': False, 'action_std_init': 0.6}, 'network': {'hidden_dims': [64, 64], 'activation': 'tanh'}, 'training': {'max_episodes': 100, 'max_steps_per_episode': 500, 'update_interval': 2048, 'eval_interval': 10, 'save_interval': 300, 'log_interval': 10}, 'experiment': {'name': 'cartpole_ppo_wandb', 'seeds': [0, 1, 2, 3, 4], 'device': 'cuda', 'save_dir': 'results/cartpole_ppo_wandb'}, 'logging': {'tensorboard': False, 'save_metrics': True, 'plot_interval': 25, 'use_wandb': True, 'wandb_project': 'rl-framework-cartpole', 'wandb_entity': 'tatalintelli-university-of-seoul', 'enable_step_logging': True, 'step_log_interval': 1000}}
+2025-08-01 09:11:14,114 INFO    MainThread:964160 [wandb_init.py:init():776] starting backend
+2025-08-01 09:11:14,114 INFO    MainThread:964160 [wandb_init.py:init():780] sending inform_init request
+2025-08-01 09:11:14,116 INFO    MainThread:964160 [backend.py:_multiprocessing_setup():97] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2025-08-01 09:11:14,116 INFO    MainThread:964160 [wandb_init.py:init():795] backend started and connected
+2025-08-01 09:11:14,119 INFO    MainThread:964160 [wandb_init.py:init():888] updated telemetry
+2025-08-01 09:11:14,127 INFO    MainThread:964160 [wandb_init.py:init():915] communicating run to backend with 90.0 second timeout
+2025-08-01 09:11:14,578 INFO    MainThread:964160 [wandb_init.py:init():967] starting run threads in backend
+2025-08-01 09:11:14,823 INFO    MainThread:964160 [wandb_run.py:_console_start():2409] atexit reg
+2025-08-01 09:11:14,824 INFO    MainThread:964160 [wandb_run.py:_redirect():2259] redirect: wrap_raw
+2025-08-01 09:11:14,824 INFO    MainThread:964160 [wandb_run.py:_redirect():2324] Wrapping output streams.
+2025-08-01 09:11:14,824 INFO    MainThread:964160 [wandb_run.py:_redirect():2349] Redirects installed.
+2025-08-01 09:11:14,824 INFO    MainThread:964160 [wandb_init.py:init():1009] run started, returning control to user process
+2025-08-01 09:11:14,842 INFO    MainThread:964160 [wandb_init.py:setup_run_log_directory():624] Logging user logs to results/cartpole_ppo_wandb/seed_4/wandb/run-20250801_091114-s5iqndqq/logs/debug.log
+2025-08-01 09:11:14,842 INFO    MainThread:964160 [wandb_init.py:setup_run_log_directory():625] Logging internal logs to results/cartpole_ppo_wandb/seed_4/wandb/run-20250801_091114-s5iqndqq/logs/debug-internal.log
+2025-08-01 09:11:14,842 INFO    MainThread:964160 [wandb_init.py:init():743] calling init triggers
+2025-08-01 09:11:14,842 INFO    MainThread:964160 [wandb_init.py:init():748] wandb.init called with sweep_config: {}
+config: {}
+2025-08-01 09:11:14,842 INFO    MainThread:964160 [wandb_init.py:init():768] wandb.init() called when a run is still active
+2025-08-01 09:11:14,843 INFO    MainThread:964160 [wandb_run.py:_config_callback():1270] config_cb None None {'environment': {'name': 'CartPole-v1', 'seed': 42}, 'algorithm': {'name': 'PPO', 'lr_actor': '3e-4', 'lr_critic': '1e-3', 'gamma': 0.99, 'gae_lambda': 0.95, 'clip_ratio': 0.2, 'target_kl': 0.01, 'train_policy_iters': 80, 'train_value_iters': 80, 'lam': 0.97, 'has_continuous_action_space': False, 'action_std_init': 0.6}, 'network': {'hidden_dims': [64, 64], 'activation': 'tanh'}, 'training': {'max_episodes': 100, 'max_steps_per_episode': 500, 'update_interval': 2048, 'eval_interval': 10, 'save_interval': 300, 'log_interval': 10}, 'experiment': {'name': 'cartpole_ppo_wandb', 'seeds': [0, 1, 2, 3, 4], 'device': 'cuda', 'save_dir': 'results/cartpole_ppo_wandb'}, 'logging': {'tensorboard': False, 'save_metrics': True, 'plot_interval': 25, 'use_wandb': True, 'wandb_project': 'rl-framework-cartpole', 'wandb_entity': 'tatalintelli-university-of-seoul', 'enable_step_logging': True, 'step_log_interval': 1000}}
+2025-08-01 09:21:21,871 INFO    MainThread:964160 [wandb_run.py:_finish():2134] finishing run tatalintelli-university-of-seoul/rl-framework-cartpole/uqcv66uw
+2025-08-01 09:21:21,872 INFO    MainThread:964160 [wandb_run.py:_atexit_cleanup():2374] got exitcode: 0
+2025-08-01 09:21:21,872 INFO    MainThread:964160 [wandb_run.py:_restore():2356] restore
+2025-08-01 09:21:21,872 INFO    MainThread:964160 [wandb_run.py:_restore():2362] restore done
+2025-08-01 09:21:24,187 INFO    MainThread:964160 [wandb_run.py:_footer_history_summary_info():3976] rendering history
+2025-08-01 09:21:24,189 INFO    MainThread:964160 [wandb_run.py:_footer_history_summary_info():4008] rendering summary
+2025-08-01 09:21:24,190 INFO    MainThread:964160 [wandb_run.py:_footer_sync_info():3937] logging synced files
