@@ -23,11 +23,12 @@ network:
   activation: "tanh"
 
 training:
-  max_episodes: 500
-  # max_steps_per_episode: 1000  # PPO는 max_steps_per_episode를
+  max_episodes: 1000
+  max_steps_per_episode: 1000
   update_interval: 2048
-  eval_interval: 10           # 10 epoch 단위
-  save_interval: 1000000
+  eval_interval: 10
+  save_interval: 500
+  log_interval: 10
 
 experiment:
   name: "lunarlandercontinuous_ppo"
@@ -44,4 +45,4 @@ logging:
   wandb_entity: "tatalintelli-university-of-seoul"  # wandb 사용자명 또는 팀명
   # 스텝 기반 로깅 설정
   enable_step_logging: true
-  step_log_interval: 100  # 모든 알고리즘에서 동일한 간격 사용 
+  step_log_interval: 1000  # 모든 알고리즘에서 동일한 간격 사용 

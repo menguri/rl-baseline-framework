@@ -9,6 +9,7 @@ import sys
 import yaml
 import numpy as np
 import json
+import torch
 from pathlib import Path
 from concurrent.futures import ProcessPoolExecutor, as_completed
 import multiprocessing as mp
@@ -64,8 +65,8 @@ def parse_args():
     parser.add_argument(
         "--num_workers", 
         type=int, 
-        default=1,
-        help="병렬 실행할 워커 수 (기본값: 1)"
+        default=min(4, mp.cpu_count()),  # CPU 코어 수에 따라 자동 설정 (최대 4)
+        help=f"병렬 실행할 워커 수 (기본값: {min(4, mp.cpu_count())}, 최대: {mp.cpu_count()})"
     )
     
     return parser.parse_args()
@@ -146,7 +147,20 @@ def run_single_seed(config_path, seed, device=None, max_episodes=None):
         
         # 인수로 전달된 값들로 설정 덮어쓰기
         if device is not None:
-            config['experiment']['device'] = device
+            # GPU 자동 감지 및 CPU 폴백 (안전한 CUDA 체크)
+            def safe_cuda_check():
+                try:
+                    return torch.cuda.is_available()
+                except RuntimeError:
+                    return False
+            
+            if device == 'auto':
+                config['experiment']['device'] = 'auto'
+            elif device == 'cuda' and not safe_cuda_check():
+                print(f"Warning: CUDA requested but not available for seed {seed}. Using CPU instead.")
+                config['experiment']['device'] = 'cpu'
+            else:
+                config['experiment']['device'] = device
         
         if max_episodes is not None:
             config['training']['max_episodes'] = max_episodes

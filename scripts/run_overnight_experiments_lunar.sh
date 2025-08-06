@@ -1,8 +1,14 @@
 #!/bin/bash
 # scripts/run_overnight_experiments.sh
 # 실행 전: chmod +x scripts/run_overnight_experiments.sh
-export CUDA_VISIBLE_DEVICES=1
-echo "Using GPU: $CUDA_VISIBLE_DEVICES"
+
+# GPU 사용 가능 여부 확인
+if command -v nvidia-smi &> /dev/null; then
+    export CUDA_VISIBLE_DEVICES=1
+    echo "GPU detected. Using GPU: $CUDA_VISIBLE_DEVICES"
+else
+    echo "No GPU detected. Using CPU."
+fi
 
 echo "=========================================="
 echo "밤새 강화학습-lunarlander 실험 시작"
@@ -30,7 +36,7 @@ echo
 echo "=========================================="
 echo "Lunar PPO 실험 시작"
 echo "=========================================="
-python -m main multi --config config/lunarlander_ppo.yaml --num_workers 5
+python -m main multi --config config/lunarlander_ppo.yaml --num_workers 1
 
 # PPO 완료 후 10초 대기
 echo "PPO 실험 완료. 10초 후 TRPO 실험 시작..."
@@ -41,7 +47,7 @@ echo
 echo "=========================================="
 echo "Lunar TRPO 실험 시작"
 echo "=========================================="
-python -m main multi --config config/lunarlander_trpo.yaml --num_workers 5
+python -m main multi --config config/lunarlander_trpo.yaml --num_workers 1
 
 # TRPO 완료 후 10초 대기
 echo "TRPO 실험 완료. 10초 후 DDPG 실험 시작..."
@@ -52,7 +58,7 @@ echo
 echo "=========================================="
 echo "Lunar DDPG 실험 시작"
 echo "=========================================="
-python -m main multi --config config/lunarlander_ddpg.yaml --num_workers 5
+python -m main multi --config config/lunarlander_ddpg.yaml --num_workers 1
 
 # DDPG 완료 후 10초 대기
 echo "DDPG 실험 완료..."

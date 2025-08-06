@@ -6,6 +6,7 @@
 import argparse
 import os
 import sys
+import multiprocessing as mp
 from pathlib import Path
 
 # 프로젝트 루트를 Python 경로에 추가
@@ -13,9 +14,8 @@ from pathlib import Path
 # sys.path.insert(0, str(project_root))
 
 # 직접 import
-import train.run_experiment
-import train.multi_seed_trainer
-import plot.plot_results
+from train.run_experiment import run_experiment
+from train.multi_seed_trainer import run_multi_seed_experiment
 
 
 
@@ -29,16 +29,16 @@ def parse_args():
     train_parser = subparsers.add_parser('train', help='단일 실험 실행')
     train_parser.add_argument('--config', type=str, required=True, help='설정 파일 경로')
     train_parser.add_argument('--seed', type=int, default=None, help='랜덤 시드')
-    train_parser.add_argument('--device', type=str, default=None, help='디바이스 (cpu/cuda)')
+    train_parser.add_argument('--device', type=str, default=None, help='디바이스 (auto/cpu/cuda, 기본값: auto)')
     train_parser.add_argument('--max_episodes', type=int, default=None, help='최대 에피소드 수')
     
     # 멀티 시드 실험 실행
     multi_parser = subparsers.add_parser('multi', help='멀티 시드 실험 실행')
     multi_parser.add_argument('--config', type=str, required=True, help='설정 파일 경로')
     multi_parser.add_argument('--seeds', type=int, nargs='+', default=[0, 1, 2, 3, 4], help='실험할 시드들')
-    multi_parser.add_argument('--device', type=str, default=None, help='디바이스 (cpu/cuda)')
+    multi_parser.add_argument('--device', type=str, default=None, help='디바이스 (auto/cpu/cuda, 기본값: auto)')
     multi_parser.add_argument('--max_episodes', type=int, default=None, help='최대 에피소드 수')
-    multi_parser.add_argument('--num_workers', type=int, default=1, help='병렬 실행할 워커 수')
+    multi_parser.add_argument('--num_workers', type=int, default=min(4, mp.cpu_count()), help=f'병렬 실행할 워커 수 (기본값: {min(4, mp.cpu_count())})')
     
     # 결과 시각화
     plot_parser = subparsers.add_parser('plot', help='결과 시각화')
@@ -58,7 +58,7 @@ def main():
     
     if args.command == 'train':
         # 단일 실험 실행
-        train.run_experiment.run_experiment(
+        run_experiment(
             config_path=args.config,
             seed=args.seed,
             device=args.device,
@@ -67,7 +67,7 @@ def main():
     
     elif args.command == 'multi':
         # 멀티 시드 실험 실행
-        train.multi_seed_trainer.run_multi_seed_experiment(
+        run_multi_seed_experiment(
             config_path=args.config,
             seeds=args.seeds,
             device=args.device,
@@ -76,16 +76,8 @@ def main():
         )
     
     elif args.command == 'plot':
-        # 결과 시각화
-        if args.plot_type == 'learning_curves':
-            plot.plot_results.plot_learning_curves(args.results_dir, args.save_path)
-        elif args.plot_type == 'comparison':
-            if not args.comparison_dirs:
-                print("Error: comparison 플롯을 위해서는 --comparison_dirs가 필요합니다.")
-                sys.exit(1)
-            plot.plot_results.plot_comparison(args.comparison_dirs, args.labels, args.save_path)
-        elif args.plot_type == 'analysis':
-            plot.plot_results.plot_single_algorithm_analysis(args.results_dir, args.save_path)
+        print("Plot 기능은 제거되었습니다. Wandb 대시보드를 사용해 주세요:")
+        print("https://wandb.ai/tatalintelli-university-of-seoul/")
     
     else:
         print("사용법:")

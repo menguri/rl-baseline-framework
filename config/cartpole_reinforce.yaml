@@ -1,0 +1,40 @@
+# CartPole REINFORCE 실험 설정
+
+environment:
+  name: "CartPole-v1"
+  seed: 42
+
+algorithm:
+  name: "REINFORCE"
+  lr: 0.001
+  gamma: 0.99
+  has_continuous_action_space: false
+  action_std_init: 0.6
+
+network:
+  hidden_dims: [128, 128]
+  activation: "tanh"
+
+training:
+  max_episodes: 2000
+  max_steps_per_episode: 500
+  update_interval: 1  # REINFORCE는 에피소드마다 업데이트
+  eval_interval: 50
+  save_interval: 500
+  log_interval: 10
+
+experiment:
+  name: "cartpole_reinforce"
+  seeds: [0, 1, 2, 3, 4]
+  device: "cuda"
+  save_dir: "results/cartpole_reinforce"
+
+logging:
+  tensorboard: false
+  save_metrics: true
+  plot_interval: 100
+  use_wandb: true
+  wandb_project: "rl-framework-cartpole"
+  wandb_entity: "tatalintelli-university-of-seoul"
+  enable_step_logging: true
+  step_log_interval: 1000

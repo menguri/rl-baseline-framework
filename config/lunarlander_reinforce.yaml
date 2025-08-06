@@ -1,0 +1,40 @@
+# LunarLanderContinuous REINFORCE 실험 설정
+
+environment:
+  name: "LunarLanderContinuous-v3"
+  seed: 42
+
+algorithm:
+  name: "REINFORCE"
+  lr: 1e-3
+  gamma: 0.99
+  has_continuous_action_space: true
+  action_std_init: 1.0
+
+network:
+  hidden_dims: [256, 256]
+  activation: "tanh"
+
+training:
+  max_episodes: 3000
+  max_steps_per_episode: 1000
+  update_interval: 1  # REINFORCE는 에피소드마다 업데이트
+  eval_interval: 100
+  save_interval: 1000
+  log_interval: 25
+
+experiment:
+  name: "lunarlander_reinforce"
+  seeds: [0, 1, 2, 3, 4]
+  device: "cuda"
+  save_dir: "results/lunarlander_reinforce"
+
+logging:
+  tensorboard: false
+  save_metrics: true
+  plot_interval: 200
+  use_wandb: true
+  wandb_project: "rl-framework-lunarlandercontinuous"
+  wandb_entity: "tatalintelli-university-of-seoul"
+  enable_step_logging: true
+  step_log_interval: 1000

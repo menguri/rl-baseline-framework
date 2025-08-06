@@ -18,10 +18,14 @@ class ActorNetwork(nn.Module):
         self.has_continuous_action_space = has_continuous_action_space
         self.clamp_logits = clamp_logits
         self.logits_clip_range = logits_clip_range
-        if torch.cuda.is_available():
-            self.device = torch.device('cuda')
-        else:
-            self.device = torch.device('cpu')  # 디바이스 설정, 필요시 변경 가능
+        # 안전한 CUDA 체크
+        try:
+            if torch.cuda.is_available():
+                self.device = torch.device('cuda')
+            else:
+                self.device = torch.device('cpu')
+        except RuntimeError:
+            self.device = torch.device('cpu')
         
         # Actor (정책) 네트워크
         self.action_dim = action_dim

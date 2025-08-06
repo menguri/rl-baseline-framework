@@ -43,24 +43,14 @@ class BaseAlgorithm(ABC):
         """학습 모드로 설정합니다."""
         pass
     
-    def get_action_logprob(self, state, action):
-        """주어진 상태와 행동에 대한 로그 확률을 계산합니다."""
-        pass
-    
-    def get_value(self, state):
-        """주어진 상태의 가치를 계산합니다."""
-        pass
-    
-    def decay_action_std(self, action_std_decay_rate, min_action_std):
-        """행동 표준편차를 감소시킵니다 (연속 행동 공간에서만 사용)."""
-        pass
 
 
 class BaseOnPolicyAlgorithm(BaseAlgorithm):
     """온-정책 알고리즘의 기본 클래스 (PPO, TRPO 등)"""
     
-    def __init__(self, state_dim, action_dim, device='cpu'):
+    def __init__(self, state_dim, action_dim, has_continuous_action_space=False, device='cpu'):
         super().__init__(state_dim, action_dim, device)
+        self.has_continuous_action_space = has_continuous_action_space
         
         # 온-정책 알고리즘 관련 변수들
         self.buffer = None

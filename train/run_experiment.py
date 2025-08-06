@@ -8,6 +8,7 @@ import os
 import sys
 import yaml
 import numpy as np
+import torch
 from pathlib import Path
 
 # 프로젝트 루트를 Python 경로에 추가
@@ -65,7 +66,20 @@ def run_experiment(config_path, seed=None, device=None, max_episodes=None):
         config['environment']['seed'] = seed
     
     if device is not None:
-        config['experiment']['device'] = device
+        # GPU 자동 감지 및 CPU 폴백 (안전한 CUDA 체크)
+        def safe_cuda_check():
+            try:
+                return torch.cuda.is_available()
+            except RuntimeError:
+                return False
+        
+        if device == 'auto':
+            config['experiment']['device'] = 'auto'
+        elif device == 'cuda' and not safe_cuda_check():
+            print("Warning: CUDA requested but not available. Using CPU instead.")
+            config['experiment']['device'] = 'cpu'
+        else:
+            config['experiment']['device'] = device
     
     if max_episodes is not None:
         config['training']['max_episodes'] = max_episodes

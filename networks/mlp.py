@@ -61,10 +61,14 @@ class MLPActorCritic(nn.Module):
         self.state_dim = state_dim
         self.action_dim = action_dim
         self.has_continuous_action_space = has_continuous_action_space
-        if torch.cuda.is_available():
-            self.device = torch.device('cuda')
-        else:
-            self.device = torch.device('cpu')  # 디바이스 설정, 필요시 변경 가능
+        # 안전한 CUDA 체크
+        try:
+            if torch.cuda.is_available():
+                self.device = torch.device('cuda')
+            else:
+                self.device = torch.device('cpu')
+        except RuntimeError:
+            self.device = torch.device('cpu')
         
         
         # Actor (정책) 네트워크

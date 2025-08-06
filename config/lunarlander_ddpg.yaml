@@ -25,10 +25,12 @@ network:
   activation: "relu"
 
 training:
-  max_episodes: 500
-  update_interval: 2048     # DDPG는 매 Step마다 업데이트하므로, max_steps_per_episode를 update_interval로 사용
+  max_episodes: 1000
+  max_steps_per_episode: 1000
+  update_interval: 100  # DDPG는 매 step마다 업데이트
   eval_interval: 10
-  save_interval: 1000000
+  save_interval: 500
+  log_interval: 10
 
 experiment:
   name: "lunarlandercontinuous_ddpg"

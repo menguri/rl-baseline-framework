@@ -6,8 +6,11 @@ from tqdm import tqdm
 
 from utils.logger import ExperimentLogger, set_seed
 from environments.cartpole_env import CartPoleEnv
-from environments import LunarLanderContinuousEnv
-from algorithms import PPO, TRPO, DDPG 
+from environments import (
+    LunarLanderContinuousEnv, HalfCheetahEnv, Walker2dEnv, 
+    HumanoidEnv, AntEnv, SwimmerEnv, HopperEnv
+)
+from algorithms import PPO, TRPO, DDPG, REINFORCE, A2C 
 
 
 class Trainer:
@@ -19,6 +22,30 @@ class Trainer:
         
         # 시드 설정
         set_seed(self.seed)
+        
+        # 디바이스 설정 (자동 감지, 안전한 CUDA 체크)
+        requested_device = self.config['experiment']['device']
+        
+        def safe_cuda_check():
+            """CUDA 드라이버 에러를 방지하는 안전한 CUDA 체크"""
+            try:
+                return torch.cuda.is_available()
+            except RuntimeError:
+                return False
+        
+        if requested_device == 'auto':
+            # 자동 감지: GPU 있으면 cuda, 없으면 cpu
+            if safe_cuda_check():
+                self.device = torch.device('cuda')
+                print("Auto-detected device: CUDA")
+            else:
+                self.device = torch.device('cpu')
+                print("Auto-detected device: CPU")
+        elif requested_device == 'cuda' and not safe_cuda_check():
+            print("Warning: CUDA requested but not available. Using CPU instead.")
+            self.device = torch.device('cpu')
+        else:
+            self.device = torch.device(requested_device)
         
         # 환경 설정
         self.env = self._setup_environment()
@@ -34,11 +61,6 @@ class Trainer:
         self.total_steps = 0
         self.best_reward = -np.inf
         
-        # 디바이스 설정
-        self.device = torch.device(self.config['experiment']['device'])
-        if self.device.type == 'cuda' and not torch.cuda.is_available():
-            raise RuntimeError("CUDA is not available. Please check your PyTorch installation.")
-        
     def _load_config(self, config_path):
         """설정 파일을 로드합니다."""
         with open(config_path, 'r') as f:
@@ -53,6 +75,18 @@ class Trainer:
             return CartPoleEnv(seed=self.seed)
         elif env_name == "LunarLanderContinuous-v3":
             return LunarLanderContinuousEnv(seed=self.seed)
+        elif env_name == "HalfCheetah-v4":
+            return HalfCheetahEnv(seed=self.seed)
+        elif env_name == "Walker2d-v4":
+            return Walker2dEnv(seed=self.seed)
+        elif env_name == "Humanoid-v4":
+            return HumanoidEnv(seed=self.seed)
+        elif env_name == "Ant-v4":
+            return AntEnv(seed=self.seed)
+        elif env_name == "Swimmer-v4":
+            return SwimmerEnv(seed=self.seed)
+        elif env_name == "Hopper-v4":
+            return HopperEnv(seed=self.seed)
         else:
             raise ValueError(f"Unsupported environment: {env_name}")
     
@@ -67,7 +101,7 @@ class Trainer:
         if has_continuous_action_space is None:
             has_continuous_action_space = False
             
-        device = self.config['experiment']['device']
+        device = self.device
         print(f"Using device: {device}")
         
         if alg_name == "PPO":
@@ -119,6 +153,31 @@ class Trainer:
                 ou_theta=alg_config.get('ou_theta', 0.15),
                 ou_mu=alg_config.get('ou_mu', 0.0),
                 ou_sigma=alg_config.get('ou_sigma', 0.2)
+            )
+        elif alg_name == "REINFORCE":
+            return REINFORCE(
+                state_dim=state_dim,
+                action_dim=action_dim,
+                hidden_dims=self.config['network']['hidden_dims'],
+                lr=alg_config.get('lr', 1e-3),
+                gamma=alg_config['gamma'],
+                has_continuous_action_space=has_continuous_action_space,
+                action_std_init=alg_config.get('action_std_init', 0.6),
+                device=device
+            )
+        elif alg_name == "A2C":
+            return A2C(
+                state_dim=state_dim,
+                action_dim=action_dim,
+                hidden_dims=self.config['network']['hidden_dims'],
+                lr_actor=alg_config.get('lr_actor', 3e-4),
+                lr_critic=alg_config.get('lr_critic', 1e-3),
+                gamma=alg_config['gamma'],
+                has_continuous_action_space=has_continuous_action_space,
+                action_std_init=alg_config.get('action_std_init', 0.6),
+                entropy_coef=alg_config.get('entropy_coef', 0.01),
+                value_loss_coef=alg_config.get('value_loss_coef', 0.5),
+                device=device
             )
         else:
             raise ValueError(f"Unsupported algorithm: {alg_name}")
@@ -186,6 +245,10 @@ class Trainer:
             episode_reward += reward
             episode_length += 1
             self.total_steps += 1
+            
+            # 스텝 기반 로깅 체크 (매 스텝마다)
+            self.logger.check_step_logging(self.total_steps, reward)
+            
             state = next_state
             if done:
                 self.logger.log_episode(self.episode_count, episode_reward, episode_length, self.total_steps)
@@ -215,9 +278,6 @@ class Trainer:
         print(f"Max episodes: {max_episodes}")
         print(f"device: {self.device}")
 
-        print(f"torch.cuda.is_available() : {torch.cuda.is_available()}")          # True 여야 함
-        print(f"torch.cuda.current_device() : {torch.cuda.current_device()}")        # GPU 번호
-        print(f"torch.cuda.get_device_name(0) : {torch.cuda.get_device_name(0)}")      # GPU 이름
 
         alg_name = self.config['algorithm']['name']
         
@@ -289,8 +349,4 @@ class Trainer:
         model_path = os.path.join(save_dir, f"seed_{self.seed}", filename)
         self.algorithm.save(model_path)
     
-    def load_model(self, filename):
-        """모델을 로드합니다."""
-        save_dir = self.config['experiment']['save_dir']
-        model_path = os.path.join(save_dir, f"seed_{self.seed}", filename)
-        self.algorithm.load(model_path) 
+ 

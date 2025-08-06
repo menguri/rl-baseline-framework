@@ -323,4 +323,4 @@ class TRPO(BaseOnPolicyAlgorithm):
         """주어진 상태의 가치를 계산합니다."""
         with torch.no_grad():
             state = torch.as_tensor(state, dtype=torch.float32, device=self.device)
-            return self.actor.get_value(state) 
+            return self.critic.evaluate(state) 
