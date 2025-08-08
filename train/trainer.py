@@ -120,6 +120,7 @@ class Trainer:
                 has_continuous_action_space=has_continuous_action_space,
                 action_std_init=alg_config['action_std_init'],
                 hidden_dims=self.config['network']['hidden_dims'],
+                entropy_coef=alg_config.get('entropy_coef', 0.01),
                 device=device
             )
         elif alg_name == "TRPO":
@@ -134,6 +135,7 @@ class Trainer:
                 has_continuous_action_space=has_continuous_action_space,
                 action_std_init=alg_config['action_std_init'],
                 hidden_dims=self.config['network']['hidden_dims'],
+                critic_iters=alg_config.get('critic_iters', 80),
                 device=device
             )
         elif alg_name == "DDPG":

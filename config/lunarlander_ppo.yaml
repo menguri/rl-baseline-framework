@@ -16,7 +16,8 @@ algorithm:
   train_value_iters: 80
   lam: 0.97
   has_continuous_action_space: true
-  action_std_init: 1.0
+  action_std_init: 0.8
+  entropy_coef: 0.01
 
 network:
   hidden_dims: [128, 128]
@@ -24,17 +25,15 @@ network:
 
 training:
   max_episodes: 1000
-  max_steps_per_episode: 1000
   update_interval: 2048
   eval_interval: 10
   save_interval: 500
-  log_interval: 10
 
 experiment:
-  name: "lunarlandercontinuous_ppo"
+  name: "lunarlandercontinuous-v3_ppo"
   seeds: [0, 1, 2, 3, 4]
   device: "cuda"
-  save_dir: "results/lunarlandercontinuous_ppo"
+  save_dir: "results/lunarlandercontinuous-v3_ppo"
 
 logging:
   tensorboard: false

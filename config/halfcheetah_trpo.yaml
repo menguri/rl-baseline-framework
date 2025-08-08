@@ -1,22 +1,19 @@
-# HalfCheetah PPO 실험 설정
+# LunarLanderContinuous TRPO 실험 설정
 
 environment:
   name: "HalfCheetah-v4"
   seed: 42
 
 algorithm:
-  name: "PPO"
-  lr_actor: 3e-4
-  lr_critic: 1e-3
+  name: "TRPO"
+  lr: 3e-4
   gamma: 0.99
   gae_lambda: 0.95
-  clip_ratio: 0.2
-  target_kl: 0.015
-  train_policy_iters: 80
-  train_value_iters: 80
-  lam: 0.97
+  max_kl: 0.01
+  damping: 0.3
   has_continuous_action_space: true
-  action_std_init: 0.8
+  action_std_init: 1.0
+  critic_iters: 80  # 가치 함수 업데이트 스텝 수
 
 network:
   hidden_dims: [256, 256]
@@ -29,16 +26,16 @@ training:
   save_interval: 500
 
 experiment:
-  name: "halfcheetah-v4_ppo"
+  name: "halfcheetah-v4_trpo"
   seeds: [0, 1]
   device: "cuda"
-  save_dir: "results/halfcheetah-v4_ppo"
+  save_dir: "results/halfcheetah-v4_trpo"
 
 logging:
-  tensorboard: false  
+  tensorboard: false
   save_metrics: true
-  plot_interval: 100
-  use_wandb: true
+  # wandb 설정
+  use_wandb: True
   wandb_project: "rl-framework-mujoco-HalfCheetah"
   wandb_entity: "tatalintelli-university-of-seoul"
   enable_step_logging: true

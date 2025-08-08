@@ -19,3 +19,9 @@
 2) 후에 step 기준으로 나오도록 전부 수정하기
 3) action 결정하면 다음 2 step까지는 똑같은 action 수행하도록 조정하는 과정도 시도해보자
 
+
+[공통 적용 필요]
+- batch에서 sample하는 규모를 줄이거나 크게 해보기(on, off 영역 중에 뭐가 더 performance에 강한가를 확인 가능) > 확실히 붕 뜨는 것은 없어졌지만 기록 낮음
+- batch normalization 필요
+- mini-batch로 업데이트하기(필수1)
+- reward 정규화(후보1)

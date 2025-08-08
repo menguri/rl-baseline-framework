@@ -11,7 +11,7 @@ else
 fi
 
 echo "=========================================="
-echo "밤새 강화학습-lunarlander 실험 시작"
+echo "밤새 강화학습-halfcheetah 실험 시작"
 echo "시작 시간: $(date)"
 echo "=========================================="
 
@@ -31,23 +31,23 @@ fi
 
 echo "wandb 로그인 확인 완료!"
 
-# PPO 실험 실행
-echo
-echo "=========================================="
-echo "Lunar PPO 실험 시작"
-echo "=========================================="
-python -m main multi --config config/lunarlander_ppo.yaml --num_workers 1
+# # PPO 실험 실행
+# echo
+# echo "=========================================="
+# echo "Halfcheetah PPO 실험 시작"
+# echo "=========================================="
+# python -m main multi --config config/halfcheetah_ppo.yaml --num_workers 1
 
-# PPO 완료 후 10초 대기
-echo "PPO 실험 완료. 10초 후 TRPO 실험 시작..."
-sleep 10
+# # PPO 완료 후 10초 대기
+# echo "PPO 실험 완료. 10초 후 TRPO 실험 시작..."
+# sleep 10
 
 # TRPO 실험 실행
 echo
 echo "=========================================="
-echo "Lunar TRPO 실험 시작"
+echo "Halfcheetah TRPO 실험 시작"
 echo "=========================================="
-python -m main multi --config config/lunarlander_trpo.yaml --num_workers 1
+python -m main multi --config config/halfcheetah_trpo.yaml --num_workers 2
 
 # TRPO 완료 후 10초 대기
 echo "TRPO 실험 완료. 10초 후 DDPG 실험 시작..."
@@ -56,9 +56,9 @@ sleep 10
 # DDPG 실험 실행
 echo
 echo "=========================================="
-echo "Lunar DDPG 실험 시작"
+echo "Halfcheetah DDPG 실험 시작"
 echo "=========================================="
-python -m main multi --config config/lunarlander_ddpg.yaml --num_workers 1
+python -m main multi --config config/halfcheetah_ddpg.yaml --num_workers 2
 
 # DDPG 완료 후 10초 대기
 echo "DDPG 실험 완료..."
@@ -73,8 +73,8 @@ echo "=========================================="
 # 결과 요약
 echo
 echo "결과 요약:"
-echo "PPO 결과: results/lunarlander_ppo/multi_seed_results.json"
-echo "TRPO 결과: results/lunarlander_trpo/multi_seed_results.json"
-echo "TRPO 결과: results/lunarlander_ddpg/multi_seed_results.json"
+echo "PPO 결과: results/halfcheetah_ppo/multi_seed_results.json"
+echo "TRPO 결과: results/halfcheetah_trpo/multi_seed_results.json"
+echo "TRPO 결과: results/halfcheetah_ddpg/multi_seed_results.json"
 echo
 echo "wandb에서 실시간으로 결과를 확인할 수 있습니다!"

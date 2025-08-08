@@ -154,7 +154,14 @@ class ExperimentLogger:
             # GPU 메트릭 추가 (안전한 CUDA 체크)
             try:
                 if torch.cuda.is_available():
-                    gpu_metrics = self._get_gpu_metrics()
+                    # 기본 GPU 메모리 정보만 수집 (MB 단위)
+                    memory_allocated = torch.cuda.memory_allocated(0) / 1024**2
+                    memory_reserved = torch.cuda.memory_reserved(0) / 1024**2
+
+                    gpu_metrics = {
+                        f"gpu/memory_allocated_mb": memory_allocated,
+                        f"gpu/memory_reserved_mb": memory_reserved,
+                        }
                     log_data.update(gpu_metrics)
             except RuntimeError:
                 # CUDA 드라이버 없으면 GPU 메트릭 생략
@@ -193,6 +200,7 @@ class ExperimentLogger:
         # wandb에 기록
         if self.use_wandb:
             wandb.log({
+                'step_metrics/episode_count': self.step_episode_count_at_interval,
                 'step_metrics/avg_reward_per_step': interval_avg_reward,
                 'step_metrics/sum_reward_in_interval': interval_sum_reward,
                 'step_metrics/steps_in_interval': steps_in_interval,
@@ -270,54 +278,28 @@ class ExperimentLogger:
             self._log_step_metrics(current_step)
     
     def _get_gpu_metrics(self):
-        """GPU 메트릭을 수집합니다."""
+        """GPU 메모리 사용량만 간단히 로깅합니다."""
         try:
             if not torch.cuda.is_available():
                 return {}
-        except RuntimeError:
-            return {}
-        
-        try:
+                
             gpu_metrics = {}
             for i in range(torch.cuda.device_count()):
                 device_name = f"gpu_{i}"
                 
-                # GPU 메모리 사용량 (MB)
+                # 기본 GPU 메모리 정보만 수집 (MB 단위)
                 memory_allocated = torch.cuda.memory_allocated(i) / 1024**2
                 memory_reserved = torch.cuda.memory_reserved(i) / 1024**2
-                memory_max_allocated = torch.cuda.max_memory_allocated(i) / 1024**2
                 
                 gpu_metrics.update({
                     f"gpu/{device_name}/memory_allocated_mb": memory_allocated,
                     f"gpu/{device_name}/memory_reserved_mb": memory_reserved,
-                    f"gpu/{device_name}/memory_max_allocated_mb": memory_max_allocated,
                 })
-                
-                # GPU 사용률 (사용 가능한 경우)
-                try:
-                    import pynvml
-                    pynvml.nvmlInit()
-                    handle = pynvml.nvmlDeviceGetHandleByIndex(i)
-                    utilization = pynvml.nvmlDeviceGetUtilizationRates(handle)
-                    temperature = pynvml.nvmlDeviceGetTemperature(handle, pynvml.NVML_TEMPERATURE_GPU)
-                    
-                    gpu_metrics.update({
-                        f"gpu/{device_name}/utilization_percent": utilization.gpu,
-                        f"gpu/{device_name}/memory_utilization_percent": utilization.memory,
-                        f"gpu/{device_name}/temperature_c": temperature,
-                    })
-                except ImportError:
-                    # pynvml이 없으면 기본 메트릭만 사용
-                    pass
-                except Exception:
-                    # 다른 오류는 무시
-                    pass
             
             return gpu_metrics
         except Exception as e:
-            # GPU 메트릭 수집 실패 시 빈 딕셔너리 반환
+            print(f"Warning: Failed to collect GPU metrics: {str(e)}")
             return {}
-
 
 def set_seed(seed):
     """랜덤 시드를 설정합니다."""
@@ -326,4 +308,4 @@ def set_seed(seed):
     np.random.seed(seed)
     import random
     random.seed(seed)
-    os.environ['PYTHONHASHSEED'] = str(seed) 
+    os.environ['PYTHONHASHSEED'] = str(seed)

@@ -45,6 +45,7 @@ class ActorNetwork(nn.Module):
                                         (self.action_dim,),
                                         new_action_std ** 2,
                                         dtype=torch.float32,
+                                        device=self.device
                                     )
         else:
             print("WARNING: Calling set_action_std() on discrete action space policy")

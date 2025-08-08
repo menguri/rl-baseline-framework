@@ -69,23 +69,10 @@ def main():
         # 멀티 시드 실험 실행
         run_multi_seed_experiment(
             config_path=args.config,
-            seeds=args.seeds,
             device=args.device,
             max_episodes=args.max_episodes,
             num_workers=args.num_workers
         )
-    
-    elif args.command == 'plot':
-        print("Plot 기능은 제거되었습니다. Wandb 대시보드를 사용해 주세요:")
-        print("https://wandb.ai/tatalintelli-university-of-seoul/")
-    
-    else:
-        print("사용법:")
-        print("  python main.py train --config config/cartpole_ppo.yaml")
-        print("  python main.py multi --config config/cartpole_ppo.yaml --seeds 0 1 2 3 4")
-        print("  python main.py plot --results_dir results/cartpole_ppo --plot_type learning_curves")
-        print("\n자세한 도움말은 'python main.py <command> --help'를 참조하세요.")
-
 
 if __name__ == "__main__":
     main() 

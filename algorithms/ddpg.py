@@ -65,17 +65,20 @@ class DDPG(BaseOffPolicyAlgorithm):
         critic_loss = self.mse_loss(q_expected, q_target)
         self.critic_optim.zero_grad()
         critic_loss.backward()
+        torch.nn.utils.clip_grad_norm_(self.critic.parameters(), max_norm=1.0) 
         self.critic_optim.step()
         
         # Actor update
         actor_loss = -self.critic(states, self.actor(states)).mean()
         self.actor_optim.zero_grad()
         actor_loss.backward()
+        torch.nn.utils.clip_grad_norm_(self.actor.parameters(), max_norm=1.0) 
         self.actor_optim.step()
-
-        # Target network soft update
-        self._soft_update(self.actor_target, self.actor)
+        
+        # Soft update
         self._soft_update(self.critic_target, self.critic)
+        self._soft_update(self.actor_target, self.actor)
+        
         return {'critic_loss': critic_loss.item(), 'actor_loss': actor_loss.item()}
 
     def _soft_update(self, target, source):

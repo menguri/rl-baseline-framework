@@ -16,7 +16,7 @@ class PPO(BaseOnPolicyAlgorithm):
                  gamma=0.99, gae_lambda=0.95, clip_ratio=0.2, target_kl=0.01,
                  train_policy_iters=80, train_value_iters=80, lam=0.97,
                  has_continuous_action_space=True, action_std_init=0.6,
-                 hidden_dims=[64, 64], device='cpu'):
+                 hidden_dims=[64, 64], entropy_coef=0.01, device='cpu'):
         
         super().__init__(state_dim, action_dim, device)
         
@@ -28,14 +28,10 @@ class PPO(BaseOnPolicyAlgorithm):
         self.train_value_iters = train_value_iters
         self.lam = lam
         self.has_continuous_action_space = has_continuous_action_space
+        self.entropy_coef = entropy_coef
         self.device = torch.device(device)
         
         # 네트워크 초기화
-        self.policy = MLPActorCritic(
-            state_dim, action_dim, hidden_dims, 
-            has_continuous_action_space, action_std_init
-        ).to(device)
-
         self.policy = MLPActorCritic(
             state_dim, action_dim, hidden_dims, 
             has_continuous_action_space, action_std_init
@@ -68,8 +64,8 @@ class PPO(BaseOnPolicyAlgorithm):
         """연속 행동 공간에서 행동 표준편차를 설정합니다."""
         if self.has_continuous_action_space:
             self.action_std = new_action_std
-            self.policy.set_action_std(new_action_std, self.device)
-            self.policy_old.set_action_std(new_action_std, self.device)
+            self.policy.set_action_std(new_action_std, device)
+            self.policy_old.set_action_std(new_action_std, device)
         else:
             print("WARNING: Calling set_action_std() on discrete action space policy")
     
@@ -135,7 +131,7 @@ class PPO(BaseOnPolicyAlgorithm):
             entropy_loss = -dist_entropy.mean()
             
             # 전체 손실
-            loss = policy_loss + 0.01 * entropy_loss
+            loss = policy_loss + self.entropy_coef * entropy_loss
             
             # 역전파
             self.optimizer.zero_grad()

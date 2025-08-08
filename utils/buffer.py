@@ -35,7 +35,7 @@ class ReplayBuffer:
     
     def sample(self, batch_size):
         """배치 크기만큼 샘플을 추출합니다."""
-        indices = np.random.randint(0, self.size, size=batch_size)
+        indices = torch.randint(0, self.size, (batch_size,), device=self.device)
         
         return (
             self.states[indices],
@@ -68,12 +68,11 @@ class RolloutBuffer:
         self.returns = []
     
     def add(self, state, action, logprob, reward, state_value, is_terminal):
-        """새로운 경험을 버퍼에 추가합니다."""
-        self.states.append(state)
-        self.actions.append(action)
-        self.logprobs.append(logprob)
-        self.rewards.append(reward)
-        self.state_values.append(state_value)
+        self.states.append(state.to(self.device))
+        self.actions.append(action.to(self.device))
+        self.logprobs.append(logprob.to(self.device))
+        self.rewards.append(reward)  # scalar, float → 나중에 tensor로 변환
+        self.state_values.append(state_value.to(self.device))
         self.is_terminals.append(is_terminal)
     
     def compute_returns_and_advantages(self, gamma=0.99, gae_lambda=0.95, last_value=0):
@@ -102,15 +101,14 @@ class RolloutBuffer:
             self.advantages = (self.advantages - self.advantages.mean()) / (self.advantages.std() + 1e-8)
     
     def get_batch(self):
-        """배치 데이터를 반환합니다."""
         return {
-            'states': torch.stack(self.states),
-            'actions': torch.stack(self.actions),
-            'logprobs': torch.stack(self.logprobs),
+            'states': torch.stack(self.states).to(self.device),
+            'actions': torch.stack(self.actions).to(self.device),
+            'logprobs': torch.stack(self.logprobs).to(self.device),
             'rewards': torch.tensor(self.rewards, dtype=torch.float32, device=self.device),
-            'state_values': torch.stack(self.state_values),
-            'advantages': self.advantages,
-            'returns': self.returns
+            'state_values': torch.stack(self.state_values).to(self.device),
+            'advantages': self.advantages.to(self.device),
+            'returns': self.returns.to(self.device)
         }
     
     def __len__(self):

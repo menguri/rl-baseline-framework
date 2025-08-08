@@ -93,13 +93,14 @@ class MLPActorCritic(nn.Module):
         # Critic (가치 함수) 네트워크
         self.critic = MLP(state_dim, 1, hidden_dims, activation='tanh')
     
-    def set_action_std(self, new_action_std):
+    def set_action_std(self, new_action_std, device='cpu'):
         """연속 행동 공간에서 행동 표준편차를 설정합니다."""
         if self.has_continuous_action_space:
             self.action_var = torch.full(
                                         (self.action_dim,),
                                         new_action_std ** 2,
                                         dtype=torch.float32,
+                                        device=self.device
                                     )
         else:
             print("WARNING: Calling set_action_std() on discrete action space policy")

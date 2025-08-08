@@ -145,23 +145,6 @@ def run_single_seed(config_path, seed, device=None, max_episodes=None):
         with open(config_path, 'r') as f:
             config = yaml.safe_load(f)
         
-        # 인수로 전달된 값들로 설정 덮어쓰기
-        if device is not None:
-            # GPU 자동 감지 및 CPU 폴백 (안전한 CUDA 체크)
-            def safe_cuda_check():
-                try:
-                    return torch.cuda.is_available()
-                except RuntimeError:
-                    return False
-            
-            if device == 'auto':
-                config['experiment']['device'] = 'auto'
-            elif device == 'cuda' and not safe_cuda_check():
-                print(f"Warning: CUDA requested but not available for seed {seed}. Using CPU instead.")
-                config['experiment']['device'] = 'cpu'
-            else:
-                config['experiment']['device'] = device
-        
         if max_episodes is not None:
             config['training']['max_episodes'] = max_episodes
         
@@ -198,7 +181,7 @@ def run_single_seed(config_path, seed, device=None, max_episodes=None):
         }
 
 
-def run_multi_seed_experiment(config_path, seeds, device=None, max_episodes=None, num_workers=1):
+def run_multi_seed_experiment(config_path, device=None, max_episodes=None, num_workers=1):
     """여러 시드로 실험을 실행합니다."""
     
     # 설정 파일 로드
@@ -210,13 +193,16 @@ def run_multi_seed_experiment(config_path, seeds, device=None, max_episodes=None
     wandb_project = config.get('logging', {}).get('wandb_project', 'rl-framework')
     wandb_entity = config.get('logging', {}).get('wandb_entity')
     
+    # 시드 설정
+    seeds = config['experiment'].get('seed', [0, 1, 2, 3, 4])
+    
     print("=" * 60)
     print("멀티 시드 강화학습 실험 시작")
     print("=" * 60)
     print(f"설정 파일: {config_path}")
     print(f"환경: {config['environment']['name']}")
     print(f"알고리즘: {config['algorithm']['name']}")
-    print(f"시드들: {seeds}")
+    print(f"시드들: {config['environment']['seed']} (실험 시드: {seeds})")
     print(f"디바이스: {device or config['experiment']['device']}")
     print(f"최대 에피소드: {max_episodes or config['training']['max_episodes']}")
     print(f"워커 수: {num_workers}")
@@ -244,13 +230,6 @@ def run_multi_seed_experiment(config_path, seeds, device=None, max_episodes=None
             if use_wandb:
                     wandb.finish()
             
-            # wandb에 개별 시드 결과 로깅
-            # if use_wandb and 'error' not in result:
-            #     wandb.log({
-            #         f'seed_{seed}/best_reward': result['best_reward'],
-            #         f'seed_{seed}/total_steps': result['total_steps'],
-            #         f'seed_{seed}/final_episode': result['final_episode']
-            #     })
     else:
         # 병렬 실행
         with ProcessPoolExecutor(max_workers=num_workers) as executor:
@@ -267,13 +246,6 @@ def run_multi_seed_experiment(config_path, seeds, device=None, max_episodes=None
                     result = future.result()
                     results.append(result)
                     
-                    # wandb에 개별 시드 결과 로깅
-                    # if use_wandb and 'error' not in result:
-                    #     wandb.log({
-                    #         f'seed_{seed}/best_reward': result['best_reward'],
-                    #         f'seed_{seed}/total_steps': result['total_steps'],
-                    #         f'seed_{seed}/final_episode': result['final_episode']
-                    #     })
                 except Exception as e:
                     print(f"시드 {seed} 실험 중 예외 발생: {e}")
                     results.append({
@@ -304,18 +276,6 @@ def run_multi_seed_experiment(config_path, seeds, device=None, max_episodes=None
         print(f"최저 보상: {np.min(rewards):.2f}")
         print(f"평균 총 스텝: {np.mean(steps):.0f} ± {np.std(steps):.0f}")
         print(f"평균 에피소드: {np.mean(episodes):.0f} ± {np.std(episodes):.0f}")
-        
-        # wandb에 평균 결과 로깅
-        # if use_wandb:
-        #     wandb.log({
-        #         'summary/mean_reward': np.mean(rewards),
-        #         'summary/std_reward': np.std(rewards),
-        #         'summary/max_reward': np.max(rewards),
-        #         'summary/min_reward': np.min(rewards),
-        #         'summary/mean_steps': np.mean(steps),
-        #         'summary/mean_episodes': np.mean(episodes),
-        #         'summary/success_rate': len(successful_results) / len(seeds)
-        #     })
         
         # 시드별 결과
         print("\n시드별 결과:")
@@ -380,7 +340,6 @@ def main():
     try:
         run_multi_seed_experiment(
             config_path=args.config,
-            seeds=args.seeds,
             device=args.device,
             max_episodes=args.max_episodes,
             num_workers=args.num_workers
