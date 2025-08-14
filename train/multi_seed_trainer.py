@@ -41,14 +41,6 @@ def parse_args():
     )
     
     parser.add_argument(
-        "--seeds", 
-        type=int, 
-        nargs='+',
-        default=[0, 1, 2, 3, 4],
-        help="실험할 시드들 (기본값: 0 1 2 3 4)"
-    )
-    
-    parser.add_argument(
         "--device", 
         type=str, 
         default=None,
@@ -194,7 +186,7 @@ def run_multi_seed_experiment(config_path, device=None, max_episodes=None, num_w
     wandb_entity = config.get('logging', {}).get('wandb_entity')
     
     # 시드 설정
-    seeds = config['experiment'].get('seed', [0, 1, 2, 3, 4])
+    seeds = config['experiment'].get('seeds', [0, 1, 2, 3, 4])
     
     print("=" * 60)
     print("멀티 시드 강화학습 실험 시작")

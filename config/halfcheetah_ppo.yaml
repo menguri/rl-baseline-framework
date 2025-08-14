@@ -30,7 +30,7 @@ training:
 
 experiment:
   name: "halfcheetah-v4_ppo"
-  seeds: [0, 1]
+  seeds: [42, 1337, 20250811, 987654, 314159]
   device: "cuda"
   save_dir: "results/halfcheetah-v4_ppo"
 

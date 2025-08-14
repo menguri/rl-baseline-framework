@@ -48,6 +48,10 @@ class ReplayBuffer:
     def __len__(self):
         return self.size
 
+    def current_size(self):
+        """현재 버퍼에 저장된 경험의 수를 반환합니다."""
+        return self.size
+
 
 class RolloutBuffer:
     """롤아웃 버퍼 (PPO, TRPO 등에서 사용)"""

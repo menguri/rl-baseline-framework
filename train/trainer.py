@@ -10,7 +10,7 @@ from environments import (
     LunarLanderContinuousEnv, HalfCheetahEnv, Walker2dEnv, 
     HumanoidEnv, AntEnv, SwimmerEnv, HopperEnv
 )
-from algorithms import PPO, TRPO, DDPG, REINFORCE, A2C 
+from algorithms import PPO, TRPO, DDPG, REINFORCE, A2C, TD3
 
 
 class Trainer:
@@ -154,7 +154,30 @@ class Trainer:
                 batch_size=alg_config['batch_size'],
                 ou_theta=alg_config.get('ou_theta', 0.15),
                 ou_mu=alg_config.get('ou_mu', 0.0),
-                ou_sigma=alg_config.get('ou_sigma', 0.2)
+                ou_sigma=alg_config.get('ou_sigma', 0.2),
+                noise_type=alg_config.get('noise_type', 'ou'),
+                exploration_std=alg_config.get('exploration_std', 0.1),
+                stable_update_size=alg_config.get('stable_update_size', 10000),
+                bn_use = alg_config.get('bn_use', True)
+            )
+        elif alg_name == "TD3":
+            return TD3(
+                state_dim=state_dim,
+                action_dim=action_dim,
+                device=device,
+                hidden1=alg_config.get('hidden1', 400),
+                hidden2=alg_config.get('hidden2', 300),
+                init_w=alg_config.get('init_w', 3e-3),
+                lr_actor=alg_config['lr_actor'],
+                lr_critic=alg_config['lr_critic'],
+                gamma=alg_config['gamma'],
+                tau=alg_config['tau'],
+                buffer_size=alg_config['buffer_size'],
+                batch_size=alg_config['batch_size'],
+                policy_noise=alg_config.get('policy_noise', 0.2),
+                noise_clip=alg_config.get('noise_clip', 0.5),
+                exploration_std=alg_config.get('exploration_std', 0.1),
+                policy_freq= alg_config.get('policy_freq', 2),
             )
         elif alg_name == "REINFORCE":
             return REINFORCE(
@@ -216,51 +239,70 @@ class Trainer:
     def collect_rollout(self, max_steps):
         """롤아웃을 수집합니다."""
         state = self.env.reset()
-        episode_reward = 0
-        episode_length = 0
+        episode_reward = 0.0
+        episode_length = 0  # agent-steps 기준(의사결정 스텝)
+        env_steps_in_episode = 0  # (선택) 물리/env 스텝 카운트
 
-
-        action_low, action_high = None, None
+        # 한번만 가져오자
+        action_low, action_high = (None, None)
         if self.env.has_continuous_actions():
             action_low, action_high = self.env.get_action_bounds()
 
-        
         alg_name = self.config['algorithm']['name']
+        k = int(self.config['algorithm'].get('action_repeat', 1))  # e.g., 3
+        k = max(1, k)
+
         for step in range(max_steps):
+            # 1) 정책에서 action 샘플
             action = self.algorithm.select_action(state)
             if self.env.has_continuous_actions():
                 action = np.clip(action, action_low, action_high)
 
-            next_state, reward, done, info = self.env.step(action)
-            next_state = torch.as_tensor(next_state, dtype=torch.float32, device=self.device)
-            
-            if alg_name == 'DDPG':
-                self.algorithm.store_transition(state, action, reward, next_state, done)
-                self.algorithm.update()  #DDPG는 매 step마다 업데이트
+            # 2) action repeat: 같은 action을 k번 적용
+            acc_reward = 0.0
+            done = False
+            info_final = {}
+            for j in range(k):
+                next_state, reward, done, info = self.env.step(action)
+                acc_reward += float(reward)
+                env_steps_in_episode += 1
+                info_final = info  # 마지막 info를 보존
+                if done:
+                    break
+
+            # 3) (중요) agent-전이: 마지막 관측으로 next_state 결정
+            #    알고리즘/버퍼는 한 번의 의사결정에 대해 한 건의 전이만 받는다.
+            next_state_tensor = torch.as_tensor(next_state, dtype=torch.float32, device=self.device)
+
+            if alg_name in ['DDPG', 'TD3']:
+                # 오프폴리시: (s, a, sum_r, s', done) 1건 저장
+                self.algorithm.store_transition(state, action, acc_reward, next_state_tensor, done)
+                self.algorithm.update()  # DDPG/TD3는 매 agent-step 업데이트
             else:
-                # PPO/TRPO: 기존 방식 (RolloutBuffer)
+                # 온폴리시: 액션-리피트 후의 누적 reward를 한 번 기록
                 if len(self.algorithm.buffer.rewards) > 0:
-                    self.algorithm.buffer.rewards[-1] = reward
+                    self.algorithm.buffer.rewards[-1] = acc_reward
                 if done and len(self.algorithm.buffer.is_terminals) > 0:
                     self.algorithm.buffer.is_terminals[-1] = True
 
-            episode_reward += reward
+            # 4) 로깅 및 카운트 (agent-step 기준)
+            episode_reward += acc_reward
             episode_length += 1
-            self.total_steps += 1
-            
-            # 스텝 기반 로깅 체크 (매 스텝마다)
-            self.logger.check_step_logging(self.total_steps, reward)
-            
-            state = next_state
+            self.total_steps += 1  # agent-step 총합 (원하면 env 총합도 따로 둬)
+            self.logger.check_step_logging(self.total_steps, acc_reward)
+
+            state = next_state_tensor
             if done:
+                # 에피소드 종료 로그 (원하면 env_steps_in_episode도 같이 기록)
                 self.logger.log_episode(self.episode_count, episode_reward, episode_length, self.total_steps)
                 self.episode_count += 1
                 state = self.env.reset()
-                episode_reward = 0
+                episode_reward = 0.0
                 episode_length = 0
-                
+                env_steps_in_episode = 0
+
         # 온폴리시만 returns/advantages 계산
-        if alg_name != 'DDPG' and hasattr(self.algorithm.buffer, 'compute_returns_and_advantages'):
+        if alg_name not in ['DDPG', 'TD3'] and hasattr(self.algorithm.buffer, 'compute_returns_and_advantages'):
             self.algorithm.buffer.compute_returns_and_advantages(
                 gamma=self.config['algorithm']['gamma'],
                 gae_lambda=self.config['algorithm']['gae_lambda']
@@ -290,7 +332,7 @@ class Trainer:
             if update_info is None:
                 continue
 
-            if alg_name == 'DDPG':
+            if alg_name in ['DDPG', 'TD3']:
                 self.logger.log_losses(
                     update_info['actor_loss'],
                     update_info['critic_loss'],
@@ -334,7 +376,10 @@ class Trainer:
             done = False
             
             while not done:
-                action = self.algorithm.select_action(state)
+                if self.config['algorithm']['name'] in ['DDPG', 'TD3']:
+                    action = self.algorithm.select_action(state, noise=False)
+                else:
+                    action = self.algorithm.select_action(state)
                 if self.env.has_continuous_actions():
                     action = np.clip(action, action_low, action_high)
                 state, reward, done, _ = self.env.step(action)

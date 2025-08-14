@@ -14,6 +14,12 @@
 1) TRPO/PPO는 update_interval을 2048 정도로 둬서, 충분히 transition 모으고 업댓
 2) DDPG는 이와 달리 매 step 마다 transition 수집 및 sampling을 통한 업데이터를 진행함. algorithm 수정 필요.
 
+[TD3 - 구현해야 하는 사항]
+1) Clipped Double Q-learing
+2) Target policy smoothing
+3) Delay actor & target upates (if t mod d = 0)
+4) action clipping, action과 state scale 맞춰주는 것에 대한 고찰
+
 [Continuos action space]
 1) .log_prob(action).sum(dim=-1) 로 변경해줘야 함. Because 각 transition마다 log probability는 한 개이기를 기대함
 2) 후에 step 기준으로 나오도록 전부 수정하기
@@ -25,3 +31,4 @@
 - batch normalization 필요
 - mini-batch로 업데이트하기(필수1)
 - reward 정규화(후보1)
+- Exploding Value Loss -> 너무 큰 alpha 의미할 수 있음 

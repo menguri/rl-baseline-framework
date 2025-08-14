@@ -14,29 +14,35 @@ class DDPG(BaseOffPolicyAlgorithm):
                  hidden1=400, hidden2=300, init_w=3e-3,
                  lr_actor=1e-4, lr_critic=1e-3, gamma=0.99, tau=0.001,
                  buffer_size=1000000, batch_size=64,
-                 ou_theta=0.15, ou_mu=0.0, ou_sigma=0.2):
+                 ou_theta=0.15, ou_mu=0.0, ou_sigma=0.2, noise_type='ou', exploration_std=0.1,
+                 stable_update_size=10000, bn_use=True):
         super().__init__(state_dim, action_dim, device)
         self.gamma = gamma
         self.tau = tau
+        self.bn_use = bn_use
         self.batch_size = batch_size
+        self.stable_update_size = stable_update_size
+        self.exploration_std = exploration_std
         self.device = device
 
         # Actor & Critic
-        self.actor = DDPGActor(state_dim, action_dim, hidden1, hidden2, init_w).to(device)
-        self.actor_target = DDPGActor(state_dim, action_dim, hidden1, hidden2, init_w).to(device)
+        self.actor = DDPGActor(state_dim, action_dim, hidden1, hidden2, init_w, bn_use).to(device)
+        self.actor_target = DDPGActor(state_dim, action_dim, hidden1, hidden2, init_w, bn_use).to(device)
         self.actor_target.load_state_dict(self.actor.state_dict())
         self.actor_optim = Adam(self.actor.parameters(), lr=lr_actor)
 
-        self.critic = DDPGCritic(state_dim, action_dim, hidden1, hidden2, init_w).to(device)
-        self.critic_target = DDPGCritic(state_dim, action_dim, hidden1, hidden2, init_w).to(device)
+        self.critic = DDPGCritic(state_dim, action_dim, hidden1, hidden2, init_w, bn_use).to(device)
+        self.critic_target = DDPGCritic(state_dim, action_dim, hidden1, hidden2, init_w, bn_use).to(device)
         self.critic_target.load_state_dict(self.critic.state_dict())
         self.critic_optim = Adam(self.critic.parameters(), lr=lr_critic)
 
         # Replay buffer
         self.buffer = ReplayBuffer(buffer_size, state_dim, action_dim, device)
 
-        # OU Noise
+        # Noise
+        self.noise_type = noise_type
         self.ou_noise = OrnsteinUhlenbeckProcess(size=action_dim, theta=ou_theta, mu=ou_mu, sigma=ou_sigma)
+            
 
         self.mse_loss = nn.MSELoss()
 
@@ -47,11 +53,16 @@ class DDPG(BaseOffPolicyAlgorithm):
             action = self.actor(state).cpu().data.numpy().flatten()
         self.actor.train()
         if noise:
-            action += self.ou_noise.sample()
+            if self.noise_type == 'ou':
+                action += self.ou_noise.sample()
+            elif self.noise_type == 'gaussian':
+                action += np.random.normal(0, 0.1, size=action.shape)
+            else:
+                raise ValueError("Unsupported noise type: {}".format(self.noise_type))
         return action
 
     def update(self):
-        if len(self.buffer) < self.batch_size:
+        if len(self.buffer) < self.stable_update_size:
             return None
         states, actions, rewards, next_states, dones = self.buffer.sample(self.batch_size)
         # Critic update

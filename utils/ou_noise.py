@@ -1,7 +1,7 @@
 import numpy as np
 
 class OrnsteinUhlenbeckProcess:
-    def __init__(self, size, theta=0.15, mu=0.0, sigma=0.2, dt=1e-2, x0=None):
+    def __init__(self, size, theta=0.15, mu=0.0, sigma=0.2, dt=1, x0=None):
         self.theta = theta
         self.mu = mu
         self.sigma = sigma

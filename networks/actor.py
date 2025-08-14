@@ -9,8 +9,9 @@ from .mlp import MLP
 class ActorNetwork(nn.Module):
     """MLP 기반 Actor 네트워크"""
     
-    def __init__(self, state_dim, action_dim, hidden_dims=[64, 64], 
-                 has_continuous_action_space=True, action_std_init=0.6, clamp_logits=False, logits_clip_range=10):
+    def __init__(self, state_dim, action_dim, hidden_dims=[64, 64],
+                 has_continuous_action_space=True, action_std_init=0.6, 
+                 clamp_logits=False, logits_clip_range=10, activation_function='tanh'):
         super(ActorNetwork, self).__init__()
         
         self.state_dim = state_dim
@@ -18,6 +19,7 @@ class ActorNetwork(nn.Module):
         self.has_continuous_action_space = has_continuous_action_space
         self.clamp_logits = clamp_logits
         self.logits_clip_range = logits_clip_range
+
         # 안전한 CUDA 체크
         try:
             if torch.cuda.is_available():
@@ -36,7 +38,7 @@ class ActorNetwork(nn.Module):
                                     device=self.device
                                 )
         
-        self.actor = MLP(state_dim, action_dim, hidden_dims, activation='tanh')
+        self.actor = MLP(state_dim, action_dim, hidden_dims, activation=activation_function)
         
     def set_action_std(self, new_action_std):
         """연속 행동 공간에서 행동 표준편차를 설정합니다."""
