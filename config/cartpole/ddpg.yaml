@@ -1,0 +1,55 @@
+# CartPole DDPG 실험 설정
+# 주의: CartPole은 이산 행동공간이므로 DDPG가 직접 적용되지 않습니다.
+# 이 설정은 참고용입니다.
+
+# 환경 설정
+environment:
+  name: "CartPole-v1"
+  seed: 42
+
+# 알고리즘 설정
+algorithm:
+  name: "DDPG"
+  lr_actor: 1e-4
+  lr_critic: 1e-3
+  gamma: 0.99
+  tau: 0.001
+  buffer_size: 1000000
+  batch_size: 64
+  ou_theta: 0.15
+  ou_mu: 0.0
+  ou_sigma: 0.2
+  noise_type: "ou"
+  exploration_std: 0.1
+  stable_update_size: 10000
+
+# 네트워크 설정
+network:
+  hidden1: 400
+  hidden2: 300
+  init_w: 3e-3
+  bn_use: true
+
+# 학습 설정
+training:
+  max_episodes: 1000
+  max_steps_per_episode: 500
+  eval_interval: 50
+  save_interval: 100
+  log_interval: 10
+
+# 실험 설정
+experiment:
+  name: "cartpole_ddpg"
+  seeds: [0, 1, 2]
+  device: "cpu"
+  save_dir: "results/cartpole_ddpg"
+
+# 로깅 설정
+logging:
+  tensorboard: false
+  save_metrics: true
+  plot_interval: 50
+  use_wandb: false
+  enable_step_logging: true
+  step_log_interval: 1000

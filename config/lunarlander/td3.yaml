@@ -1,0 +1,53 @@
+# LunarLanderContinuous TD3 실험 설정
+
+# 환경 설정
+environment:
+  name: "LunarLanderContinuous-v3"
+  seed: 42
+
+# 알고리즘 설정
+algorithm:
+  name: "TD3"
+  lr_actor: 1e-4
+  lr_critic: 1e-3
+  gamma: 0.99
+  tau: 0.005
+  buffer_size: 1000000
+  batch_size: 128
+  policy_noise: 0.2
+  noise_clip: 0.5
+  exploration_std: 0.1
+  policy_freq: 2
+  stable_update_size: 10000
+
+# 네트워크 설정
+network:
+  hidden1: 400
+  hidden2: 300
+  init_w: 3e-3
+
+# 학습 설정
+training:
+  max_episodes: 1000
+  max_steps_per_episode: 1000
+  eval_interval: 50
+  save_interval: 100
+  log_interval: 10
+
+# 실험 설정
+experiment:
+  name: "lunarlander_td3"
+  seeds: [0, 1, 2]
+  device: "cuda"
+  save_dir: "results/lunarlander_td3"
+
+# 로깅 설정
+logging:
+  tensorboard: false
+  save_metrics: true
+  plot_interval: 50
+  use_wandb: true
+  wandb_project: "rl-framework-lunarlander"
+  wandb_entity: "tatalintelli-university-of-seoul"
+  enable_step_logging: true
+  step_log_interval: 1000

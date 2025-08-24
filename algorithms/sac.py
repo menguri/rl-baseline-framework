@@ -1,228 +1,224 @@
 import torch
 import torch.nn as nn
-import torch.optim as optim
 import torch.nn.functional as F
 import numpy as np
+from torch.optim import Adam
+from torch.distributions import Normal
+
 from .base import BaseOffPolicyAlgorithm
+from networks.ddpg_actor import DDPGActor
+from networks.ddpg_critic import DDPGCritic
 from utils.buffer import ReplayBuffer
-from networks.actor import ActorNetwork
-from networks.critic import CriticNetwork, QCriticNetwork
+
+
+class SACGaussianActor(nn.Module):
+    def __init__(self, state_dim, action_dim, hidden_dims=[256, 256], log_std_min=-20, log_std_max=2):
+        super(SACGaussianActor, self).__init__()
+        
+        self.log_std_min = log_std_min
+        self.log_std_max = log_std_max
+        
+        layers = []
+        input_dim = state_dim
+        for hidden_dim in hidden_dims:
+            layers.append(nn.Linear(input_dim, hidden_dim))
+            layers.append(nn.ReLU())
+            input_dim = hidden_dim
+        
+        self.backbone = nn.Sequential(*layers)
+        self.mean_layer = nn.Linear(hidden_dims[-1], action_dim)
+        self.log_std_layer = nn.Linear(hidden_dims[-1], action_dim)
+        
+    def forward(self, state):
+        x = self.backbone(state)
+        mean = self.mean_layer(x)
+        log_std = self.log_std_layer(x)
+        log_std = torch.clamp(log_std, self.log_std_min, self.log_std_max)
+        return mean, log_std
+    
+    def sample(self, state):
+        mean, log_std = self.forward(state)
+        std = log_std.exp()
+        normal = Normal(mean, std)
+        x_t = normal.rsample()  # reparameterization trick
+        y_t = torch.tanh(x_t)
+        action = y_t
+        log_prob = normal.log_prob(x_t)
+        # Enforcing Action Bound
+        log_prob -= torch.log(1 - y_t.pow(2) + 1e-6)
+        log_prob = log_prob.sum(1, keepdim=True)
+        mean = torch.tanh(mean)
+        return action, log_prob, mean
 
 
 class SAC(BaseOffPolicyAlgorithm):
-    """Advantage Actor-Critic (A2C) 알고리즘
-    
-    Actor-Critic 방법으로, 정책 네트워크(Actor)와 가치 함수(Critic)를 동시에 학습합니다.
-    Advantage function을 사용하여 정책 그래디언트의 분산을 줄입니다.
-    """
-    
-    def __init__(self, state_dim, action_dim, hidden_dims=[256, 256], 
-                 lr_actor=3e-4, lr_critic=1e-3, gamma=0.99, activation_function='relu', 
-                 has_continuous_action_space=False, action_std_init=0.6,
-                 entropy_coef=0.01, tau=0.005, target_interval=1,
-                 buffer_size=1000000, batch_size=64, device="cpu"):
-        super().__init__(state_dim, action_dim, has_continuous_action_space, device)
-        
-        self.tau = tau
+    def __init__(self, state_dim, action_dim, device='cpu',
+                 hidden_dims=[256, 256], lr_actor=3e-4, lr_critic=3e-4, lr_alpha=3e-4,
+                 gamma=0.99, tau=0.005, buffer_size=1000000, batch_size=256,
+                 alpha=0.2, automatic_entropy_tuning=True, target_entropy=None,
+                 stable_update_size=10000):
+        super().__init__(state_dim, action_dim, device)
         self.gamma = gamma
-        self.entropy_coef = entropy_coef
-        self.target_interval = target_interval
-        self.action_std_init = action_std_init
-        
-        # 장치 설정
+        self.tau = tau
+        self.batch_size = batch_size
+        self.stable_update_size = stable_update_size
         self.device = device
-        
-        # Actor (정책 네트워크)
-        self.policy = ActorNetwork(
-            state_dim, action_dim, hidden_dims, 
-            has_continuous_action_space, action_std_init,
-            activation_function
-        ).to(device)
-        
-        # Critic (가치 함수)
-        self.value_function = CriticNetwork(state_dim, action_dim, hidden_dims, 
-                                            has_continuous_action_space, action_std_init, activation_function).to(device)
-        self.q_function_first = QCriticNetwork(state_dim, action_dim, hidden_dims,
-                                            activation_function=activation_function).to(device)
-        self.q_function_second = QCriticNetwork(state_dim, action_dim, hidden_dims,
-                                            activation_function=activation_function).to(device)
-        
-        # 옵티마이저
-        self.policy_optimizer = optim.Adam(self.policy.parameters(), lr=lr_actor)
-        self.value_optimizer = optim.Adam(self.value_function.parameters(), lr=lr_critic)
-        self.q_first_optimizer = optim.Adam(self.q_function_first.parameters(), lr=lr_critic)
-        self.q_second_optimizer = optim.Adam(self.q_function_second.parameters(), lr=lr_critic)
-        
-        # 타겟 네트워크 초기화
-        self.value_function_target = CriticNetwork(state_dim, action_dim, hidden_dims,
-                                                    has_continuous_action_space, action_std_init, activation_function).to(device)
-        
-        # Replay buffer
-        self.buffer = ReplayBuffer(buffer_size, state_dim, action_dim, device)
-        
-        # mse 손실 함수
-        self.mse_loss = nn.MSELoss()
-        
+        self.automatic_entropy_tuning = automatic_entropy_tuning
 
+        # Actor Network
+        self.actor = SACGaussianActor(state_dim, action_dim, hidden_dims).to(device)
+        self.actor_optim = Adam(self.actor.parameters(), lr=lr_actor)
 
-############################################################ 여기부터 계속 구현해야 함.
-        
-    def select_action(self, state):
-        """행동을 선택합니다."""
-        state = torch.FloatTensor(state).unsqueeze(0).to(self.device)
-        
-        with torch.no_grad():
-            # 가치 함수 평가
-            value = self.value_function(state)
-            
-            # 정책에서 행동 선택
-            if self.has_continuous_action_space:
-                action, log_prob = self.policy.act(state)
-                action_np = action.cpu().numpy().flatten()
+        # Twin Critics (Q functions)
+        self.critic1 = DDPGCritic(state_dim, action_dim, hidden_dims[0], hidden_dims[1]).to(device)
+        self.critic2 = DDPGCritic(state_dim, action_dim, hidden_dims[0], hidden_dims[1]).to(device)
+        self.critic1_optim = Adam(self.critic1.parameters(), lr=lr_critic)
+        self.critic2_optim = Adam(self.critic2.parameters(), lr=lr_critic)
+
+        # Target Critics
+        self.critic1_target = DDPGCritic(state_dim, action_dim, hidden_dims[0], hidden_dims[1]).to(device)
+        self.critic2_target = DDPGCritic(state_dim, action_dim, hidden_dims[0], hidden_dims[1]).to(device)
+        self.critic1_target.load_state_dict(self.critic1.state_dict())
+        self.critic2_target.load_state_dict(self.critic2.state_dict())
+
+        # Entropy Temperature
+        if self.automatic_entropy_tuning:
+            if target_entropy is None:
+                self.target_entropy = -action_dim
             else:
-                action_probs = self.policy(state)
-                dist = torch.distributions.Categorical(action_probs)
-                action = dist.sample()
-                log_prob = dist.log_prob(action)
-                action_np = action.cpu().numpy().item()
-        
-        # 버퍼에 저장
-        self.states.append(state.cpu().numpy().flatten())
-        self.actions.append(action_np)
-        self.values.append(value.cpu().numpy().item())
-        self.log_probs.append(log_prob.cpu().numpy().item())
-        
-        return action_np
-    
-    def store_transition(self, reward, done):
-        """전환 정보를 저장합니다."""
-        self.rewards.append(reward)
-        self.dones.append(done)
-    
-    def update(self, next_state=None):
-        """정책과 가치 함수를 업데이트합니다."""
-        if len(self.rewards) == 0:
-            return {'policy_loss': 0.0, 'value_loss': 0.0, 'entropy_loss': 0.0}
-        
-        # 다음 상태의 가치 계산 (에피소드가 끝나지 않은 경우)
-        if next_state is not None and not self.dones[-1]:
-            next_state = torch.FloatTensor(next_state).unsqueeze(0).to(self.device)
-            with torch.no_grad():
-                next_value = self.value_function(next_state).cpu().numpy().item()
+                self.target_entropy = target_entropy
+            self.log_alpha = torch.zeros(1, requires_grad=True, device=device)
+            self.alpha_optim = Adam([self.log_alpha], lr=lr_alpha)
+            self.alpha = self.log_alpha.exp()
         else:
-            next_value = 0.0
-        
-        # Returns와 Advantages 계산
-        returns, advantages = self._compute_gae(next_value)
-        
-        # 텐서로 변환
-        states = torch.FloatTensor(np.array(self.states)).to(self.device)
-        actions = torch.FloatTensor(np.array(self.actions)).to(self.device) if self.has_continuous_action_space else torch.LongTensor(self.actions).to(self.device)
-        returns = torch.FloatTensor(returns).to(self.device)
-        advantages = torch.FloatTensor(advantages).to(self.device)
-        old_log_probs = torch.FloatTensor(self.log_probs).to(self.device)
-        
-        # 정규화
-        if len(advantages) > 1:
-            advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-8)
-        
-        # 정책 손실 계산
-        if self.has_continuous_action_space:
-            _, log_probs = self.policy.act(states, actions)
-            dist = self.policy.get_distribution(states)
-            entropy = dist.entropy().mean()
+            self.alpha = alpha
+
+        # Replay Buffer
+        self.buffer = ReplayBuffer(buffer_size, state_dim, action_dim, device)
+
+        # Loss function
+        self.mse_loss = nn.MSELoss()
+
+    def select_action(self, state, evaluate=False):
+        state = torch.as_tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0)
+        if evaluate:
+            _, _, action = self.actor.sample(state)
         else:
-            action_probs = self.policy(states)
-            dist = torch.distributions.Categorical(action_probs)
-            log_probs = dist.log_prob(actions)
-            entropy = dist.entropy().mean()
-        
-        policy_loss = -(log_probs * advantages).mean()
-        entropy_loss = -self.entropy_coef * entropy
-        
-        # 가치 함수 손실 계산
-        values = self.value_function(states).squeeze()
-        value_loss = F.mse_loss(values, returns)
-        
-        # 전체 손실
-        total_loss = policy_loss + self.value_loss_coef * value_loss + entropy_loss
-        
-        # 그래디언트 업데이트
-        self.policy_optimizer.zero_grad()
-        self.value_optimizer.zero_grad()
-        total_loss.backward()
-        
-        # 그래디언트 클리핑
-        torch.nn.utils.clip_grad_norm_(self.policy.parameters(), max_norm=1.0)
-        torch.nn.utils.clip_grad_norm_(self.value_function.parameters(), max_norm=1.0)
-        
-        self.policy_optimizer.step()
-        self.value_optimizer.step()
-        
-        # 버퍼 초기화
-        self.clear_buffer()
-        
+            action, _, _ = self.actor.sample(state)
+        return action.detach().cpu().numpy().flatten()
+
+    def update(self):
+        if len(self.buffer) < self.stable_update_size:
+            return None
+
+        states, actions, rewards, next_states, dones = self.buffer.sample(self.batch_size)
+
+        with torch.no_grad():
+            next_state_actions, next_state_log_pi, _ = self.actor.sample(next_states)
+            qf1_next_target = self.critic1_target(next_states, next_state_actions)
+            qf2_next_target = self.critic2_target(next_states, next_state_actions)
+            min_qf_next_target = torch.min(qf1_next_target, qf2_next_target) - self.alpha * next_state_log_pi
+            next_q_value = rewards + (1 - dones.float()) * self.gamma * min_qf_next_target
+
+        # Twin Q-functions update
+        qf1 = self.critic1(states, actions)
+        qf2 = self.critic2(states, actions)
+        qf1_loss = self.mse_loss(qf1, next_q_value)
+        qf2_loss = self.mse_loss(qf2, next_q_value)
+
+        self.critic1_optim.zero_grad()
+        qf1_loss.backward()
+        self.critic1_optim.step()
+
+        self.critic2_optim.zero_grad()
+        qf2_loss.backward()
+        self.critic2_optim.step()
+
+        # Policy update
+        pi, log_pi, _ = self.actor.sample(states)
+        qf1_pi = self.critic1(states, pi)
+        qf2_pi = self.critic2(states, pi)
+        min_qf_pi = torch.min(qf1_pi, qf2_pi)
+
+        policy_loss = ((self.alpha * log_pi) - min_qf_pi).mean()
+
+        self.actor_optim.zero_grad()
+        policy_loss.backward()
+        self.actor_optim.step()
+
+        # Entropy temperature update
+        if self.automatic_entropy_tuning:
+            alpha_loss = -(self.log_alpha * (log_pi + self.target_entropy).detach()).mean()
+
+            self.alpha_optim.zero_grad()
+            alpha_loss.backward()
+            self.alpha_optim.step()
+
+            self.alpha = self.log_alpha.exp()
+            alpha_tlogs = self.alpha.clone()
+        else:
+            alpha_loss = torch.tensor(0.).to(self.device)
+            alpha_tlogs = torch.tensor(self.alpha)
+
+        # Soft update of target networks
+        self._soft_update(self.critic1_target, self.critic1)
+        self._soft_update(self.critic2_target, self.critic2)
+
         return {
             'policy_loss': policy_loss.item(),
-            'value_loss': value_loss.item(),
-            'entropy_loss': entropy_loss.item()
+            'qf1_loss': qf1_loss.item(),
+            'qf2_loss': qf2_loss.item(),
+            'alpha_loss': alpha_loss.item(),
+            'alpha': alpha_tlogs.item()
         }
-    
-    def _compute_gae(self, next_value, gae_lambda=0.95):
-        """Generalized Advantage Estimation (GAE)를 계산합니다."""
-        returns = []
-        advantages = []
-        
-        gae = 0
-        for step in reversed(range(len(self.rewards))):
-            if step == len(self.rewards) - 1:
-                next_non_terminal = 1.0 - self.dones[step]
-                next_values = next_value
-            else:
-                next_non_terminal = 1.0 - self.dones[step]
-                next_values = self.values[step + 1]
-            
-            delta = self.rewards[step] + self.gamma * next_values * next_non_terminal - self.values[step]
-            gae = delta + self.gamma * gae_lambda * next_non_terminal * gae
-            
-            advantages.insert(0, gae)
-            returns.insert(0, gae + self.values[step])
-        
-        return returns, advantages
-    
-    def clear_buffer(self):
-        """버퍼를 초기화합니다."""
-        self.states = []
-        self.actions = []
-        self.rewards = []
-        self.values = []
-        self.log_probs = []
-        self.dones = []
-    
-    def save(self, filepath):
-        """모델을 저장합니다."""
+
+    def _soft_update(self, target, source):
+        for t_param, s_param in zip(target.parameters(), source.parameters()):
+            t_param.data.copy_(t_param.data * (1.0 - self.tau) + s_param.data * self.tau)
+
+    def store_transition(self, state, action, reward, next_state, done):
+        self.buffer.push(state, action, reward, next_state, done)
+
+    def save(self, path):
         torch.save({
-            'policy_state_dict': self.policy.state_dict(),
-            'value_state_dict': self.value_function.state_dict(),
-            'policy_optimizer_state_dict': self.policy_optimizer.state_dict(),
-            'value_optimizer_state_dict': self.value_optimizer.state_dict(),
-        }, filepath)
-    
-    def load(self, filepath):
-        """모델을 로드합니다."""
-        checkpoint = torch.load(filepath, map_location=self.device)
-        self.policy.load_state_dict(checkpoint['policy_state_dict'])
-        self.value_function.load_state_dict(checkpoint['value_state_dict'])
-        self.policy_optimizer.load_state_dict(checkpoint['policy_optimizer_state_dict'])
-        self.value_optimizer.load_state_dict(checkpoint['value_optimizer_state_dict'])
-    
-    def get_action_std(self):
-        """연속 행동 공간에서 액션 표준편차를 반환합니다."""
-        if self.has_continuous_action_space:
-            return self.policy.action_var.item()
-        return None
-    
-    def set_action_std(self, new_action_std):
-        """연속 행동 공간에서 액션 표준편차를 설정합니다."""
-        if self.has_continuous_action_space:
-            self.policy.set_action_std(new_action_std)
+            'actor': self.actor.state_dict(),
+            'critic1': self.critic1.state_dict(),
+            'critic2': self.critic2.state_dict(),
+            'critic1_target': self.critic1_target.state_dict(),
+            'critic2_target': self.critic2_target.state_dict(),
+            'actor_optim': self.actor_optim.state_dict(),
+            'critic1_optim': self.critic1_optim.state_dict(),
+            'critic2_optim': self.critic2_optim.state_dict(),
+            'log_alpha': self.log_alpha if self.automatic_entropy_tuning else None,
+            'alpha_optim': self.alpha_optim.state_dict() if self.automatic_entropy_tuning else None,
+        }, path)
+
+    def load(self, path):
+        checkpoint = torch.load(path, map_location=self.device)
+        self.actor.load_state_dict(checkpoint['actor'])
+        self.critic1.load_state_dict(checkpoint['critic1'])
+        self.critic2.load_state_dict(checkpoint['critic2'])
+        self.critic1_target.load_state_dict(checkpoint['critic1_target'])
+        self.critic2_target.load_state_dict(checkpoint['critic2_target'])
+        self.actor_optim.load_state_dict(checkpoint['actor_optim'])
+        self.critic1_optim.load_state_dict(checkpoint['critic1_optim'])
+        self.critic2_optim.load_state_dict(checkpoint['critic2_optim'])
+        
+        if self.automatic_entropy_tuning and checkpoint['log_alpha'] is not None:
+            self.log_alpha.data = checkpoint['log_alpha']
+            self.alpha_optim.load_state_dict(checkpoint['alpha_optim'])
+            self.alpha = self.log_alpha.exp()
+
+    def set_eval_mode(self):
+        self.actor.eval()
+        self.critic1.eval()
+        self.critic2.eval()
+        self.critic1_target.eval()
+        self.critic2_target.eval()
+
+    def set_train_mode(self):
+        self.actor.train()
+        self.critic1.train()
+        self.critic2.train()
+        self.critic1_target.train()
+        self.critic2_target.train()

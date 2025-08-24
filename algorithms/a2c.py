@@ -33,7 +33,8 @@ class A2C(BaseOnPolicyAlgorithm):
         ).to(device)
         
         # Critic (가치 함수)
-        self.value_function = CriticNetwork(state_dim, hidden_dims).to(device)
+        self.value_function = CriticNetwork(state_dim, action_dim, hidden_dims, 
+                                            has_continuous_action_space, action_std_init).to(device)
         
         # 옵티마이저
         self.policy_optimizer = optim.Adam(self.policy.parameters(), lr=lr_actor)

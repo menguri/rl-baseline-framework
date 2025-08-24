@@ -47,7 +47,7 @@ class DDPG(BaseOffPolicyAlgorithm):
         self.mse_loss = nn.MSELoss()
 
     def select_action(self, state, noise=True):
-        state = torch.as_tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0).to(self.device)
+        state = torch.as_tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0)
         self.actor.eval()
         with torch.no_grad():
             action = self.actor(state).cpu().data.numpy().flatten()
