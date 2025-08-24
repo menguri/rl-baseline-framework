@@ -44,3 +44,14 @@ wandb/
 
 # 기타
 *.egg-info/
+
+# Claude AI 관련 파일
+.claude/
+.claude_config/
+.claude_cache/
+.claude_logs/
+.claude_temp/
+.claude_sessions/
+.claude_data/
+.claude_models/
+CLAUDE.md
