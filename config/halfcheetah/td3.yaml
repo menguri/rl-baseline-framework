@@ -6,7 +6,7 @@ environment:
 
 algorithm:
   name: "TD3"
-  lr_actor: 0.001
+  lr_actor: 0.0003
   lr_critic: 0.001
   gamma: 0.99
   tau: 0.005
@@ -16,7 +16,7 @@ algorithm:
   hidden1: 400
   hidden2: 300
   init_w: 0.003
-  policy_noise: 0.2
+  policy_noise: 0.1
   noise_clip: 0.5
   policy_freq: 2
   exploration_noise: 0.1
@@ -27,7 +27,7 @@ network:
 
 training:
   max_episodes: 1000
-  update_interval: 2048  # TD3는 매 step마다 업데이트
+  update_interval: 1  # TD3는 매 step마다 업데이트
   eval_interval: 10
   save_interval: 500
 

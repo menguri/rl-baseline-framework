@@ -61,7 +61,9 @@ class TD3(BaseOffPolicyAlgorithm):
             action = self.actor(state).cpu().data.numpy().flatten()
         if noise:
             # Add exploration noise 
-            action += np.random.normal(0, self.exploration_std, size=self.action_dim) if noise else 0
+            if not evaluate:
+                action += np.random.normal(0, self.exploration_std, size=self.action_dim)
+            action = np.clip(action, -1, 1)  # Ensure action bounds
         self.actor.train()
         return action
 
@@ -74,7 +76,7 @@ class TD3(BaseOffPolicyAlgorithm):
         with torch.no_grad():
             noise = (torch.randn_like(actions) * self.policy_noise).clamp(-self.noise_clip, self.noise_clip)
             target_actions = self.actor_target(next_states) + noise
-            # target_actions = target_actions.clamp(-1, 1)
+            target_actions = target_actions.clamp(-1, 1)  # Action clipping for stability
             q_first_next = self.critic_target_first(next_states, target_actions)
             q_second_next = self.critic_target_second(next_states, target_actions)
             q_next = torch.min(q_first_next, q_second_next)
@@ -95,7 +97,7 @@ class TD3(BaseOffPolicyAlgorithm):
         
         # Actor & Target network update
         actor_loss = None  # 초기값 설정 필요
-        if self.policy_freq == 0 or self.update_count % self.policy_freq == 0:
+        if self.update_count % self.policy_freq == 0:
             actor_loss = -self.critic_first(states, self.actor(states)).mean()
             self.actor_optim.zero_grad()
             actor_loss.backward()

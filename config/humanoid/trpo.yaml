@@ -1,0 +1,42 @@
+# Humanoid-v4 TRPO 최적화 설정
+
+environment:
+  name: "Humanoid-v4"
+  seed: 42
+
+algorithm:
+  name: "TRPO"
+  lr: 1e-4  # Humanoid에서는 더 작은 learning rate
+  gamma: 0.99
+  gae_lambda: 0.95
+  max_kl: 0.01
+  damping: 0.3
+  has_continuous_action_space: true
+  action_std_init: 0.5
+  critic_iters: 80
+
+network:
+  hidden_dims: [512, 512, 256]  # 복잡한 환경을 위한 큰 네트워크
+  activation: "tanh"
+
+training:
+  max_episodes: 10000  # 10M steps 목표
+  update_interval: 2048
+  eval_interval: 50
+  save_interval: 500
+  max_steps_per_episode: 1000
+
+experiment:
+  name: "humanoid-v4_trpo"
+  seeds: [0, 1, 2]
+  device: "cuda"
+  save_dir: "results/humanoid-v4_trpo"
+
+logging:
+  tensorboard: false
+  save_metrics: true
+  use_wandb: true
+  wandb_project: "rl-framework-mujoco-humanoid"
+  wandb_entity: "tatalintelli-university-of-seoul"
+  enable_step_logging: true
+  step_log_interval: 1000

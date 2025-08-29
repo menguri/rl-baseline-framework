@@ -8,15 +8,15 @@ environment:
 # 알고리즘 설정
 algorithm:
   name: "TD3"
-  lr_actor: 1e-4
+  lr_actor: 3e-4
   lr_critic: 1e-3
   gamma: 0.99
   tau: 0.005
   buffer_size: 1000000
   batch_size: 128
-  policy_noise: 0.2
+  policy_noise: 0.1
   noise_clip: 0.5
-  exploration_std: 0.1
+  exploration_std: 0.03
   policy_freq: 2
   stable_update_size: 10000
 

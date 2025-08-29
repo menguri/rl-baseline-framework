@@ -1,0 +1,45 @@
+# Walker2d-v4 SAC 최적화 설정
+
+environment:
+  name: "Walker2d-v4"
+  seed: 42
+
+algorithm:
+  name: "SAC"
+  lr_actor: 0.0003
+  lr_critic: 0.0003
+  lr_alpha: 0.0003
+  gamma: 0.99
+  tau: 0.005
+  buffer_size: 1000000
+  batch_size: 256
+  alpha: 0.2
+  automatic_entropy_tuning: true
+  target_entropy: -6  # -action_dim for Walker2d (6 actions)
+  stable_update_size: 10000
+
+network:
+  hidden_dims: [256, 256]
+
+training:
+  max_episodes: 1500
+  update_interval: 1
+  eval_interval: 15
+  save_interval: 150
+  max_steps_per_episode: 1000
+
+experiment:
+  name: "walker2d-v4_sac"
+  seeds: [0, 1, 2]
+  device: "cuda"
+  save_dir: "results/walker2d-v4_sac"
+
+logging:
+  tensorboard: false
+  save_metrics: true
+  plot_interval: 100
+  use_wandb: true
+  wandb_project: "rl-framework-mujoco-walker2d"
+  wandb_entity: "tatalintelli-university-of-seoul"
+  enable_step_logging: true
+  step_log_interval: 1000

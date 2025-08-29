@@ -26,8 +26,8 @@ else
     echo "No GPU detected. Using CPU."
 fi
 
-# 알고리즘 목록 (Humanoid-v4 연속 행동공간)
-algorithms=("ppo")  # 필요시 "td3" "ddpg" 등 추가
+# 알고리즘 목록 (Humanoid-v4 연속 행동공간, 10M steps 벤치마크)
+algorithms=("sac" "td3" "ppo" "ddpg" "trpo")
 
 for algo in "${algorithms[@]}"; do
     echo
@@ -61,7 +61,7 @@ echo "=========================================="
 echo
 echo "결과 요약:"
 for algo in "${algorithms[@]}"; do
-    result_file="results/humanoid_${algo}/multi_seed_results.json"
+    result_file="results/humanoid-v4_${algo}/multi_seed_results.json"
     if [ -f "$result_file" ]; then
         echo "✅ ${algo^^}: $result_file"
     else
@@ -71,3 +71,4 @@ done
 
 echo
 echo "wandb 대시보드에서 결과를 확인하세요."
+echo "예상 학습 시간: 10M steps (overnight 밤새 실행)"

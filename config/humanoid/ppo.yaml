@@ -23,11 +23,11 @@ network:
   activation: "tanh"
 
 training:
-  max_episodes: 5000  # 더 많은 에피소드 필요
+  max_episodes: 10000  # 10M steps 목표
   max_steps_per_episode: 1000
   update_interval: 2048
-  eval_interval: 100
-  save_interval: 1000
+  eval_interval: 50
+  save_interval: 500
   log_interval: 25
 
 experiment:

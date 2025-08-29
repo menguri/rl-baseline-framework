@@ -1,0 +1,45 @@
+# Ant-v4 SAC 최적화 설정 (벤치마크: TD3 3902.23, SAC 1488.56)
+
+environment:
+  name: "Ant-v4"
+  seed: 42
+
+algorithm:
+  name: "SAC"
+  lr_actor: 0.0003
+  lr_critic: 0.0003
+  lr_alpha: 0.0003
+  gamma: 0.99
+  tau: 0.005
+  buffer_size: 1000000
+  batch_size: 256
+  alpha: 0.2
+  automatic_entropy_tuning: true
+  target_entropy: -8  # -action_dim for Ant (8 actions)
+  stable_update_size: 10000
+
+network:
+  hidden_dims: [256, 256]
+
+training:
+  max_episodes: 2000
+  update_interval: 1
+  eval_interval: 20
+  save_interval: 200
+  max_steps_per_episode: 1000
+
+experiment:
+  name: "ant-v4_sac"
+  seeds: [0, 1, 2, 3, 4]  # 5개 시드로 통계적 유의성 확보
+  device: "cuda"
+  save_dir: "results/ant-v4_sac"
+
+logging:
+  tensorboard: false
+  save_metrics: true
+  plot_interval: 100
+  use_wandb: true
+  wandb_project: "rl-framework-mujoco-ant"
+  wandb_entity: "tatalintelli-university-of-seoul"
+  enable_step_logging: true
+  step_log_interval: 1000

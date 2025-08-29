@@ -1,0 +1,48 @@
+# Humanoid-v4 TD3 최적화 설정
+
+environment:
+  name: "Humanoid-v4"
+  seed: 42
+
+algorithm:
+  name: "TD3"
+  lr_actor: 1e-4  # Humanoid는 더 작은 learning rate
+  lr_critic: 1e-3
+  gamma: 0.99
+  tau: 0.005
+  buffer_size: 1000000
+  batch_size: 256
+  has_continuous_action_space: true
+  hidden1: 400
+  hidden2: 300
+  init_w: 0.003
+  policy_noise: 0.1  # 작은 target policy noise
+  noise_clip: 0.3
+  policy_freq: 2
+  exploration_noise: 0.02  # 매우 작은 exploration noise
+
+network:
+  hidden_dims: [400, 300]
+  activation: "relu"
+
+training:
+  max_episodes: 10000  # 10M steps 목표
+  update_interval: 1
+  eval_interval: 50
+  save_interval: 500
+  max_steps_per_episode: 1000
+
+experiment:
+  name: "humanoid-v4_td3"
+  seeds: [0, 1, 2]
+  device: "cuda"
+  save_dir: "results/humanoid-v4_td3"
+
+logging:
+  tensorboard: false
+  save_metrics: true
+  use_wandb: true
+  wandb_project: "rl-framework-mujoco-humanoid"
+  wandb_entity: "tatalintelli-university-of-seoul"
+  enable_step_logging: true
+  step_log_interval: 1000

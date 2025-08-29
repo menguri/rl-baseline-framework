@@ -1,0 +1,52 @@
+# Humanoid-v4 DDPG 최적화 설정
+
+environment:
+  name: "Humanoid-v4"
+  seed: 42
+
+algorithm:
+  name: "DDPG"
+  lr_actor: 1e-4  # Humanoid는 더 작은 learning rate
+  lr_critic: 1e-3
+  gamma: 0.99
+  tau: 0.005
+  buffer_size: 1000000
+  batch_size: 128  # 메모리 효율성을 위해 작은 배치
+  ou_theta: 0.15
+  ou_mu: 0.0
+  ou_sigma: 0.1  # 작은 노이즈로 안정성 확보
+  has_continuous_action_space: true
+  hidden1: 400
+  hidden2: 300
+  init_w: 0.003
+  action_repeat: 1
+  bn_use: true
+  noise_type: "ou"  # OU noise가 Humanoid에 더 효과적
+  exploration_std: 0.05
+  stable_update_size: 25000  # Humanoid는 더 많은 warm-up 필요
+
+network:
+  hidden_dims: [400, 300]
+  activation: "relu"
+
+training:
+  max_episodes: 10000  # 10M steps 목표
+  update_interval: 1
+  eval_interval: 50
+  save_interval: 500
+  max_steps_per_episode: 1000
+
+experiment:
+  name: "humanoid-v4_ddpg"
+  seeds: [0, 1, 2]
+  device: "cuda"
+  save_dir: "results/humanoid-v4_ddpg"
+
+logging:
+  tensorboard: false
+  save_metrics: true
+  use_wandb: true
+  wandb_project: "rl-framework-mujoco-humanoid"
+  wandb_entity: "tatalintelli-university-of-seoul"
+  enable_step_logging: true
+  step_log_interval: 1000
