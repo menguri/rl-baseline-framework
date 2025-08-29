@@ -1,7 +1,7 @@
-# Walker2d-v4 TRPO 최적화 설정
+# Walker2d-v5 TRPO 최적화 설정
 
 environment:
-  name: "Walker2d-v4"
+  name: "Walker2d-v5"
   seed: 42
 
 algorithm:

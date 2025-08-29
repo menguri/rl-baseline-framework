@@ -1,7 +1,7 @@
-# Ant-v4 TD3 최적화 설정 (벤치마크 최고 성능: 3902.23)
+# Ant-v5 TD3 최적화 설정 (벤치마크 최고 성능: 3902.23)
 
 environment:
-  name: "Ant-v4"
+  name: "Ant-v5"
   seed: 42
 
 algorithm:

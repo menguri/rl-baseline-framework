@@ -1,7 +1,7 @@
-# Ant-v4 SAC 최적화 설정 (벤치마크: TD3 3902.23, SAC 1488.56)
+# Ant-v5 SAC 최적화 설정 (벤치마크: TD3 3902.23, SAC 1488.56)
 
 environment:
-  name: "Ant-v4"
+  name: "Ant-v5"
   seed: 42
 
 algorithm:

@@ -1,7 +1,7 @@
-# Ant-v4 DDPG 최적화 설정
+# Ant-v5 DDPG 최적화 설정
 
 environment:
-  name: "Ant-v4"
+  name: "Ant-v5"
   seed: 42
 
 algorithm:

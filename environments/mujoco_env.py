@@ -13,10 +13,10 @@ class MuJoCoEnvironment(GymEnv):
 
 
 class HalfCheetahEnv(MuJoCoEnvironment):
-    """HalfCheetah-v4 환경 래퍼"""
+    """HalfCheetah-v5 환경 래퍼"""
     
     def __init__(self, seed=None):
-        super().__init__("HalfCheetah-v4", seed)
+        super().__init__("HalfCheetah-v5", seed)
         self.max_episode_steps = 1000
     
     def step(self, action):
@@ -29,10 +29,10 @@ class HalfCheetahEnv(MuJoCoEnvironment):
 
 
 class Walker2dEnv(MuJoCoEnvironment):
-    """Walker2d-v4 환경 래퍼"""
+    """Walker2d-v5 환경 래퍼"""
     
     def __init__(self, seed=None):
-        super().__init__("Walker2d-v4", seed)
+        super().__init__("Walker2d-v5", seed)
         self.max_episode_steps = 1000
     
     def step(self, action):
@@ -45,10 +45,10 @@ class Walker2dEnv(MuJoCoEnvironment):
 
 
 class HumanoidEnv(MuJoCoEnvironment):
-    """Humanoid-v4 환경 (로봇팔 대신 전신 휴머노이드)"""
+    """Humanoid-v5 환경 (로봇팔 대신 전신 휴머노이드)"""
     
     def __init__(self, seed=None):
-        super().__init__("Humanoid-v4", seed)
+        super().__init__("Humanoid-v5", seed)
         self.max_episode_steps = 1000
     
     def step(self, action):
@@ -61,10 +61,10 @@ class HumanoidEnv(MuJoCoEnvironment):
 
 
 class AntEnv(MuJoCoEnvironment):
-    """Ant-v4 환경 래퍼 (사족보행 로봇)"""
+    """Ant-v5 환경 래퍼 (사족보행 로봇)"""
     
     def __init__(self, seed=None):
-        super().__init__("Ant-v4", seed)
+        super().__init__("Ant-v5", seed)
         self.max_episode_steps = 1000
     
     def step(self, action):
@@ -76,10 +76,10 @@ class AntEnv(MuJoCoEnvironment):
 
 
 class SwimmerEnv(MuJoCoEnvironment):
-    """Swimmer-v4 환경 래퍼"""
+    """Swimmer-v5 환경 래퍼"""
     
     def __init__(self, seed=None):
-        super().__init__("Swimmer-v4", seed)
+        super().__init__("Swimmer-v5", seed)
         self.max_episode_steps = 1000
     
     def step(self, action):
@@ -91,10 +91,10 @@ class SwimmerEnv(MuJoCoEnvironment):
 
 
 class HopperEnv(MuJoCoEnvironment):
-    """Hopper-v4 환경 래퍼"""
+    """Hopper-v5 환경 래퍼"""
     
     def __init__(self, seed=None):
-        super().__init__("Hopper-v4", seed)
+        super().__init__("Hopper-v5", seed)
         self.max_episode_steps = 1000
     
     def step(self, action):

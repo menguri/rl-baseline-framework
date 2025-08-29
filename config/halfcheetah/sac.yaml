@@ -2,7 +2,7 @@
 
 # 환경 설정
 environment:
-  name: "HalfCheetah-v4"
+  name: "HalfCheetah-v5"
   seed: 42
 
 # 알고리즘 설정

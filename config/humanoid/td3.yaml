@@ -1,7 +1,7 @@
-# Humanoid-v4 TD3 최적화 설정
+# Humanoid-v5 TD3 최적화 설정
 
 environment:
-  name: "Humanoid-v4"
+  name: "Humanoid-v5"
   seed: 42
 
 algorithm:

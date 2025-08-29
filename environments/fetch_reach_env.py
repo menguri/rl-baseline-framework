@@ -5,7 +5,7 @@ from .base_env import BaseEnv
 
 
 class FetchReachEnv(BaseEnv):
-    """FetchReach-v4 환경 래퍼 클래스
+    """FetchReach-v5 환경 래퍼 클래스
     
     Fetch 로봇팔이 목표 위치에 end-effector를 도달시키는 task
     - Action space: Box(4,) - [dx, dy, dz, gripper_control]
@@ -14,12 +14,12 @@ class FetchReachEnv(BaseEnv):
     """
     
     def _setup_env(self):
-        """FetchReach-v4 환경을 설정합니다."""
+        """FetchReach-v5 환경을 설정합니다."""
         # gymnasium-robotics 환경 등록
         gym.register_envs(gymnasium_robotics)
         
-        # FetchReach-v4 환경 생성
-        self.env = gym.make('FetchReach-v4')
+        # FetchReach-v5 환경 생성
+        self.env = gym.make('FetchReach-v5')
         
         if self.seed is not None:
             self.env.reset(seed=self.seed)

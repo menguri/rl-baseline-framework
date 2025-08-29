@@ -76,17 +76,17 @@ class Trainer:
             return CartPoleEnv(seed=self.seed)
         elif env_name == "LunarLanderContinuous-v3":
             return LunarLanderContinuousEnv(seed=self.seed)
-        elif env_name == "HalfCheetah-v4":
+        elif env_name == "HalfCheetah-v5":
             return HalfCheetahEnv(seed=self.seed)
-        elif env_name == "Walker2d-v4":
+        elif env_name == "Walker2d-v5":
             return Walker2dEnv(seed=self.seed)
-        elif env_name == "Humanoid-v4":
+        elif env_name == "Humanoid-v5":
             return HumanoidEnv(seed=self.seed)
-        elif env_name == "Ant-v4":
+        elif env_name == "Ant-v5":
             return AntEnv(seed=self.seed)
-        elif env_name == "Swimmer-v4":
+        elif env_name == "Swimmer-v5":
             return SwimmerEnv(seed=self.seed)
-        elif env_name == "Hopper-v4":
+        elif env_name == "Hopper-v5":
             return HopperEnv(seed=self.seed)
         elif env_name == "FetchReach-v4":
             return FetchReachEnv(seed=self.seed)
