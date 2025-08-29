@@ -2,53 +2,15 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
+from typing import Tuple, List
+import math
 from torch.optim import Adam
 from torch.distributions import Normal
 
 from .base import BaseOffPolicyAlgorithm
-from networks.ddpg_actor import DDPGActor
+from networks.sac_actor import SACGaussianActor
 from networks.ddpg_critic import DDPGCritic
 from utils.buffer import ReplayBuffer
-
-
-class SACGaussianActor(nn.Module):
-    def __init__(self, state_dim, action_dim, hidden_dims=[256, 256], log_std_min=-20, log_std_max=2):
-        super(SACGaussianActor, self).__init__()
-        
-        self.log_std_min = log_std_min
-        self.log_std_max = log_std_max
-        
-        layers = []
-        input_dim = state_dim
-        for hidden_dim in hidden_dims:
-            layers.append(nn.Linear(input_dim, hidden_dim))
-            layers.append(nn.ReLU())
-            input_dim = hidden_dim
-        
-        self.backbone = nn.Sequential(*layers)
-        self.mean_layer = nn.Linear(hidden_dims[-1], action_dim)
-        self.log_std_layer = nn.Linear(hidden_dims[-1], action_dim)
-        
-    def forward(self, state):
-        x = self.backbone(state)
-        mean = self.mean_layer(x)
-        log_std = self.log_std_layer(x)
-        log_std = torch.clamp(log_std, self.log_std_min, self.log_std_max)
-        return mean, log_std
-    
-    def sample(self, state):
-        mean, log_std = self.forward(state)
-        std = log_std.exp()
-        normal = Normal(mean, std)
-        x_t = normal.rsample()  # reparameterization trick
-        y_t = torch.tanh(x_t)
-        action = y_t
-        log_prob = normal.log_prob(x_t)
-        # Enforcing Action Bound
-        log_prob -= torch.log(1 - y_t.pow(2) + 1e-6)
-        log_prob = log_prob.sum(1, keepdim=True)
-        mean = torch.tanh(mean)
-        return action, log_prob, mean
 
 
 class SAC(BaseOffPolicyAlgorithm):
@@ -99,7 +61,7 @@ class SAC(BaseOffPolicyAlgorithm):
         # Loss function
         self.mse_loss = nn.MSELoss()
 
-    def select_action(self, state, evaluate=False):
+    def select_action(self, state, noise=False, evaluate=False):
         state = torch.as_tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0)
         if evaluate:
             _, _, action = self.actor.sample(state)
@@ -115,32 +77,32 @@ class SAC(BaseOffPolicyAlgorithm):
 
         with torch.no_grad():
             next_state_actions, next_state_log_pi, _ = self.actor.sample(next_states)
-            qf1_next_target = self.critic1_target(next_states, next_state_actions)
-            qf2_next_target = self.critic2_target(next_states, next_state_actions)
-            min_qf_next_target = torch.min(qf1_next_target, qf2_next_target) - self.alpha * next_state_log_pi
-            next_q_value = rewards + (1 - dones.float()) * self.gamma * min_qf_next_target
+            critic1_next_target = self.critic1_target(next_states, next_state_actions)
+            critic2_next_target = self.critic2_target(next_states, next_state_actions)
+            min_critic_next_target = torch.min(critic1_next_target, critic2_next_target) - self.alpha * next_state_log_pi
+            next_q_value = rewards + (1 - dones.float()) * self.gamma * min_critic_next_target
 
         # Twin Q-functions update
-        qf1 = self.critic1(states, actions)
-        qf2 = self.critic2(states, actions)
-        qf1_loss = self.mse_loss(qf1, next_q_value)
-        qf2_loss = self.mse_loss(qf2, next_q_value)
+        critic1 = self.critic1(states, actions)
+        critic2 = self.critic2(states, actions)
+        critic1_loss = self.mse_loss(critic1, next_q_value)
+        critic2_loss = self.mse_loss(critic2, next_q_value)
 
         self.critic1_optim.zero_grad()
-        qf1_loss.backward()
+        critic1_loss.backward()
         self.critic1_optim.step()
 
         self.critic2_optim.zero_grad()
-        qf2_loss.backward()
+        critic2_loss.backward()
         self.critic2_optim.step()
 
         # Policy update
-        pi, log_pi, _ = self.actor.sample(states)
-        qf1_pi = self.critic1(states, pi)
-        qf2_pi = self.critic2(states, pi)
-        min_qf_pi = torch.min(qf1_pi, qf2_pi)
+        action, log_action, _ = self.actor.sample(states)
+        critic1_pi = self.critic1(states, action)
+        critic2_pi = self.critic2(states, action)
+        min_critic_pi = torch.min(critic1_pi, critic2_pi)
 
-        policy_loss = ((self.alpha * log_pi) - min_qf_pi).mean()
+        policy_loss = ((self.alpha * log_action) - min_critic_pi).mean()
 
         self.actor_optim.zero_grad()
         policy_loss.backward()
@@ -148,7 +110,7 @@ class SAC(BaseOffPolicyAlgorithm):
 
         # Entropy temperature update
         if self.automatic_entropy_tuning:
-            alpha_loss = -(self.log_alpha * (log_pi + self.target_entropy).detach()).mean()
+            alpha_loss = -(self.log_alpha * (log_action + self.target_entropy).detach()).mean()
 
             self.alpha_optim.zero_grad()
             alpha_loss.backward()
@@ -165,9 +127,9 @@ class SAC(BaseOffPolicyAlgorithm):
         self._soft_update(self.critic2_target, self.critic2)
 
         return {
-            'policy_loss': policy_loss.item(),
-            'qf1_loss': qf1_loss.item(),
-            'qf2_loss': qf2_loss.item(),
+            'actor_loss': policy_loss.item(),
+            'critic_loss': critic1_loss.item(),
+            'critic2_loss': critic2_loss.item(),
             'alpha_loss': alpha_loss.item(),
             'alpha': alpha_tlogs.item()
         }

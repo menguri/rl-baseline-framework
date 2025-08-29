@@ -54,7 +54,7 @@ class TD3(BaseOffPolicyAlgorithm):
         self.critic_target_first.load_state_dict(self.critic_first.state_dict())
         self.critic_target_second.load_state_dict(self.critic_second.state_dict())
 
-    def select_action(self, state, noise=True):
+    def select_action(self, state, noise=True, evaluate=False):
         state = torch.as_tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0)
         self.actor.eval()
         with torch.no_grad():
@@ -68,6 +68,7 @@ class TD3(BaseOffPolicyAlgorithm):
     def update(self):
         if len(self.buffer) < self.stable_update_size:
             return None
+        
         states, actions, rewards, next_states, dones = self.buffer.sample(self.batch_size)
         # Target policy smoothing for Critic update
         with torch.no_grad():
@@ -85,6 +86,7 @@ class TD3(BaseOffPolicyAlgorithm):
         self.critic_first_optim.zero_grad()
         critic_loss.backward()
         self.critic_first_optim.step()
+        
         q_expected_second = self.critic_second(states, actions)
         critic_loss_second = self.mse_loss(q_expected_second, q_target)     
         self.critic_second_optim.zero_grad()

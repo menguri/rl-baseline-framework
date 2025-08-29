@@ -209,7 +209,7 @@ class ExperimentLogger:
             }, step=current_step)
         
         # 콘솔에 출력
-        self.logger.info(f"Step {current_step}: Interval Avg={interval_avg_reward:.4f} (sum={interval_sum_reward:.2f}, steps={steps_in_interval}), Running Avg={running_average:.2f}")
+        # self.logger.info(f"Step {current_step}: Interval Avg={interval_avg_reward:.4f} (sum={interval_sum_reward:.2f}, steps={steps_in_interval}), Running Avg={running_average:.2f}")
         
         # 다음 간격을 위해 리셋
         self.step_episode_rewards = []

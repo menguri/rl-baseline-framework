@@ -20,6 +20,9 @@
 3) Delay actor & target upates (if t mod d = 0)
 4) action clipping, action과 state scale 맞춰주는 것에 대한 고찰
 
+[SAC]
+1) Training이 중간에 멈춤(log 멈춤인지, for loop가 계속 도는 것인지 확인 필요)
+
 [Continuos action space]
 1) .log_prob(action).sum(dim=-1) 로 변경해줘야 함. Because 각 transition마다 log probability는 한 개이기를 기대함
 2) 후에 step 기준으로 나오도록 전부 수정하기
@@ -32,3 +35,6 @@
 - mini-batch로 업데이트하기(필수1)
 - reward 정규화(후보1)
 - Exploding Value Loss -> 너무 큰 alpha 의미할 수 있음 
+
+[Wandb]
+- 공용 서버에서 wandb를 쓸 경우, login 충돌이 일어나는 경우가 생김 > .sh 파일에서

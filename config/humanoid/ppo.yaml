@@ -41,7 +41,7 @@ logging:
   save_metrics: true
   plot_interval: 200
   use_wandb: true
-  wandb_project: "rl-framework-mujoco"
+  wandb_project: "rl-framework-mujoco-Humanoid"
   wandb_entity: "tatalintelli-university-of-seoul"
   enable_step_logging: true
   step_log_interval: 1000

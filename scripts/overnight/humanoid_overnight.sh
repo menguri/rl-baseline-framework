@@ -4,7 +4,7 @@
 #          bash scripts/overnight/halfcheetah_overnight.sh
 
 echo "=========================================="
-echo "HalfCheetah Overnight 실험 시작"
+echo "Humonoid Overnight 실험 시작"
 echo "시작 시간: $(date)"
 echo "=========================================="
 
@@ -26,20 +26,20 @@ else
     echo "No GPU detected. Using CPU."
 fi
 
-# 알고리즘 목록 (HalfCheetah 연속 행동공간)
-algorithms=("td3")  # 필요시 "sac" "td3" "trpo" "ddpg" "ppo" 등 추가
+# 알고리즘 목록 (Humanoid-v4 연속 행동공간)
+algorithms=("ppo")  # 필요시 "td3" "ddpg" 등 추가
 
 for algo in "${algorithms[@]}"; do
     echo
     echo "=========================================="
-    echo "HalfCheetah ${algo^^} 실험 시작"
+    echo "Humanoid-v4 ${algo^^} 실험 시작"
     echo "=========================================="
     
     # 내 wandb 세션을 강제 사용하여 실행
     WANDB_DIR=$WANDB_DIR WANDB_CONFIG_DIR=$WANDB_CONFIG_DIR \
     python -m main multi \
-        --config config/halfcheetah/${algo}.yaml \
-        --num_workers 3
+        --config config/humanoid/${algo}.yaml \
+        --num_workers 5
     
     if [ $? -eq 0 ]; then
         echo "${algo^^} 실험 완료 성공!"
@@ -53,7 +53,7 @@ done
 
 echo
 echo "=========================================="
-echo "HalfCheetah 모든 실험 완료!"
+echo "Humanoid-v4 모든 실험 완료!"
 echo "종료 시간: $(date)"
 echo "=========================================="
 
@@ -61,7 +61,7 @@ echo "=========================================="
 echo
 echo "결과 요약:"
 for algo in "${algorithms[@]}"; do
-    result_file="results/halfcheetah_${algo}/multi_seed_results.json"
+    result_file="results/humanoid_${algo}/multi_seed_results.json"
     if [ -f "$result_file" ]; then
         echo "✅ ${algo^^}: $result_file"
     else

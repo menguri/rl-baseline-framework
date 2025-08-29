@@ -10,7 +10,7 @@ from environments import (
     LunarLanderContinuousEnv, HalfCheetahEnv, Walker2dEnv, 
     HumanoidEnv, AntEnv, SwimmerEnv, HopperEnv
 )
-from algorithms import PPO, TRPO, DDPG, REINFORCE, A2C, TD3
+from algorithms import PPO, TRPO, DDPG, REINFORCE, A2C, TD3, SAC
 
 
 class Trainer:
@@ -121,6 +121,24 @@ class Trainer:
                 action_std_init=alg_config['action_std_init'],
                 hidden_dims=self.config['network']['hidden_dims'],
                 entropy_coef=alg_config.get('entropy_coef', 0.01),
+                device=device
+            )
+        elif alg_name == "SAC":
+            return SAC(
+                state_dim=state_dim,
+                action_dim=action_dim,
+                hidden_dims=self.config['network']['hidden_dims'],
+                lr_actor=alg_config.get('lr_actor', 3e-4),
+                lr_critic=alg_config.get('lr_critic', 1e-3),
+                lr_alpha=alg_config.get('lr_alpha', 3e-4),
+                gamma=alg_config['gamma'],
+                tau=alg_config['tau'],
+                buffer_size=alg_config['buffer_size'],
+                batch_size=alg_config['batch_size'],
+                alpha=alg_config.get('alpha', 0.2),
+                automatic_entropy_tuning=alg_config.get('automatic_entropy_tuning', True),
+                target_entropy=alg_config.get('target_entropy', -action_dim),
+                stable_update_size=alg_config.get('stable_update_size', 10000),
                 device=device
             )
         elif alg_name == "TRPO":
@@ -252,7 +270,7 @@ class Trainer:
         k = int(self.config['algorithm'].get('action_repeat', 1))  # e.g., 3
         k = max(1, k)
 
-        for step in range(max_steps):
+        for step in tqdm(range(max_steps), desc="Interacting with Environment & Update"):
             # 1) 정책에서 action 샘플
             action = self.algorithm.select_action(state)
             if self.env.has_continuous_actions():
@@ -274,10 +292,10 @@ class Trainer:
             #    알고리즘/버퍼는 한 번의 의사결정에 대해 한 건의 전이만 받는다.
             next_state_tensor = torch.as_tensor(next_state, dtype=torch.float32, device=self.device)
 
-            if alg_name in ['DDPG', 'TD3']:
+            if alg_name in ['DDPG', 'TD3', 'SAC']:
                 # 오프폴리시: (s, a, sum_r, s', done) 1건 저장
                 self.algorithm.store_transition(state, action, acc_reward, next_state_tensor, done)
-                self.algorithm.update()  # DDPG/TD3는 매 agent-step 업데이트
+                self.algorithm.update()  # DDPG/TD3/SAC는 매 agent-step 업데이트
             else:
                 # 온폴리시: 액션-리피트 후의 누적 reward를 한 번 기록
                 if len(self.algorithm.buffer.rewards) > 0:
@@ -302,7 +320,7 @@ class Trainer:
                 env_steps_in_episode = 0
 
         # 온폴리시만 returns/advantages 계산
-        if alg_name not in ['DDPG', 'TD3'] and hasattr(self.algorithm.buffer, 'compute_returns_and_advantages'):
+        if alg_name not in ['DDPG', 'TD3', 'SAC'] and hasattr(self.algorithm.buffer, 'compute_returns_and_advantages'):
             self.algorithm.buffer.compute_returns_and_advantages(
                 gamma=self.config['algorithm']['gamma'],
                 gae_lambda=self.config['algorithm']['gae_lambda']
@@ -316,6 +334,7 @@ class Trainer:
         eval_interval = training_config['eval_interval']
         save_interval = training_config['save_interval']
         self.logger.log_hyperparameters(self.config)
+        
         print(f"Starting training with seed {self.seed}")
         print(f"Environment: {self.config['environment']['name']}")
         print(f"Algorithm: {self.config['algorithm']['name']}")
@@ -328,18 +347,16 @@ class Trainer:
         for episode in tqdm(range(max_episodes), desc="Training"):
             self.collect_rollout(update_interval)
             update_info = self.algorithm.update()
+            
 
-            if update_info is None:
-                continue
-
-            if alg_name in ['DDPG', 'TD3']:
+            if alg_name in ['DDPG', 'TD3', 'SAC'] and update_info is not None:
                 self.logger.log_losses(
                     update_info['actor_loss'],
                     update_info['critic_loss'],
-                    0,  # DDPG는 entropy_loss 없음
+                    update_info.get('alpha_loss', 0),
                     episode
                 )
-            else:
+            elif alg_name in ['PPO', 'TRPO', 'A2C', 'REINFORCE'] and update_info is not None:
                 self.logger.log_losses(
                     update_info['policy_loss'],
                     update_info['value_loss'],
@@ -376,8 +393,8 @@ class Trainer:
             done = False
             
             while not done:
-                if self.config['algorithm']['name'] in ['DDPG', 'TD3']:
-                    action = self.algorithm.select_action(state, noise=False)
+                if self.config['algorithm']['name'] in ['DDPG', 'TD3', 'SAC']:
+                    action = self.algorithm.select_action(state, noise=False, evaluate=True)
                 else:
                     action = self.algorithm.select_action(state)
                 if self.env.has_continuous_actions():

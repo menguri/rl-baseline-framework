@@ -20,7 +20,7 @@ algorithm:
   hidden2: 300
   init_w: 0.003
   action_repeat: 1  # 액션 반복 횟수
-  bn_use: false  # 입력 레이어에 배치 정규화 사용 여부
+  bn_use: True  # 입력 레이어에 배치 정규화 사용 여부
   noise_type: "gaussian"  # 'ou' 또는 'gaussian'
   exploration_std: 0.1  # 탐험을 위한 표준편차
   stable_update_size: 10000  # 안정적인 업데이트를 위한 크기
@@ -38,7 +38,7 @@ training:
 
 experiment:
   name: "halfcheetah-v4_ddpg"
-  seeds: [42]
+  seeds: [0, 1, 2]
   device: "cuda"
   save_dir: "results/halfcheetah-v4_ddpg"
 
