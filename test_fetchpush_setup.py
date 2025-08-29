@@ -1,21 +1,22 @@
 #!/usr/bin/env python3
 """
-DroneHover-v0 환경 설정 테스트 스크립트
+FetchPush-v3 환경 설정 테스트 스크립트
 """
 
 import sys
 import numpy as np
-import os
 
 def test_import_dependencies():
     """필수 패키지 import 테스트"""
     try:
-        import gym_pybullet_drones
-        print("✅ gym-pybullet-drones imported successfully")
+        import gymnasium as gym
+        print("✅ gymnasium imported successfully")
         
-        from gym_pybullet_drones.envs.HoverAviary import HoverAviary
-        from gym_pybullet_drones.utils.enums import DroneModel, Physics
-        print("✅ HoverAviary and enums imported successfully")
+        import gymnasium_robotics
+        print("✅ gymnasium-robotics imported successfully")
+        
+        gym.register_envs(gymnasium_robotics)
+        print("✅ gymnasium-robotics environments registered")
         
         return True
     except Exception as e:
@@ -23,63 +24,40 @@ def test_import_dependencies():
         return False
 
 def test_environment_creation():
-    """DroneHover 환경 생성 테스트"""
+    """FetchPush-v3 환경 생성 테스트"""
     try:
-        from gym_pybullet_drones.envs.HoverAviary import HoverAviary
-        from gym_pybullet_drones.utils.enums import DroneModel, Physics
+        import gymnasium as gym
+        import gymnasium_robotics
         
-        # Set headless mode for testing
-        os.environ["DISPLAY"] = ""
-        
-        env = HoverAviary(
-            drone_model=DroneModel.CF2X,
-            num_drones=1,
-            neighbourhood_radius=10,
-            initial_xyzs=None,
-            initial_rpys=None,
-            physics=Physics.PYB,
-            freq=240,
-            aggregate_phy_steps=1,
-            gui=False,  # Headless
-            record=False,
-            obstacles=False,
-            user_debug_gui=False
-        )
-        print("✅ HoverAviary environment created successfully")
+        gym.register_envs(gymnasium_robotics)
+        env = gym.make('FetchPush-v3')
+        print("✅ FetchPush-v3 environment created successfully")
         
         # Reset and check observation
-        obs = env.reset()
-        if isinstance(obs, tuple):
-            obs = obs[0]  # Handle new gym API
-            
+        obs, info = env.reset(seed=42)
         print(f"✅ Environment reset successful")
         print(f"   - Observation type: {type(obs)}")
+        print(f"   - Observation keys: {obs.keys() if isinstance(obs, dict) else 'Not dict'}")
         
         if isinstance(obs, dict):
-            print(f"   - Observation keys: {list(obs.keys())}")
-            sample_obs = list(obs.values())[0]
-            print(f"   - Single drone obs shape: {sample_obs.shape}")
-        else:
-            print(f"   - Observation shape: {obs.shape}")
+            print(f"   - observation shape: {obs['observation'].shape}")
+            print(f"   - achieved_goal shape: {obs['achieved_goal'].shape}")
+            print(f"   - desired_goal shape: {obs['desired_goal'].shape}")
         
         # Test action space
         print(f"   - Action space: {env.action_space}")
-        if isinstance(env.action_space, dict):
-            sample_action_space = list(env.action_space.values())[0]
-            print(f"   - Single drone action space: {sample_action_space}")
+        print(f"   - Action space shape: {env.action_space.shape}")
         
         # Test random action
-        if isinstance(env.action_space, dict):
-            action = {0: env.action_space[0].sample()}
-        else:
-            action = env.action_space.sample()
-        print(f"   - Sample action generated")
+        action = env.action_space.sample()
+        print(f"   - Sample action: {action}")
         
         # Test step
-        next_obs, reward, done, truncated, info = env.step(action)
+        next_obs, reward, terminated, truncated, info = env.step(action)
         print(f"✅ Environment step successful")
-        print(f"   - Reward type: {type(reward)}")
-        print(f"   - Done type: {type(done)}")
+        print(f"   - Reward: {reward}")
+        print(f"   - Terminated: {terminated}")
+        print(f"   - Truncated: {truncated}")
         
         env.close()
         return True
@@ -91,33 +69,33 @@ def test_environment_creation():
         return False
 
 def test_custom_wrapper():
-    """커스텀 DroneHoverEnv wrapper 테스트"""
+    """커스텀 FetchPushEnv wrapper 테스트"""
     try:
         # Add current directory to path for imports
+        import os
         sys.path.insert(0, os.getcwd())
         
-        from environments.drone_env import DroneHoverEnv
-        print("✅ DroneHoverEnv wrapper imported successfully")
+        from environments.fetch_push_env import FetchPushEnv
+        print("✅ FetchPushEnv wrapper imported successfully")
         
         # Create environment
-        env = DroneHoverEnv(env_name="hover", seed=42)
-        print("✅ DroneHoverEnv wrapper created successfully")
+        env = FetchPushEnv(env_name="FetchPush-v3", seed=42)
+        print("✅ FetchPushEnv wrapper created successfully")
         
         # Test properties
         print(f"   - State dim: {env.get_state_dim()}")
         print(f"   - Action dim: {env.get_action_dim()}")
         print(f"   - Has continuous actions: {env.has_continuous_actions()}")
         
-        # Test action bounds
-        action_low, action_high = env.get_action_bounds()
-        print(f"   - Action bounds: [{action_low[0]:.2f}, {action_high[0]:.2f}]")
+        # Test observation info
+        obs_info = env.get_observation_info()
+        print(f"   - Observation info: {obs_info}")
         
         # Test reset and step
         state = env.reset()
         print(f"✅ Wrapper reset successful, state shape: {state.shape}")
         
-        # Random action within bounds
-        action = np.random.uniform(action_low, action_high)
+        action = np.random.uniform(-1, 1, 4)  # Random action in [-1, 1]
         next_state, reward, done, info = env.step(action)
         print(f"✅ Wrapper step successful")
         print(f"   - Next state shape: {next_state.shape}")
@@ -136,6 +114,7 @@ def test_custom_wrapper():
 def test_trainer_integration():
     """Trainer 클래스와의 통합 테스트"""
     try:
+        import os
         sys.path.insert(0, os.getcwd())
         
         from train.trainer import Trainer
@@ -143,7 +122,7 @@ def test_trainer_integration():
         # Create a minimal config for testing
         test_config = {
             'environment': {
-                'name': 'DroneHover-v0',
+                'name': 'FetchPush-v3',
                 'seed': 42
             },
             'algorithm': {
@@ -168,10 +147,10 @@ def test_trainer_integration():
                 'update_interval': 1,
                 'eval_interval': 1,
                 'save_interval': 10,
-                'max_steps_per_episode': 100  # Short episodes for testing
+                'max_steps_per_episode': 50
             },
             'experiment': {
-                'name': 'test_drone_sac',
+                'name': 'test_fetchpush_sac',
                 'seeds': [42],
                 'device': 'cpu',  # Use CPU for testing
                 'save_dir': 'test_results'
@@ -186,7 +165,7 @@ def test_trainer_integration():
         # Save test config
         import yaml
         os.makedirs('config/test', exist_ok=True)
-        with open('config/test/drone_test.yaml', 'w') as f:
+        with open('config/test/fetchpush_test.yaml', 'w') as f:
             yaml.dump(test_config, f)
         
         print("✅ Test config created")
@@ -206,11 +185,8 @@ def test_trainer_integration():
 def main():
     """메인 테스트 실행"""
     print("========================================")
-    print("DroneHover-v0 Setup Validation")
+    print("FetchPush-v3 Setup Validation")
     print("========================================")
-    
-    # Set headless mode
-    os.environ["DISPLAY"] = ""
     
     tests = [
         ("Import Dependencies", test_import_dependencies),
@@ -234,8 +210,7 @@ def main():
     print(f"Test Results: {passed}/{total} tests passed")
     
     if passed == total:
-        print("🎉 All tests passed! DroneHover-v0 setup is ready.")
-        print("🚁 Ready for single drone hovering experiments!")
+        print("🎉 All tests passed! FetchPush-v3 setup is ready.")
     else:
         print("⚠️  Some tests failed. Please check the errors above.")
     

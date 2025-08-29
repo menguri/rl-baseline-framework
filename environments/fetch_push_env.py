@@ -4,29 +4,29 @@ import numpy as np
 from .base_env import BaseEnv
 
 
-class FetchReachEnv(BaseEnv):
-    """FetchReach-v3 환경 래퍼 클래스
+class FetchPushEnv(BaseEnv):
+    """FetchPush-v3 환경 래퍼 클래스
     
-    Fetch 로봇팔이 목표 위치에 end-effector를 도달시키는 task
+    Fetch 로봇팔이 박스를 밀어서 목표 위치로 이동시키는 task
     - Action space: Box(4,) - [dx, dy, dz, gripper_control]
     - Observation space: Dict with observation, achieved_goal, desired_goal
     - Episode length: 50 steps (기본값)
     """
     
     def _setup_env(self):
-        """FetchReach-v3 환경을 설정합니다."""
+        """FetchPush-v3 환경을 설정합니다."""
         # gymnasium-robotics 환경 등록
         gym.register_envs(gymnasium_robotics)
         
-        # FetchReach-v3 환경 생성
-        self.env = gym.make('FetchReach-v3')
+        # FetchPush-v3 환경 생성
+        self.env = gym.make('FetchPush-v3')
         
         if self.seed is not None:
             self.env.reset(seed=self.seed)
             self.env.action_space.seed(self.seed)
             self.env.observation_space.seed(self.seed)
         
-        # FetchReach는 Dict observation space를 가지므로 특별 처리
+        # FetchPush는 Dict observation space를 가지므로 특별 처리
         # observation space: Dict with keys 'observation', 'achieved_goal', 'desired_goal'
         obs_space = self.env.observation_space['observation']
         goal_space = self.env.observation_space['achieved_goal'] 
@@ -76,7 +76,7 @@ class FetchReachEnv(BaseEnv):
         desired_goal_space = self.env.observation_space['desired_goal']
         
         return {
-            'observation_dim': obs_space.shape[0],  # 10 (gripper position, velocity etc.)
+            'observation_dim': obs_space.shape[0],  # 25 (gripper + object position, velocity etc.)
             'achieved_goal_dim': goal_space.shape[0],  # 3 (x, y, z)
             'desired_goal_dim': desired_goal_space.shape[0],  # 3 (x, y, z)
             'total_dim': self.state_dim

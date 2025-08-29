@@ -1,7 +1,7 @@
-# DroneHover-v0 DDPG 최적화 설정
+# FetchReach-v4 DDPG 최적화 설정 (로봇팔 manipulation)
 
 environment:
-  name: "DroneHover-v0"
+  name: "FetchReach-v4"
   seed: 42
 
 algorithm:
@@ -14,39 +14,39 @@ algorithm:
   batch_size: 256
   ou_theta: 0.15
   ou_mu: 0.0
-  ou_sigma: 0.2  # 드론 제어를 위한 탐험 노이즈
+  ou_sigma: 0.1  # 로봇팔은 작은 노이즈
   has_continuous_action_space: true
-  hidden1: 512
-  hidden2: 256
+  hidden1: 400
+  hidden2: 300
   init_w: 0.003
   action_repeat: 1
   bn_use: true
-  noise_type: "ou"  # OU noise for drone control
-  exploration_std: 0.1
-  stable_update_size: 10000
+  noise_type: "ou"  # OU noise가 로봇팔에 효과적
+  exploration_std: 0.05
+  stable_update_size: 1000
 
 network:
-  hidden_dims: [512, 256]
+  hidden_dims: [400, 300]
   activation: "relu"
 
 training:
-  max_episodes: 3000
+  max_episodes: 5000
   update_interval: 2048
   eval_interval: 100
-  save_interval: 300
-  max_steps_per_episode: 8000
+  save_interval: 500
+  max_steps_per_episode: 50
 
 experiment:
-  name: "drone_hover_ddpg"
+  name: "fetchpush-v3_ddpg"
   seeds: [0, 1, 2]
   device: "cuda"
-  save_dir: "results/drone_hover_ddpg"
+  save_dir: "results/fetchpush-v3_ddpg"
 
 logging:
   tensorboard: false
   save_metrics: true
   use_wandb: true
-  wandb_project: "rl-framework-drone-hover"
+  wandb_project: "rl-framework-robotics-fetchpush"
   wandb_entity: "tatalintelli-university-of-seoul"
   enable_step_logging: true
-  step_log_interval: 1000
+  step_log_interval: 500

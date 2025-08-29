@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-FetchReach-v5 환경 설정 테스트 스크립트
+FetchReach-v3 환경 설정 테스트 스크립트
 """
 
 import sys
@@ -24,14 +24,14 @@ def test_import_dependencies():
         return False
 
 def test_environment_creation():
-    """FetchReach-v5 환경 생성 테스트"""
+    """FetchReach-v3 환경 생성 테스트"""
     try:
         import gymnasium as gym
         import gymnasium_robotics
         
         gym.register_envs(gymnasium_robotics)
-        env = gym.make('FetchReach-v5')
-        print("✅ FetchReach-v5 environment created successfully")
+        env = gym.make('FetchReach-v3')
+        print("✅ FetchReach-v3 environment created successfully")
         
         # Reset and check observation
         obs, info = env.reset(seed=42)
@@ -79,7 +79,7 @@ def test_custom_wrapper():
         print("✅ FetchReachEnv wrapper imported successfully")
         
         # Create environment
-        env = FetchReachEnv(env_name="FetchReach-v5", seed=42)
+        env = FetchReachEnv(env_name="FetchReach-v3", seed=42)
         print("✅ FetchReachEnv wrapper created successfully")
         
         # Test properties
@@ -122,7 +122,7 @@ def test_trainer_integration():
         # Create a minimal config for testing
         test_config = {
             'environment': {
-                'name': 'FetchReach-v5',
+                'name': 'FetchReach-v3',
                 'seed': 42
             },
             'algorithm': {
@@ -185,7 +185,7 @@ def test_trainer_integration():
 def main():
     """메인 테스트 실행"""
     print("========================================")
-    print("FetchReach-v5 Setup Validation")
+    print("FetchReach-v3 Setup Validation")
     print("========================================")
     
     tests = [
@@ -210,7 +210,7 @@ def main():
     print(f"Test Results: {passed}/{total} tests passed")
     
     if passed == total:
-        print("🎉 All tests passed! FetchReach-v5 setup is ready.")
+        print("🎉 All tests passed! FetchReach-v3 setup is ready.")
     else:
         print("⚠️  Some tests failed. Please check the errors above.")
     

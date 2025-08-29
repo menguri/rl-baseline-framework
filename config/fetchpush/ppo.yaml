@@ -1,7 +1,7 @@
-# DroneHover-v0 PPO 최적화 설정 (연구에서 "decent" 성능, GPU 활용도 75%)
+# FetchReach-v4 PPO 최적화 설정 (로봇팔 manipulation)
 
 environment:
-  name: "DroneHover-v0"
+  name: "FetchReach-v4"
   seed: 42
 
 algorithm:
@@ -16,31 +16,31 @@ algorithm:
   train_value_iters: 80
   lam: 0.97
   has_continuous_action_space: true
-  action_std_init: 0.5  # 드론 제어를 위한 적절한 초기 표준편차
+  action_std_init: 0.3  # 로봇팔은 작은 exploration
 
 network:
-  hidden_dims: [512, 256]  # 연구에서 효과적인 네트워크 크기
+  hidden_dims: [256, 256]
   activation: "tanh"
 
 training:
-  max_episodes: 3000
-  update_interval: 2048  # PPO 배치 업데이트
+  max_episodes: 5000
+  update_interval: 2048  # PPO는 배치 업데이트
   eval_interval: 100
-  save_interval: 300
-  max_steps_per_episode: 8000
+  save_interval: 500
+  max_steps_per_episode: 50
 
 experiment:
-  name: "drone_hover_ppo"
+  name: "fetchpush-v3_ppo"
   seeds: [0, 1, 2]
   device: "cuda"
-  save_dir: "results/drone_hover_ppo"
+  save_dir: "results/fetchpush-v3_ppo"
 
 logging:
   tensorboard: false
   save_metrics: true
   plot_interval: 200
   use_wandb: true
-  wandb_project: "rl-framework-drone-hover"
+  wandb_project: "rl-framework-robotics-fetchpush"
   wandb_entity: "tatalintelli-university-of-seoul"
   enable_step_logging: true
-  step_log_interval: 1000
+  step_log_interval: 500

@@ -1,7 +1,7 @@
-# DroneHover-v0 TD3 최적화 설정 (연구에서 가장 일관된 성능)
+# FetchReach-v4 TD3 최적화 설정 (로봇팔 manipulation)
 
 environment:
-  name: "DroneHover-v0"
+  name: "FetchReach-v4"
   seed: 42
 
 algorithm:
@@ -13,36 +13,36 @@ algorithm:
   buffer_size: 1000000
   batch_size: 256
   has_continuous_action_space: true
-  hidden1: 512
-  hidden2: 256
+  hidden1: 400
+  hidden2: 300
   init_w: 0.003
   policy_noise: 0.1
   noise_clip: 0.5
   policy_freq: 2
-  exploration_noise: 0.1  # 드론 제어를 위한 적절한 탐험
+  exploration_noise: 0.05  # 로봇팔은 정밀한 제어 필요
 
 network:
-  hidden_dims: [512, 256]
+  hidden_dims: [400, 300]  # Robotics manipulation에 효과적
   activation: "relu"
 
 training:
-  max_episodes: 3000
+  max_episodes: 5000
   update_interval: 2048
   eval_interval: 100
-  save_interval: 300
-  max_steps_per_episode: 8000
+  save_interval: 500
+  max_steps_per_episode: 50
 
 experiment:
-  name: "drone_hover_td3"
+  name: "fetchpush-v3_td3"
   seeds: [0, 1, 2]
   device: "cuda"
-  save_dir: "results/drone_hover_td3"
+  save_dir: "results/fetchpush-v3_td3"
 
 logging:
   tensorboard: false
   save_metrics: true
   use_wandb: true
-  wandb_project: "rl-framework-drone-hover"
+  wandb_project: "rl-framework-robotics-fetchpush"
   wandb_entity: "tatalintelli-university-of-seoul"
   enable_step_logging: true
-  step_log_interval: 1000
+  step_log_interval: 500
