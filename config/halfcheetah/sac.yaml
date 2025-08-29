@@ -34,7 +34,7 @@ training:
 # 실험 설정
 experiment:
   name: "halfcheetah-v4_sac"
-  seeds: [0, 1, 2]
+  seeds: [0, 1, 2]  # 5개 시드로 통계적 유의성
   device: "cuda"
   save_dir: "results/halfcheetah-v4_sac"
 

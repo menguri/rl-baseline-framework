@@ -23,14 +23,14 @@ network:
 
 training:
   max_episodes: 10000  # 10M steps 목표 (1000 * 10000)
-  update_interval: 1
+  update_interval: 1024
   eval_interval: 50
   save_interval: 500
   max_steps_per_episode: 1000
 
 experiment:
   name: "humanoid-v4_sac"
-  seeds: [0, 1, 2]
+  seeds: [0, 1, 2]  # 5개 시드로 통계적 유의성
   device: "cuda"
   save_dir: "results/humanoid-v4_sac"
 

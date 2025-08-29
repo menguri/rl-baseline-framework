@@ -1,7 +1,7 @@
-# Walker2d-v4 TD3 최적화 설정
+# FetchReach-v4 TD3 최적화 설정 (로봇팔 manipulation)
 
 environment:
-  name: "Walker2d-v4"
+  name: "FetchReach-v4"
   seed: 42
 
 algorithm:
@@ -19,30 +19,30 @@ algorithm:
   policy_noise: 0.1
   noise_clip: 0.5
   policy_freq: 2
-  exploration_noise: 0.03
+  exploration_noise: 0.05  # 로봇팔은 정밀한 제어 필요
 
 network:
-  hidden_dims: [400, 300]
+  hidden_dims: [400, 300]  # Robotics manipulation에 효과적
   activation: "relu"
 
 training:
-  max_episodes: 1500
+  max_episodes: 5000
   update_interval: 2048
-  eval_interval: 15
-  save_interval: 150
-  max_steps_per_episode: 1000
+  eval_interval: 100
+  save_interval: 500
+  max_steps_per_episode: 50
 
 experiment:
-  name: "walker2d-v4_td3"
+  name: "fetchreach-v4_td3"
   seeds: [0, 1, 2]
   device: "cuda"
-  save_dir: "results/walker2d-v4_td3"
+  save_dir: "results/fetchreach-v4_td3"
 
 logging:
   tensorboard: false
   save_metrics: true
   use_wandb: true
-  wandb_project: "rl-framework-mujoco-walker2d"
+  wandb_project: "rl-framework-robotics-fetchreach"
   wandb_entity: "tatalintelli-university-of-seoul"
   enable_step_logging: true
-  step_log_interval: 1000
+  step_log_interval: 500

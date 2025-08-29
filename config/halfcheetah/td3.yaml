@@ -27,7 +27,7 @@ network:
 
 training:
   max_episodes: 1000
-  update_interval: 1  # TD3는 매 step마다 업데이트
+  update_interval: 2048  # TD3는 매 step마다 업데이트
   eval_interval: 10
   save_interval: 500
 

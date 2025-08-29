@@ -25,14 +25,14 @@ network:
 training:
   max_episodes: 10000  # 10M steps 목표
   max_steps_per_episode: 1000
-  update_interval: 2048
+  update_interval: 1024
   eval_interval: 50
   save_interval: 500
   log_interval: 25
 
 experiment:
   name: "humanoid_ppo"
-  seeds: [0, 1, 2, 3, 4]
+  seeds: [0, 1, 2]
   device: "cuda"
   save_dir: "results/humanoid_ppo"
 

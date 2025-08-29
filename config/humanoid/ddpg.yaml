@@ -31,7 +31,7 @@ network:
 
 training:
   max_episodes: 10000  # 10M steps 목표
-  update_interval: 1
+  update_interval: 1024
   eval_interval: 50
   save_interval: 500
   max_steps_per_episode: 1000

@@ -23,7 +23,7 @@ network:
 
 training:
   max_episodes: 1500
-  update_interval: 1
+  update_interval: 2048
   eval_interval: 15
   save_interval: 150
   max_steps_per_episode: 1000

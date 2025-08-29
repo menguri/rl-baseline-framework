@@ -28,7 +28,7 @@ training:
 
 experiment:
   name: "cartpole_a2c"
-  seeds: [0, 1, 2, 3, 4]
+  seeds: [0, 1, 2]
   device: "cuda"
   save_dir: "results/cartpole_a2c"
 

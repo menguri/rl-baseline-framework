@@ -1,7 +1,7 @@
-# Ant-v4 TRPO 최적화 설정
+# DroneHover-v0 TRPO 최적화 설정
 
 environment:
-  name: "Ant-v4"
+  name: "DroneHover-v0"
   seed: 42
 
 algorithm:
@@ -12,31 +12,31 @@ algorithm:
   max_kl: 0.01
   damping: 0.3
   has_continuous_action_space: true
-  action_std_init: 0.6
+  action_std_init: 0.5  # 드론 제어를 위한 초기 표준편차
   critic_iters: 80
 
 network:
-  hidden_dims: [256, 256]
+  hidden_dims: [512, 256]  # 일관된 네트워크 크기
   activation: "tanh"
 
 training:
-  max_episodes: 2000
+  max_episodes: 3000
   update_interval: 2048
-  eval_interval: 20
-  save_interval: 200
-  max_steps_per_episode: 1000
+  eval_interval: 100
+  save_interval: 300
+  max_steps_per_episode: 8000
 
 experiment:
-  name: "ant-v4_trpo"
+  name: "drone_hover_trpo"
   seeds: [0, 1, 2]
   device: "cuda"
-  save_dir: "results/ant-v4_trpo"
+  save_dir: "results/drone_hover_trpo"
 
 logging:
   tensorboard: false
   save_metrics: true
   use_wandb: true
-  wandb_project: "rl-framework-mujoco-ant"
+  wandb_project: "rl-framework-drone-hover"
   wandb_entity: "tatalintelli-university-of-seoul"
   enable_step_logging: true
   step_log_interval: 1000

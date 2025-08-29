@@ -1,7 +1,7 @@
-# Walker2d-v4 DDPG 최적화 설정
+# DroneHover-v0 DDPG 최적화 설정
 
 environment:
-  name: "Walker2d-v4"
+  name: "DroneHover-v0"
   seed: 42
 
 algorithm:
@@ -14,39 +14,39 @@ algorithm:
   batch_size: 256
   ou_theta: 0.15
   ou_mu: 0.0
-  ou_sigma: 0.15  # Walker2d에 적합한 탐험 노이즈
+  ou_sigma: 0.2  # 드론 제어를 위한 탐험 노이즈
   has_continuous_action_space: true
-  hidden1: 400
-  hidden2: 300
+  hidden1: 512
+  hidden2: 256
   init_w: 0.003
   action_repeat: 1
   bn_use: true
-  noise_type: "ou"
+  noise_type: "ou"  # OU noise for drone control
   exploration_std: 0.1
   stable_update_size: 10000
 
 network:
-  hidden_dims: [400, 300]
+  hidden_dims: [512, 256]
   activation: "relu"
 
 training:
-  max_episodes: 1500
+  max_episodes: 3000
   update_interval: 2048
-  eval_interval: 15
-  save_interval: 150
-  max_steps_per_episode: 1000
+  eval_interval: 100
+  save_interval: 300
+  max_steps_per_episode: 8000
 
 experiment:
-  name: "walker2d-v4_ddpg"
+  name: "drone_hover_ddpg"
   seeds: [0, 1, 2]
   device: "cuda"
-  save_dir: "results/walker2d-v4_ddpg"
+  save_dir: "results/drone_hover_ddpg"
 
 logging:
   tensorboard: false
   save_metrics: true
   use_wandb: true
-  wandb_project: "rl-framework-mujoco-walker2d"
+  wandb_project: "rl-framework-drone-hover"
   wandb_entity: "tatalintelli-university-of-seoul"
   enable_step_logging: true
   step_log_interval: 1000

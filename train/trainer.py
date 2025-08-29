@@ -8,7 +8,8 @@ from utils.logger import ExperimentLogger, set_seed
 from environments.cartpole_env import CartPoleEnv
 from environments import (
     LunarLanderContinuousEnv, HalfCheetahEnv, Walker2dEnv, 
-    HumanoidEnv, AntEnv, SwimmerEnv, HopperEnv
+    HumanoidEnv, AntEnv, SwimmerEnv, HopperEnv, FetchReachEnv,
+    DroneHoverEnv, DroneTakeoffEnv
 )
 from algorithms import PPO, TRPO, DDPG, REINFORCE, A2C, TD3, SAC
 
@@ -87,6 +88,12 @@ class Trainer:
             return SwimmerEnv(seed=self.seed)
         elif env_name == "Hopper-v4":
             return HopperEnv(seed=self.seed)
+        elif env_name == "FetchReach-v4":
+            return FetchReachEnv(seed=self.seed)
+        elif env_name == "DroneHover-v0":
+            return DroneHoverEnv(seed=self.seed)
+        elif env_name == "DroneTakeoff-v0":
+            return DroneTakeoffEnv(seed=self.seed)
         else:
             raise ValueError(f"Unsupported environment: {env_name}")
     

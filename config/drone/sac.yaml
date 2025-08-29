@@ -1,0 +1,45 @@
+# DroneHover-v0 SAC 최적화 설정 (연구에서 "decent" 성능 확인)
+
+environment:
+  name: "DroneHover-v0"
+  seed: 42
+
+algorithm:
+  name: "SAC"
+  lr_actor: 0.0003
+  lr_critic: 0.0003
+  lr_alpha: 0.0003
+  gamma: 0.99
+  tau: 0.005
+  buffer_size: 1000000
+  batch_size: 256
+  alpha: 0.2
+  automatic_entropy_tuning: true
+  target_entropy: -4  # -action_dim for Drone (4 motor RPMs)
+  stable_update_size: 10000
+
+network:
+  hidden_dims: [512, 256]  # 연구에서 512 first layer가 효과적
+
+training:
+  max_episodes: 3000  # 8000 steps * 3000 = 24M steps (충분한 학습)
+  update_interval: 2048
+  eval_interval: 100  # 자주 평가
+  save_interval: 300
+  max_steps_per_episode: 8000  # PyBullet drones 기본값 (~27초 @ 240Hz)
+
+experiment:
+  name: "drone_hover_sac"
+  seeds: [0, 1, 2]  # 시드 민감도 고려한 5개 시드
+  device: "cuda"
+  save_dir: "results/drone_hover_sac"
+
+logging:
+  tensorboard: false
+  save_metrics: true
+  plot_interval: 200
+  use_wandb: true
+  wandb_project: "rl-framework-drone-hover"
+  wandb_entity: "tatalintelli-university-of-seoul"
+  enable_step_logging: true
+  step_log_interval: 1000

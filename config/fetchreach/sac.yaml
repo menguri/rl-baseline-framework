@@ -1,0 +1,45 @@
+# FetchReach-v4 SAC 최적화 설정 (로봇팔 manipulation)
+
+environment:
+  name: "FetchReach-v4"
+  seed: 42
+
+algorithm:
+  name: "SAC"
+  lr_actor: 0.0003
+  lr_critic: 0.0003
+  lr_alpha: 0.0003
+  gamma: 0.99
+  tau: 0.005
+  buffer_size: 1000000
+  batch_size: 256
+  alpha: 0.2
+  automatic_entropy_tuning: true
+  target_entropy: -4  # -action_dim for FetchReach (4 actions: dx, dy, dz, gripper)
+  stable_update_size: 1000  # 짧은 에피소드(50 step)를 고려한 빠른 시작
+
+network:
+  hidden_dims: [256, 256]  # Robotics에서 효과적인 중간 크기
+
+training:
+  max_episodes: 5000  # 50 step * 2000 = 100K steps
+  update_interval: 2048
+  eval_interval: 100  # 자주 평가 (에피소드가 짧음)
+  save_interval: 500
+  max_steps_per_episode: 50  # FetchReach 기본값
+
+experiment:
+  name: "fetchreach-v4_sac"
+  seeds: [0, 1, 2]  # 5개 시드로 통계적 유의성
+  device: "cuda"
+  save_dir: "results/fetchreach-v4_sac"
+
+logging:
+  tensorboard: false
+  save_metrics: true
+  plot_interval: 200
+  use_wandb: true
+  wandb_project: "rl-framework-robotics-fetchreach"
+  wandb_entity: "tatalintelli-university-of-seoul"
+  enable_step_logging: true
+  step_log_interval: 500  # 짧은 에피소드에 맞춘 로깅

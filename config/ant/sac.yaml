@@ -23,14 +23,14 @@ network:
 
 training:
   max_episodes: 2000
-  update_interval: 1
+  update_interval: 2048
   eval_interval: 20
   save_interval: 200
   max_steps_per_episode: 1000
 
 experiment:
   name: "ant-v4_sac"
-  seeds: [0, 1, 2, 3, 4]  # 5개 시드로 통계적 유의성 확보
+  seeds: [0, 1, 2]  # 5개 시드로 통계적 유의성 확보
   device: "cuda"
   save_dir: "results/ant-v4_sac"
 

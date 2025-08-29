@@ -31,7 +31,7 @@ training:
 
 experiment:
   name: "lunarlandercontinuous-v3_ppo"
-  seeds: [0, 1, 2, 3, 4]
+  seeds: [0, 1, 2]
   device: "cuda"
   save_dir: "results/lunarlandercontinuous-v3_ppo"
 

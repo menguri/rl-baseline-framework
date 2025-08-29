@@ -1,0 +1,46 @@
+# DroneHover-v0 PPO 최적화 설정 (연구에서 "decent" 성능, GPU 활용도 75%)
+
+environment:
+  name: "DroneHover-v0"
+  seed: 42
+
+algorithm:
+  name: "PPO"
+  lr_actor: 3e-4
+  lr_critic: 1e-3
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_ratio: 0.2
+  target_kl: 0.015
+  train_policy_iters: 80
+  train_value_iters: 80
+  lam: 0.97
+  has_continuous_action_space: true
+  action_std_init: 0.5  # 드론 제어를 위한 적절한 초기 표준편차
+
+network:
+  hidden_dims: [512, 256]  # 연구에서 효과적인 네트워크 크기
+  activation: "tanh"
+
+training:
+  max_episodes: 3000
+  update_interval: 2048  # PPO 배치 업데이트
+  eval_interval: 100
+  save_interval: 300
+  max_steps_per_episode: 8000
+
+experiment:
+  name: "drone_hover_ppo"
+  seeds: [0, 1, 2]
+  device: "cuda"
+  save_dir: "results/drone_hover_ppo"
+
+logging:
+  tensorboard: false
+  save_metrics: true
+  plot_interval: 200
+  use_wandb: true
+  wandb_project: "rl-framework-drone-hover"
+  wandb_entity: "tatalintelli-university-of-seoul"
+  enable_step_logging: true
+  step_log_interval: 1000

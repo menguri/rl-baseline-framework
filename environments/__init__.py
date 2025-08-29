@@ -5,6 +5,8 @@ from .mujoco_env import (
     MuJoCoEnvironment, HalfCheetahEnv, Walker2dEnv, HumanoidEnv, 
     AntEnv, SwimmerEnv, HopperEnv
 )
+from .fetch_reach_env import FetchReachEnv
+from .drone_env import DroneHoverEnv, DroneTakeoffEnv
 
 class LunarLanderContinuousEnv(GymEnv):
     def __init__(self, seed=None):
@@ -20,5 +22,8 @@ __all__ = [
     'HumanoidEnv',
     'AntEnv',
     'SwimmerEnv',
-    'HopperEnv'
+    'HopperEnv',
+    'FetchReachEnv',
+    'DroneHoverEnv',
+    'DroneTakeoffEnv'
 ] 
